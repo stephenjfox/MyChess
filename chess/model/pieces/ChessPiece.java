@@ -9,4 +9,8 @@ public abstract class ChessPiece {
     protected ChessPiece(boolean isWhite) {
         this.isWhite = isWhite;
     }
+
+    public boolean isWhite() {
+        return isWhite;
+    }
 }

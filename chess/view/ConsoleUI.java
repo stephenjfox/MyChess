@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.model.board.TextChessBoard;
+
 /**
  * Created by Stephen on 5/9/2014.
  */
