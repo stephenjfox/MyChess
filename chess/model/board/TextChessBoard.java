@@ -114,9 +114,14 @@ public class TextChessBoard {
     public void movePiece(BoardLocation location, BoardLocation newLocation) {
         ChessPiece toBeMoved = null;
 
-        gameBoard.keySet().remove(gameBoard.get(location));
+//        ChessPiece pieceToMove = gameBoard.get(location);
+//        gameBoard.values().remove(pieceToMove);
+        ChessPiece removedPiece = gameBoard.remove(location);
+//        gameBoard.put(newLocation, removedPiece);
+        for (BoardLocation boardLocation : gameBoard.keySet()) {
+            if(boardLocation.equals(newLocation)) gameBoard.put(newLocation, removedPiece);
+        }
 
-        printAll();
     }
 
 }

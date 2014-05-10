@@ -1,6 +1,7 @@
 package chess.viewmodel;
 
 import chess.model.board.BoardLocation;
+import chess.model.board.TextChessBoard;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public class FileInputHandler {
 
+    TextChessBoard doer = new TextChessBoard();
     String PLACEMENT_REGEX = "[KkQqBbNnRrPp][ld][A-Ha-h][1-8]";
     String MOVE_ONE_REGEX = "[A-Ha-h][1-8]\\s[A-Ha-h][1-8]\\*?";
     String MOVE_TWO_REGEX = "[A-Ha-h][1-8]\\s[A-Ha-h][1-8]\\s[A-Ha-h][1-8]\\s[A-Ha-h][1-8]";
@@ -60,6 +62,7 @@ public class FileInputHandler {
         } catch (NullPointerException e) {
             ErrorLogger.logError("The parseAble hit null or .operate() was called on a null");
         }
+        doer.printAll();
     }
 
     void startingPlacement(String piecePattern) {
@@ -81,11 +84,14 @@ public class FileInputHandler {
 
     void movePiece(String piecePattern) {
         String[] parts = piecePattern.split("\\s");
-        new BoardLocation(parts[0].charAt(0),
-                Integer.parseInt(String.valueOf(parts[0].charAt(1))));
-        new BoardLocation(parts[1].charAt(0),
-                Integer.parseInt(String.valueOf(parts[1].charAt(1))));
-        System.out.println("Piece at " + parts[0] + " move to " + parts[1]);
+//        doer.movePiece(
+//                new BoardLocation(parts[0].charAt(0),
+//                        Integer.parseInt(String.valueOf(parts[0].charAt(1)))),
+//                new BoardLocation(parts[1].charAt(0),
+//                        Integer.parseInt(String.valueOf(parts[1].charAt(1))))
+//        );
+
+        System.out.println("Piece at " + parts[0] + " moves to " + parts[1]);
     }
 
     void moveTwoPieces(String piecePattern) {
