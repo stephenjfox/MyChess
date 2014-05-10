@@ -1,0 +1,21 @@
+Fri May 09 13:16:00 MDT 2014
+C:\Users\Stephen\Documents\Neumont
+The FIH.execute..()'s Files.readAllLines() failed
+
+Fri May 09 13:16:00 MDT 2014
+The parseAble hit null or .operate() was called on a null
+
+Fri May 09 13:17:37 MDT 2014
+C:\Users\Stephen\Documents\Neumont
+The FIH.execute..()'s Files.readAllLines() failed
+
+Fri May 09 13:17:37 MDT 2014
+The parseAble hit null or .operate() was called on a null
+
+Fri May 09 13:18:15 MDT 2014
+C:\Users\Stephen\Documents\Neumont
+The FIH.execute..()'s Files.readAllLines() failed
+
+Fri May 09 13:18:15 MDT 2014
+The parseAble hit null or .operate() was called on a null
+
