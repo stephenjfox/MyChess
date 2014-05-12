@@ -90,8 +90,11 @@ public class FileInputHandler {
 //                new BoardLocation(parts[1].charAt(0),
 //                        Integer.parseInt(String.valueOf(parts[1].charAt(1))))
 //        );
-
-        System.out.println("Piece at " + parts[0] + " moves to " + parts[1]);
+        if(parts[1].contains("*")) {
+        	System.out.println("Piece at " + parts[0] + " moves to capture " + parts[1]);
+        }
+        else 
+        	System.out.println("Piece at " + parts[0] + " moves to " + parts[1]);
     }
 
     void moveTwoPieces(String piecePattern) {
