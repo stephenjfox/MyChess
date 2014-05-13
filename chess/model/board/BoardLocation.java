@@ -1,5 +1,7 @@
 package chess.model.board;
 
+import chess.model.pieces.ChessPiece;
+
 /**
  * Created by Stephen on 5/9/2014.
  */
@@ -8,7 +10,8 @@ public class BoardLocation {
      * This class is the 1-based board locations on a standard 8x8 chessboard
      */
     int x, y;
-
+    String name;
+    ChessPiece presentPiece = null;
 
     public BoardLocation(int x, int y) {
         this.x = x;
@@ -16,6 +19,7 @@ public class BoardLocation {
     }
 
     public BoardLocation(char lowercase, int y) {
+    	this.name = lowercase + "" + y;
         this.x = intSwap(lowercase);
         this.y = y;
     }
@@ -46,7 +50,22 @@ public class BoardLocation {
                 return 0;
         }
     }
-    /**
+    
+    public void placePiece(ChessPiece piece){
+    	this.presentPiece = piece;
+    }
+    
+    public ChessPiece getPresentPiece() {
+		return presentPiece;
+	}
+
+    public ChessPiece remove() {
+    	ChessPiece toReturn = this.presentPiece;
+    	this.presentPiece = null;
+    	return toReturn;
+    }
+
+	/**
      * Returns a string representation of this point and its location
      * in the {@code (x,y)} coordinate space. This method is
      * intended to be used only for debugging purposes, and the content
@@ -56,6 +75,7 @@ public class BoardLocation {
      * @return  a string representation of this point
      */
     public String toString() {
-        return getClass().getName() + "[x=" + x + ",y=" + y + "]";
+//        return getClass().getName() + "[x=" + x + ",y=" + y + "]";
+    	return this.name;
     }
 }

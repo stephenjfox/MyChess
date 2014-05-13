@@ -17,25 +17,25 @@ public class TextChessBoard {
     {
         gameBoard = new LinkedHashMap<>();
 
-        // Royalty for black
-        gameBoard.put(new BoardLocation('A', 8), new Rook(black));
-        gameBoard.put(new BoardLocation('B', 8), new Knight(black));
-        gameBoard.put(new BoardLocation('C', 8), new Bishop(black));
-        gameBoard.put(new BoardLocation('D', 8), new Queen(black));
-        gameBoard.put(new BoardLocation('E', 8), new King(black));
-        gameBoard.put(new BoardLocation('F', 8), new Bishop(black));
-        gameBoard.put(new BoardLocation('G', 8), new Knight(black));
-        gameBoard.put(new BoardLocation('H', 8), new Rook(black));
-        // Pawn of darkness
-        gameBoard.put(new BoardLocation('A', 7), new Pawn(black));
-        gameBoard.put(new BoardLocation('B', 7), new Pawn(black));
-        gameBoard.put(new BoardLocation('C', 7), new Pawn(black));
-        gameBoard.put(new BoardLocation('D', 7), new Pawn(black));
-        gameBoard.put(new BoardLocation('E', 7), new Pawn(black));
-        gameBoard.put(new BoardLocation('F', 7), new Pawn(black));
-        gameBoard.put(new BoardLocation('G', 7), new Pawn(black));
-        gameBoard.put(new BoardLocation('H', 7), new Pawn(black));
-        
+        // Royalty for white
+        gameBoard.put(new BoardLocation('A', 1), new Rook(white));
+        gameBoard.put(new BoardLocation('B', 1), new Knight(white));
+        gameBoard.put(new BoardLocation('C', 1), new Bishop(white));
+        gameBoard.put(new BoardLocation('D', 1), new Queen(white));
+        gameBoard.put(new BoardLocation('E', 1), new King(white));
+        gameBoard.put(new BoardLocation('F', 1), new Bishop(white));
+        gameBoard.put(new BoardLocation('G', 1), new Knight(white));
+        gameBoard.put(new BoardLocation('H', 1), new Rook(white));
+
+        // Pawn of light
+        gameBoard.put(new BoardLocation('A', 2), new Pawn(white));
+        gameBoard.put(new BoardLocation('B', 2), new Pawn(white));
+        gameBoard.put(new BoardLocation('C', 2), new Pawn(white));
+        gameBoard.put(new BoardLocation('D', 2), new Pawn(white));
+        gameBoard.put(new BoardLocation('E', 2), new Pawn(white));
+        gameBoard.put(new BoardLocation('F', 2), new Pawn(white));
+        gameBoard.put(new BoardLocation('G', 2), new Pawn(white));
+        gameBoard.put(new BoardLocation('H', 2), new Pawn(white));
 
         // Empty middle ground
         gameBoard.put(new BoardLocation('A', 3), null);
@@ -74,25 +74,25 @@ public class TextChessBoard {
         gameBoard.put(new BoardLocation('G', 6), null);
         gameBoard.put(new BoardLocation('H', 6), null);
 
-        // Pawn of light
-        gameBoard.put(new BoardLocation('A', 2), new Pawn(white));
-        gameBoard.put(new BoardLocation('B', 2), new Pawn(white));
-        gameBoard.put(new BoardLocation('C', 2), new Pawn(white));
-        gameBoard.put(new BoardLocation('D', 2), new Pawn(white));
-        gameBoard.put(new BoardLocation('E', 2), new Pawn(white));
-        gameBoard.put(new BoardLocation('F', 2), new Pawn(white));
-        gameBoard.put(new BoardLocation('G', 2), new Pawn(white));
-        gameBoard.put(new BoardLocation('H', 2), new Pawn(white));
-        
-        // Royalty for white
-        gameBoard.put(new BoardLocation('A', 1), new Rook(white));
-        gameBoard.put(new BoardLocation('B', 1), new Knight(white));
-        gameBoard.put(new BoardLocation('C', 1), new Bishop(white));
-        gameBoard.put(new BoardLocation('D', 1), new Queen(white));
-        gameBoard.put(new BoardLocation('E', 1), new King(white));
-        gameBoard.put(new BoardLocation('F', 1), new Bishop(white));
-        gameBoard.put(new BoardLocation('G', 1), new Knight(white));
-        gameBoard.put(new BoardLocation('H', 1), new Rook(white));
+        // Pawn of darkness
+        gameBoard.put(new BoardLocation('A', 7), new Pawn(black));
+        gameBoard.put(new BoardLocation('B', 7), new Pawn(black));
+        gameBoard.put(new BoardLocation('C', 7), new Pawn(black));
+        gameBoard.put(new BoardLocation('D', 7), new Pawn(black));
+        gameBoard.put(new BoardLocation('E', 7), new Pawn(black));
+        gameBoard.put(new BoardLocation('F', 7), new Pawn(black));
+        gameBoard.put(new BoardLocation('G', 7), new Pawn(black));
+        gameBoard.put(new BoardLocation('H', 7), new Pawn(black));
+
+        // Royalty for black
+        gameBoard.put(new BoardLocation('A', 8), new Rook(black));
+        gameBoard.put(new BoardLocation('B', 8), new Knight(black));
+        gameBoard.put(new BoardLocation('C', 8), new Bishop(black));
+        gameBoard.put(new BoardLocation('D', 8), new Queen(black));
+        gameBoard.put(new BoardLocation('E', 8), new King(black));
+        gameBoard.put(new BoardLocation('F', 8), new Bishop(black));
+        gameBoard.put(new BoardLocation('G', 8), new Knight(black));
+        gameBoard.put(new BoardLocation('H', 8), new Rook(black));
     }
 
     public void printAll() {
