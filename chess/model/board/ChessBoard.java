@@ -1,7 +1,5 @@
 package chess.model.board;
 
-
-
 import chess.model.pieces.ChessPiece;
 
 public class ChessBoard {
@@ -10,8 +8,9 @@ public class ChessBoard {
 	BoardLocation[][] functionalBoard = new BoardLocation[columnCount][rowCount];
 
 	private void placePiece(ChessPiece c, String destination){
-		
-	}
+        
+        System.out.println(c.toString()+ " was place at " + destination);
+    }
 	
 	public void printSelf(){
 		for (int i = 0; i < rowCount; i++) {
