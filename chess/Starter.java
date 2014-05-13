@@ -3,7 +3,6 @@ package chess;
 import chess.view.ConsoleUI;
 import chess.viewmodel.FileInputHandler;
 
-
 /**
  * Created by Stephen on 5/9/2014.
  */
