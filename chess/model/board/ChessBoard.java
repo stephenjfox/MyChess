@@ -16,7 +16,7 @@ public class ChessBoard {
 		for (int i = 0; i < rowCount; i++) {
 	        // If the board piece at a location is holding a piece
 			for (int k = 0; k < columnCount; k++) {
-		        System.out.print("[ " +((functionalBoard[i][k].getPresentPiece() == null) ? "-" : 
+		        System.out.print("[ " +((functionalBoard[i][k]/*.getPresentPiece()*/ == null) ? "-" :
 		        	functionalBoard[i][k].getPresentPiece().toString())+ " ]");
 			}
 			System.out.println();
