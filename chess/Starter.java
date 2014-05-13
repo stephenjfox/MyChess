@@ -14,8 +14,8 @@ public class Starter {
         if(args.length == 1) {
             FileInputHandler fIH = new FileInputHandler();
             ConsoleUI chessView = new ConsoleUI();
-            fIH.executeFromFile(new File(args[0]));
-
+//            fIH.executeFromFile(new File(args[0]));
+            chessView.drawBoard();
         }
     }
 }

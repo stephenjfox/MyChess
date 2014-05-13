@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.model.board.ChessBoard;
 import chess.model.board.TextChessBoard;
 
 /**
@@ -9,7 +10,7 @@ public class ConsoleUI implements UserInterface {
 
     @Override
     public void drawBoard() {
-    	
+    	new ChessBoard().printSelf();
     }
 
     @Override
