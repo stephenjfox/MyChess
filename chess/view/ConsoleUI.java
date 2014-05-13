@@ -9,7 +9,7 @@ public class ConsoleUI implements UserInterface {
 
     @Override
     public void drawBoard() {
-
+    	
     }
 
     @Override

@@ -13,15 +13,24 @@ public class BoardLocation {
     String name;
     ChessPiece presentPiece = null;
 
-    public BoardLocation(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
 
+    /**
+     * Creates a BoardLocation object to be placed in the board array of arrays.
+     * @param lowercase the column letter on a valid chess board (i.e. a-h)
+     * @param y the number row on a valid chess board (i.e. 1-8)
+     */
     public BoardLocation(char lowercase, int y) {
     	this.name = lowercase + "" + y;
         this.x = intSwap(lowercase);
         this.y = y;
+    }
+    /**
+     * Calls the previous constructor with the appropriate versions of their values
+     * @param location: a valid chess board location (i.e. e3)
+     */
+    public BoardLocation(String location) {
+    	this(location.charAt(0), Integer.parseInt(String.valueOf(location.charAt(1))));
+    	this.name = location;
     }
 
     /**
