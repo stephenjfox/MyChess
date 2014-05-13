@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,11 +15,19 @@ import java.util.List;
  */
 public class FileInputHandler {
 
-    TextChessBoard gameBoard = new TextChessBoard();
     String PLACEMENT_REGEX = "[KkQqBbNnRrPp][ld][A-Ha-h][1-8]";
     String MOVE_ONE_REGEX = "[A-Ha-h][1-8]\\s[A-Ha-h][1-8]\\*?";
     String MOVE_TWO_REGEX = "[A-Ha-h][1-8]\\s[A-Ha-h][1-8]\\s[A-Ha-h][1-8]\\s[A-Ha-h][1-8]";
 
+    @SuppressWarnings("serial")
+	HashMap<Character, String> pieceCharRelator = new HashMap<Character, String>(){{
+        put('k', "King");
+        put('q', "Queen");
+        put('b', "Bishop");
+        put('n', "Knight");
+        put('r', "Rook");
+        put('p', "Rook");
+    }};
     // The piece is what's important: it tells you want can be done and how
     // The user provides instruction for the piece to do things
     
@@ -48,7 +57,6 @@ public class FileInputHandler {
         } catch (NullPointerException e) {
             ErrorLogger.logError("The parseAble hit null or .operate() was called on a null");
         }
-        gameBoard.printAll();
     }
 
     private void startingPlacement(String piecePattern) {
@@ -62,7 +70,7 @@ public class FileInputHandler {
         String[] parts = new String[4];
         char[] wordSplit = parseAble.toLowerCase().toCharArray();
         // will be 4 characters long
-        parts[0] = retrievePieceName(wordSplit[0]); // Pawn, king, queen, rook, knight, bishop
+        parts[0] = pieceCharRelator.get(wordSplit[0]); // Pawn, king, queen, rook, knight, bishop
         parts[1] = wordSplit[1] == 'd' ? "Black" : "White"; // black or white type
         parts[2] = String.valueOf(wordSplit[2]); // lettered column [a, b, c, d, e, f, g, h]
         parts[3] = String.valueOf(wordSplit[3]); // the numbered row [1, 2, 3, 4, 5, 6, 7, 8]
@@ -72,13 +80,7 @@ public class FileInputHandler {
 
     private void movePiece(String piecePattern) {
         String[] parts = piecePattern.split("\\s");
-        gameBoard.movePiece(
-                new BoardLocation(parts[0].charAt(0),
-                        Integer.parseInt(String.valueOf(parts[0].charAt(1)))),
-                new BoardLocation(parts[1].charAt(0),
-                        Integer.parseInt(String.valueOf(parts[1].charAt(1))))
-        );
-        // DEBUG LOGIC
+           // DEBUG LOGIC
         if(parts[1].contains("*")) {
         	System.out.println("Piece at " + parts[0] + " moves to capture " + parts[1].substring(0, 2));
         	
@@ -100,24 +102,7 @@ public class FileInputHandler {
         System.out.println(piecePattern + " twas an invalid move");
     }
     // DEBUG LOGIC
-    private String retrievePieceName(char c) {
-        switch(c){
-            case 'k':
-                return "King";
-            case 'q':
-                return "Queen";
-            case 'b':
-                return "Bishop";
-            case 'n':
-                return "Pawn";
-            case 'r':
-                return "Rook";
-            case 'p':
-                return "Pawn";
-            default:
-                return "SwitchFail";
-        }
-    }
+    
 /*
     enum Operation {
         PlacePiece {
