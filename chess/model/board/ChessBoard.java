@@ -18,7 +18,7 @@ public class ChessBoard {
         BoardLocation tempLoc = new BoardLocation(destination);
         functionalBoard[tempLoc.getY() - ONE_BASED_OFFSET][tempLoc.getX() - ONE_BASED_OFFSET] = tempLoc;
         tempLoc.placePiece(c);
-        System.out.println(c.getClass().getSimpleName() + " was placed at " + destination + "\n");
+        System.out.println(c.getClass().getSimpleName() + " was placed at " + destination);
     }
 
     // Test method
@@ -62,6 +62,7 @@ public class ChessBoard {
         placePiece(new Knight(true), "g1");
         placePiece(new Rook(true), "h1");
     }
+
     public void printBoard(){
 		for (int i = rowCount - 1; i >= 0; i--) {
 	        // If the board piece at a location is holding a piece

@@ -26,21 +26,33 @@ public class GameController {
                 fIH.executeFromFile(new File(starterArg));
 
         for (String[] partsForPieceGen : executionInstructions) {
-            // [0] = Piece type: 'k', 'q', 'b', 'n', 'r', 'p'
+            /* Place piece  */
+            // [0] = Piece type: "King", "Queen", etc.
             // [1] = Piece color: 'l' or 'd'
-            // [2]+[3] = Board location [letter][number]
+            // [2] = Board location [letter][number]
             // or
+            /* Move a piece */
             // [0] = board index for a piece
             // [1] = board index for the movement destination
+            // or
+            /* Move two pieces */
+            // [0] = board index for a piece1
+            // [1] = board index for the movement destination1
+            // [2] = board index for a piece2
+            // [3] = board index for the movement destination2
             if (partsForPieceGen.length == 2) {
-
+                System.out.println("Move single piece (to capture)");
             } else if (partsForPieceGen.length == 3){
-                System.out.println(partsForPieceGen[0] + " " + partsForPieceGen[1] + " " + partsForPieceGen[2]);
+                // Pull the predetermined parts from the array and place piece on the board
+//                System.out.println(partsForPieceGen[0] + " " + partsForPieceGen[1] + " " + partsForPieceGen[2]);
+                // That's a debug line ^^^^^^^^^^^^^^^^
                 containerForTheGame.placePiece(
                         ChessHelp.getNewPiece(
                                 partsForPieceGen[0], partsForPieceGen[1].charAt(0)),
                         partsForPieceGen[2]
                 );
+            } else {
+                System.out.println("Move two pieces simultaneously");
             }
         }
     }
