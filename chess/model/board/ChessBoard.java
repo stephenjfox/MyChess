@@ -1,6 +1,7 @@
 package chess.model.board;
 
 import chess.model.pieces.*;
+import chess.viewmodel.FileInputHandler;
 
 public class ChessBoard {
 	final int rowCount = 8;
@@ -13,13 +14,14 @@ public class ChessBoard {
      * @param c ChessPiece object to be placed on the board
      * @param destination the grid location on the board
      */
-	private void placePiece(ChessPiece c, String destination) {
+	public void placePiece(ChessPiece c, String destination) {
         BoardLocation tempLoc = new BoardLocation(destination);
         functionalBoard[tempLoc.getY() - ONE_BASED_OFFSET][tempLoc.getX() - ONE_BASED_OFFSET] = tempLoc;
         tempLoc.placePiece(c);
         System.out.println(c.getClass().getSimpleName() + " was placed at " + destination + "\n");
     }
 
+    // Test method
     public void init(){
         // Black royalty
         placePiece(new Rook(false), "a8");
@@ -31,9 +33,25 @@ public class ChessBoard {
         placePiece(new Knight(false), "g8");
         placePiece(new Rook(false), "h8");
 
+        placePiece(new Pawn(false), "a7");
+        placePiece(new Pawn(false), "b7");
+        placePiece(new Pawn(false), "c7");
+        placePiece(new Pawn(false), "d7");
+        placePiece(new Pawn(false), "e7");
+        placePiece(new Pawn(false), "f7");
+        placePiece(new Pawn(false), "g7");
+        placePiece(new Pawn(false), "h7");
+
         // TODO: Link initialization of pieces with the method calls in the FileInputHandler
         // TODO: perhaps send a "Movement" (object) back up to the Game Controller?
-        placePiece(new Pawn(true), "a4");
+        placePiece(new Pawn(true), "a2");
+        placePiece(new Pawn(true), "b2");
+        placePiece(new Pawn(true), "c2");
+        placePiece(new Pawn(true), "d2");
+        placePiece(new Pawn(true), "e2");
+        placePiece(new Pawn(true), "f2");
+        placePiece(new Pawn(true), "g2");
+        placePiece(new Pawn(true), "h2");
         // White royalty
         placePiece(new Rook(true), "a1");
         placePiece(new Knight(true), "b1");
@@ -55,5 +73,5 @@ public class ChessBoard {
 	    }
 
 	}
-	
+
 }

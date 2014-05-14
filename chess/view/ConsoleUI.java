@@ -7,11 +7,15 @@ import chess.model.board.ChessBoard;
  */
 public class ConsoleUI implements UserInterface {
 
+    private ChessBoard viewFocusBoard;
+
+    public ConsoleUI(ChessBoard boardForTheGame) {
+        viewFocusBoard = boardForTheGame;
+    }
+
     @Override
     public void drawBoard() {
-    	ChessBoard focusBoard = new ChessBoard();
-        focusBoard.init();
-        focusBoard.printBoard();
+        viewFocusBoard.printBoard();
     }
 
     @Override
