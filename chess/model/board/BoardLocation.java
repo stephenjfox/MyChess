@@ -74,7 +74,15 @@ public class BoardLocation {
     	return toReturn;
     }
 
-	/**
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    /**
      * Returns a string representation of this point and its location
      * in the {@code (x,y)} coordinate space. This method is
      * intended to be used only for debugging purposes, and the content
