@@ -17,7 +17,7 @@ public class ChessBoard {
         BoardLocation tempLoc = new BoardLocation(destination);
         functionalBoard[tempLoc.getY() - ONE_BASED_OFFSET][tempLoc.getX() - ONE_BASED_OFFSET] = tempLoc;
         tempLoc.placePiece(c);
-        System.out.println(c.getClass().getName() + " was placed at " + destination);
+        System.out.println(c.getClass().getSimpleName() + " was placed at " + destination + "\n");
     }
 
     public void init(){
@@ -31,6 +31,9 @@ public class ChessBoard {
         placePiece(new Knight(false), "g8");
         placePiece(new Rook(false), "h8");
 
+        // TODO: Link initialization of pieces with the method calls in the FileInputHandler
+        // TODO: perhaps send a "Movement" (object) back up to the Game Controller?
+        placePiece(new Pawn(true), "a4");
         // White royalty
         placePiece(new Rook(true), "a1");
         placePiece(new Knight(true), "b1");
