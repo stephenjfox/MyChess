@@ -1,7 +1,6 @@
 package chess.model.board;
 
-import chess.model.pieces.ChessPiece;
-import chess.model.pieces.King;
+import chess.model.pieces.*;
 
 public class ChessBoard {
 	final int rowCount = 8;
@@ -18,11 +17,29 @@ public class ChessBoard {
         BoardLocation tempLoc = new BoardLocation(destination);
         functionalBoard[tempLoc.getY() - ONE_BASED_OFFSET][tempLoc.getX() - ONE_BASED_OFFSET] = tempLoc;
         tempLoc.placePiece(c);
-        System.out.println(c.toString() + " was placed at " + destination);
+        System.out.println(c.getClass().getName() + " was placed at " + destination);
     }
 
     public void init(){
+        // Black royalty
+        placePiece(new Rook(false), "a8");
+        placePiece(new Knight(false), "b8");
+        placePiece(new Bishop(false), "c8");
+        placePiece(new Queen(false), "d8");
+        placePiece(new King(false), "e8");
+        placePiece(new Bishop(false), "f8");
+        placePiece(new Knight(false), "g8");
+        placePiece(new Rook(false), "h8");
+
+        // White royalty
+        placePiece(new Rook(true), "a1");
+        placePiece(new Knight(true), "b1");
+        placePiece(new Bishop(true), "c1");
+        placePiece(new Queen(true), "d1");
         placePiece(new King(true), "e1");
+        placePiece(new Bishop(true), "f1");
+        placePiece(new Knight(true), "g1");
+        placePiece(new Rook(true), "h1");
     }
     public void printBoard(){
 		for (int i = rowCount - 1; i >= 0; i--) {
