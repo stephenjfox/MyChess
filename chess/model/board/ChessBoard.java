@@ -35,7 +35,7 @@ public class ChessBoard {
         functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
     }
 
-    public void moveTwoPiece() {
+    public void moveTwoPiece(String o1, String d1, String o2, String d2) {
 
     }
     public void printBoard(){

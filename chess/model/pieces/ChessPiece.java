@@ -6,6 +6,14 @@ package chess.model.pieces;
 public abstract class ChessPiece {
     private boolean isWhite;
 
+    private boolean moved; // false initially
+
+    protected void setMoved(){
+        moved = true;
+    }
+    protected boolean isMoved() {
+        return moved;
+    }
     protected ChessPiece(boolean isWhite) {
         this.isWhite = isWhite;
     }
