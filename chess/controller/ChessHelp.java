@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.model.board.BoardLocation;
 import chess.model.pieces.*;
 
 /**
@@ -22,5 +23,25 @@ public class ChessHelp {
             default:
                 return new Pawn(color == 'l');
         }
+    }
+
+    public static boolean isValidMove(BoardLocation start, BoardLocation destination) {
+        int dX = start.getX() - destination.getX();
+        int dY = start.getY() - destination.getY();
+        if (start.getPresentPiece() == null) {
+            ChessPiece pieceToMove = start.getPresentPiece();
+            return true; // TODO: THIS IS A LIE
+        } else {
+            return false;
+        }
+    }
+    private static boolean isValidPawnMove(BoardLocation start, BoardLocation destination) {
+        Pawn pawn = null;
+        if (start.getPresentPiece() instanceof Pawn) {
+            pawn = (Pawn) start.getPresentPiece();
+//            return ( dY == (pawn.isMoved() ? 1 : 2 | 1) && dX ==  )
+
+        }
+        return false;
     }
 }

@@ -2,6 +2,10 @@ package chess.model.board;
 
 import chess.model.pieces.*;
 
+/**
+ * This class is meant to facilitate the 2-D array that is to be the board.
+ * The class is called "ChessBoard" because all of the things to be done are ON the board.
+ */
 public class ChessBoard {
 	final int rowCount = 8;
 	final int columnCount = 8;
@@ -31,6 +35,9 @@ public class ChessBoard {
         functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
     }
 
+    public void moveTwoPiece() {
+
+    }
     public void printBoard(){
 		for (int i = rowCount - 1; i >= 0; i--) {
 	        // If the board piece at a location is holding a piece

@@ -47,7 +47,7 @@ public class GameController {
                     containerForTheGame.movePiece(
                             partsForPieceGen[0], partsForPieceGen[1]
                     );
-                } catch (Exception e) {
+                } catch (NullPointerException e) {
                     ErrorLogger.logError("Something in the movePiece() threw an error.");
                 }
             }
