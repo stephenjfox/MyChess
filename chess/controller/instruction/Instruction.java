@@ -1,4 +1,4 @@
-package chess.model.instruction;
+package chess.controller.instruction;
 
 /**
  * Created by Stephen on 5/15/2014.

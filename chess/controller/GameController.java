@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class GameController {
 
-    private static ChessBoard containerForTheGame = new ChessBoard();
+    static ChessBoard containerForTheGame = new ChessBoard();
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
@@ -42,7 +42,7 @@ public class GameController {
             // [2] = board index for a piece2
             // [3] = board index for the movement destination2
             if (partsForPieceGen.length == 2) {
-                System.out.println(partsForPieceGen[0] + " " + partsForPieceGen[1]);
+                System.out.println("For DEBUG\n"+partsForPieceGen[0] + " " + partsForPieceGen[1]);
                 try {
                     containerForTheGame.movePiece(
                             partsForPieceGen[0], partsForPieceGen[1]
