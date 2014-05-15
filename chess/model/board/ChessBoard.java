@@ -21,46 +21,8 @@ public class ChessBoard {
         System.out.println(c.getClass().getSimpleName() + " was placed at " + destination);
     }
 
-    // Test method
-    public void init(){
-        // Black royalty
-        placePiece(new Rook(false), "a8");
-        placePiece(new Knight(false), "b8");
-        placePiece(new Bishop(false), "c8");
-        placePiece(new Queen(false), "d8");
-        placePiece(new King(false), "e8");
-        placePiece(new Bishop(false), "f8");
-        placePiece(new Knight(false), "g8");
-        placePiece(new Rook(false), "h8");
+    public void movePiece(String origin, String destination) {
 
-        placePiece(new Pawn(false), "a7");
-        placePiece(new Pawn(false), "b7");
-        placePiece(new Pawn(false), "c7");
-        placePiece(new Pawn(false), "d7");
-        placePiece(new Pawn(false), "e7");
-        placePiece(new Pawn(false), "f7");
-        placePiece(new Pawn(false), "g7");
-        placePiece(new Pawn(false), "h7");
-
-        // TODO: Link initialization of pieces with the method calls in the FileInputHandler
-        // TODO: perhaps send a "Movement" (object) back up to the Game Controller?
-        placePiece(new Pawn(true), "a2");
-        placePiece(new Pawn(true), "b2");
-        placePiece(new Pawn(true), "c2");
-        placePiece(new Pawn(true), "d2");
-        placePiece(new Pawn(true), "e2");
-        placePiece(new Pawn(true), "f2");
-        placePiece(new Pawn(true), "g2");
-        placePiece(new Pawn(true), "h2");
-        // White royalty
-        placePiece(new Rook(true), "a1");
-        placePiece(new Knight(true), "b1");
-        placePiece(new Bishop(true), "c1");
-        placePiece(new Queen(true), "d1");
-        placePiece(new King(true), "e1");
-        placePiece(new Bishop(true), "f1");
-        placePiece(new Knight(true), "g1");
-        placePiece(new Rook(true), "h1");
     }
 
     public void printBoard(){
