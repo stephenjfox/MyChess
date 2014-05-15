@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class ErrorLogger {
 
-    static File errorLog = new File("src\\games\\chess\\logs\\errors " + new SimpleDateFormat("MMddYYYY").format(new Date()) + ".txt");
+    static File errorLog = new File("chess\\logs\\ " + new SimpleDateFormat("MMddYYYY").format(new Date()) + ".txt");
     public static void logError(String error) {
 
         if(!errorLog.exists()) try {
