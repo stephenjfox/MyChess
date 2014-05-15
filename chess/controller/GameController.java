@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.model.board.ChessBoard;
 import chess.view.ConsoleUI;
+import chess.viewmodel.ErrorLogger;
 import chess.viewmodel.FileInputHandler;
 
 import java.io.File;
@@ -42,9 +43,13 @@ public class GameController {
             // [3] = board index for the movement destination2
             if (partsForPieceGen.length == 2) {
                 System.out.println(partsForPieceGen[0] + " " + partsForPieceGen[1]);
-                containerForTheGame.movePiece(
-                        partsForPieceGen[0], partsForPieceGen[1]
-                );
+                try {
+                    containerForTheGame.movePiece(
+                            partsForPieceGen[0], partsForPieceGen[1]
+                    );
+                } catch (Exception e) {
+                    ErrorLogger.logError("Something in the movePiece() threw an error.");
+                }
             }
             else if (partsForPieceGen.length == 3){
                 // Pull the predetermined parts from the array and place piece on the board

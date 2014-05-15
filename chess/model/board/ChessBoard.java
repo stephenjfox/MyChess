@@ -14,10 +14,10 @@ public class ChessBoard {
      * @param destination the grid location on the board
      */
 	public void placePiece(ChessPiece c, String destination) {
-        BoardLocation tempLoc = new BoardLocation(destination);
+        BoardLocation tempDest = new BoardLocation(destination);
 
-        functionalBoard[tempLoc.getY() - offset][tempLoc.getX() - offset] = tempLoc;
-        tempLoc.placePiece(c);
+        functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
+        tempDest.placePiece(c);
 
 //        System.out.println(c.getClass().getSimpleName() + " was placed at " + destination);
     }
