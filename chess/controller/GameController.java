@@ -62,6 +62,7 @@ public class GameController {
                 );
             }
             else { // length of 4 is the only other possibility
+                containerForTheGame.moveTwoPiece(partsForPieceGen);
                 System.out.println("Move two pieces simultaneously");
             }
         }

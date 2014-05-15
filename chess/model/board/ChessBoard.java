@@ -35,8 +35,13 @@ public class ChessBoard {
         functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
     }
 
+    public void moveTwoPiece(String[] locations) {
+        moveTwoPiece(locations[0], locations[1], locations[2], locations[3]);
+    }
     public void moveTwoPiece(String o1, String d1, String o2, String d2) {
-
+        movePiece(o1, d1);
+        movePiece(o2, d2);
+        // TODO: Validate the King and Rooks. Spacing as well
     }
     public void printBoard(){
 		for (int i = rowCount - 1; i >= 0; i--) {
