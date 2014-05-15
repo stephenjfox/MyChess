@@ -80,7 +80,7 @@ public class FileInputHandler {
         // part[2] is as below
 
 		// DEBUG LOGIC
-		System.out.println(theParts[1] + " " + theParts[0] + " placed on "
+		System.out.println((theParts[1].equals("l") ? "White" : "Black") + " " + theParts[0] + " placed on "
 				+ theParts[2]);
 		// DEBUG LOGIC
 

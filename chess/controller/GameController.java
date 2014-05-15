@@ -41,8 +41,12 @@ public class GameController {
             // [2] = board index for a piece2
             // [3] = board index for the movement destination2
             if (partsForPieceGen.length == 2) {
-                System.out.println("Move single piece (to capture)");
-            } else if (partsForPieceGen.length == 3){
+                System.out.println(partsForPieceGen[0] + " " + partsForPieceGen[1]);
+                containerForTheGame.movePiece(
+                        partsForPieceGen[0], partsForPieceGen[1]
+                );
+            }
+            else if (partsForPieceGen.length == 3){
                 // Pull the predetermined parts from the array and place piece on the board
 //                System.out.println(partsForPieceGen[0] + " " + partsForPieceGen[1] + " " + partsForPieceGen[2]);
                 // That's a debug line ^^^^^^^^^^^^^^^^
@@ -51,7 +55,8 @@ public class GameController {
                                 partsForPieceGen[0], partsForPieceGen[1].charAt(0)),
                         partsForPieceGen[2]
                 );
-            } else { // length of 4 is the only other possibility
+            }
+            else { // length of 4 is the only other possibility
                 System.out.println("Move two pieces simultaneously");
             }
         }
