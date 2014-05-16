@@ -40,7 +40,6 @@ public class ChessHelp {
         if (start.getPresentPiece() instanceof Pawn) {
             pawn = (Pawn) start.getPresentPiece();
 //            return ( dY == (pawn.isMoved() ? 1 : 2 | 1) && dX ==  )
-
         }
         return false;
     }
