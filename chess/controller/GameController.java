@@ -1,5 +1,9 @@
 package chess.controller;
 
+import chess.controller.instruction.Instruction;
+import chess.controller.instruction.MovePieceInstruction;
+import chess.controller.instruction.MoveTwoInstruction;
+import chess.controller.instruction.PlacePieceInstruction;
 import chess.model.board.ChessBoard;
 import chess.view.ConsoleUI;
 import chess.viewmodel.ErrorLogger;
@@ -13,7 +17,7 @@ import java.util.ArrayList;
  */
 public class GameController {
 
-    static ChessBoard containerForTheGame = new ChessBoard();
+    public static ChessBoard containerForTheGame = new ChessBoard();
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
@@ -23,10 +27,10 @@ public class GameController {
     }
 
     private static void runFileGame(String starterArg, FileInputHandler fIH) {
-        ArrayList<String[]> executionInstructions =
+        ArrayList<Instruction> executionInstructions =
                 fIH.executeFromFile(new File(starterArg));
 
-        for (String[] partsForPieceGen : executionInstructions) {
+        for (Instruction instruction : executionInstructions) {
             /* Place piece  */
             // [0] = Piece type: "King", "Queen", etc.
             // [1] = Piece color: 'l' or 'd'
@@ -41,31 +45,9 @@ public class GameController {
             // [1] = board index for the movement destination1
             // [2] = board index for a piece2
             // [3] = board index for the movement destination2
-            if (partsForPieceGen.length == 2) {
-                System.out.println("For DEBUG\n"+partsForPieceGen[0] + " " + partsForPieceGen[1]);
-                try {
-                    containerForTheGame.movePiece(
-                            partsForPieceGen[0], partsForPieceGen[1]
-                    );
-                } catch (NullPointerException e) {
-                    ErrorLogger.logError("Something in the movePiece() threw an error.");
-                }
-            }
-            else if (partsForPieceGen.length == 3){
-                // Pull the predetermined parts from the array and place piece on the board
-//                System.out.println(partsForPieceGen[0] + " " + partsForPieceGen[1] + " " + partsForPieceGen[2]);
-                // That's a debug line ^^^^^^^^^^^^^^^^
-                containerForTheGame.placePiece(
-                        ChessHelp.getNewPiece(
-                                partsForPieceGen[0], partsForPieceGen[1].charAt(0)),
-                        partsForPieceGen[2]
-                );
-            }
-            else { // length of 4 is the only other possibility
-                containerForTheGame.moveTwoPiece(partsForPieceGen);
-                System.out.println("Move two pieces simultaneously");
-            }
+            instruction.execute();
         }
     }
+
 
 }

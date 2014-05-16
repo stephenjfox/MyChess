@@ -1,5 +1,10 @@
 package chess.viewmodel;
 
+import chess.controller.instruction.Instruction;
+import chess.controller.instruction.MovePieceInstruction;
+import chess.controller.instruction.MoveTwoInstruction;
+import chess.controller.instruction.PlacePieceInstruction;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +37,7 @@ public class FileInputHandler {
 	// The piece is what's important: it tells you want can be done and how
 	// The user provides instruction for the piece to do things
 
-	public ArrayList<String[]> executeFromFile(File file) {
+	public ArrayList<Instruction> executeFromFile(File file) {
 		File workable = file;
 		List<String> parseAbles = null;
 		try {
@@ -43,7 +48,7 @@ public class FileInputHandler {
 					+ "\nThe FIH.execute..()'s Files.readAllLines() failed");
 		}
 
-        ArrayList<String[]> instructions = new ArrayList<>();
+        ArrayList<Instruction> instructions = new ArrayList<>();
         // Instructions for pieces on the board
 
 		try { // Shot blocking NullPointer Exceptions
@@ -73,7 +78,7 @@ public class FileInputHandler {
         return instructions;
 	}
 
-	private String[] startingPlacement(String piecePattern) {
+	private Instruction startingPlacement(String piecePattern) {
 		String[] theParts = parsePlacementString(piecePattern);
 		// part[0] = string rep of piece
         // part[1] = string white or black
@@ -84,10 +89,10 @@ public class FileInputHandler {
 				+ theParts[2]);
 		// DEBUG LOGIC
 
-        return theParts;
+        return new PlacePieceInstruction(theParts);
 	}
 
-	private String[] movePiece(String piecePattern) {
+	private Instruction movePiece(String piecePattern) {
 		String[] parts = piecePattern.split("\\s");
 
 		// DEBUG LOGIC
@@ -100,16 +105,16 @@ public class FileInputHandler {
 					.println("Piece at " + parts[0] + " moves to " + parts[1]);
 		// DEBUG LOGIC
 
-        return parts;
+        return new MovePieceInstruction(parts);
 	}
 
-	private String[] moveTwoPieces(String piecePattern) {
+	private Instruction moveTwoPieces(String piecePattern) {
 		String[] parts = piecePattern.split("\\s");
 		// DEBUG LOGIC
 		System.out.println("Piece at " + parts[0] + " move to " + parts[1]
 				+ " and piece at " + parts[2] + " is moving to " + parts[3]);
 		// DEBUG LOGIC
-        return parts;
+        return new MoveTwoInstruction(parts);
 	}
 
 	// DEBUG LOGIC
