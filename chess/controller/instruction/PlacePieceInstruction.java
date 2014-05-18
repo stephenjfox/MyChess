@@ -16,7 +16,8 @@ public class PlacePieceInstruction extends Instruction {
     public void execute() {
         GameController.containerForTheGame.placePiece(
                 ChessHelp.getNewPiece(
-                        instruction[0], instruction[1].charAt(0)),
+                        instruction[0], instruction[1].charAt(0)
+                ), // More lines, more often than not, = MORE LEGIBLE
                 instruction[2]
         );
     }

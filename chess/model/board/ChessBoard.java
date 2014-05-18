@@ -39,10 +39,25 @@ public class ChessBoard {
         moveTwoPiece(locations[0], locations[1], locations[2], locations[3]);
     }
     public void moveTwoPiece(String o1, String d1, String o2, String d2) {
+        BoardLocation castler1Location = new BoardLocation(o1), castler2Location = new BoardLocation(o2);
+        BoardLocation moveForC1 = new BoardLocation(d1), moveForC2 = new BoardLocation(d2);
+        // Position integers
+        int c1LocX = castler1Location.getX(), c1LocY = castler1Location.getY(),
+                c2LocX = castler2Location.getX(), c2LocY = castler2Location.getY();
+        // Chess pieces at those board locations
+        ChessPiece c1 = functionalBoard[c1LocY- offset][c1LocX - offset].getPresentPiece(),
+                c2 = functionalBoard[c2LocY- offset][c2LocX - offset].getPresentPiece();
+        // OROROROROROROR
+
+        // Just check the starting locations (FIRST OFF)
+
+
+
+        // TODO: Validate the King and Rooks. Spacing as well
         movePiece(o1, d1);
         movePiece(o2, d2);
-        // TODO: Validate the King and Rooks. Spacing as well
     }
+
     public void printBoard(){
 		for (int i = rowCount - 1; i >= 0; i--) {
 	        // If the board piece at a location is holding a piece
