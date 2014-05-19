@@ -71,6 +71,30 @@ public class ChessHelp {
         }
         return false;
     }
+// TODO: Possibly interface the piece validation. It's principle-based refactoring
+    private static boolean isValidKingMove(BoardLocation start, BoardLocation destination) {
+        assert !(start.getPresentPiece() == null);
+        King king = (King) start.getPresentPiece();
+        // TODO: Write king validation
+        return false;
+    }
+    private static boolean isValidQueenMove(BoardLocation start, BoardLocation destination) {
+        assert !(start.getPresentPiece() == null);
+        Queen queen = (Queen) start.getPresentPiece();
+        // TODO: Queen validation will return isValidRookMove() || isValidBishopMove()
+        return false;
+    }
+
+    private static boolean isValidBishopMove(BoardLocation start, BoardLocation destination) {
+        // TODO: Bishop validation should DEMAND a slope of 1 or -1
+        return false;
+    }
+
+    private static boolean isValidRookMove(BoardLocation start, BoardLocation destination) {
+        // TODO: Rook validation should DEMAND x | y = 0 && y | x != 0
+        return false;
+    }
+
     private static boolean isValidPawnMove(BoardLocation start, BoardLocation destination) {
         assert !(start.getPresentPiece() == null);
         Pawn pawn =  (Pawn) start.getPresentPiece();
