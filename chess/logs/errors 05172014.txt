@@ -1,0 +1,4 @@
+Sat May 17 21:25:43 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove()
+The methodMap in ChessHelp needs HELP!
+
