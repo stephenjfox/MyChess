@@ -1,7 +1,7 @@
 package chess.controller.instruction;
 
 import chess.controller.GameController;
-import chess.viewmodel.ErrorLogger;
+import chess.controller.ErrorLogger;
 
 /**
  * Created by Stephen on 5/15/2014.

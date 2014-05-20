@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.model.board.BoardLocation;
 import chess.model.pieces.*;
-import chess.viewmodel.ErrorLogger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,20 +28,6 @@ public class ChessHelp {
     };
 
     public static ChessPiece getNewPiece(String rep, final char color) {
-//        switch (rep) {
-//            case "Queen":
-//                return new Queen(color == 'l');
-//            case "King":
-//                return new King(color == 'l');
-//            case "Bishop":
-//                return new Bishop(color == 'l');
-//            case "Knight":
-//                return new Knight(color == 'l');
-//            case "Rook":
-//                return new Rook(color == 'l');
-//            default:
-//                return new Pawn(color == 'l');
-//        }
         return new HashMap<String, ChessPiece>() {
             {
                 put("King", new King(color == 'l'));
@@ -56,9 +41,9 @@ public class ChessHelp {
     }
 
     public static boolean isValidMove(BoardLocation start, BoardLocation destination) {
-        int dX = start.getX() - destination.getX();
-        int dY = start.getY() - destination.getY();
+
         if (start.getPresentPiece() != null) {
+
             ChessPiece pieceToMove = start.getPresentPiece(); // That's going to throw a NullPointer
 
             try {
@@ -68,35 +53,62 @@ public class ChessHelp {
             } catch (InvocationTargetException e) {
                 ErrorLogger.logError(e.getLocalizedMessage()+"\nReflection invocation failed ");
             }
+
         }
+
         return false;
     }
 // TODO: Possibly interface the piece validation. It's principle-based refactoring
     private static boolean isValidKingMove(BoardLocation start, BoardLocation destination) {
         assert !(start.getPresentPiece() == null);
+
+        int dX = start.getX() - destination.getX();
+        int dY = start.getY() - destination.getY();
+
         King king = (King) start.getPresentPiece();
         // TODO: Write king validation
+
         return false;
     }
     private static boolean isValidQueenMove(BoardLocation start, BoardLocation destination) {
         assert !(start.getPresentPiece() == null);
+
+        int dX = start.getX() - destination.getX();
+        int dY = start.getY() - destination.getY();
+
         Queen queen = (Queen) start.getPresentPiece();
         // TODO: Queen validation will return isValidRookMove() || isValidBishopMove()
-        return false;
+        return isValidBishopMove(start, destination) || isValidRookMove(start, destination);
     }
+
+//    private static boolean isValidBishopMove(int changeOfX, int changeOfY) {
+//        return Math.abs(changeOfX) == Math.abs(changeOfY);
+//    }
 
     private static boolean isValidBishopMove(BoardLocation start, BoardLocation destination) {
         // TODO: Bishop validation should DEMAND a slope of 1 or -1
-        return false;
+        int dX = start.getX() - destination.getX();
+        int dY = start.getY() - destination.getY();
+
+        // If the slope is good, the move is valid enough. BoardLocation needs range constraint
+        return (Math.abs(dX / dY) == 1);
     }
 
     private static boolean isValidRookMove(BoardLocation start, BoardLocation destination) {
-        // TODO: Rook validation should DEMAND x | y = 0 && y | x != 0
-        return false;
+        // TODO: Rook validation should DEMAND x ^ y = 0
+
+        int dX = start.getX() - destination.getX();
+        int dY = start.getY() - destination.getY();
+
+        return (dX == 0) ^ (dY == 0);
     }
 
     private static boolean isValidPawnMove(BoardLocation start, BoardLocation destination) {
         assert !(start.getPresentPiece() == null);
+
+        int dX = start.getX() - destination.getX();
+        int dY = start.getY() - destination.getY();
+
         Pawn pawn =  (Pawn) start.getPresentPiece();
 //            return ( dY == (pawn.isMoved() ? 1 : 2 | 1) && dX ==  )
         return false;

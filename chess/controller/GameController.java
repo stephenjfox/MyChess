@@ -1,13 +1,8 @@
 package chess.controller;
 
 import chess.controller.instruction.Instruction;
-import chess.controller.instruction.MovePieceInstruction;
-import chess.controller.instruction.MoveTwoInstruction;
-import chess.controller.instruction.PlacePieceInstruction;
 import chess.model.board.ChessBoard;
 import chess.view.ConsoleUI;
-import chess.viewmodel.ErrorLogger;
-import chess.viewmodel.FileInputHandler;
 
 import java.io.File;
 import java.util.ArrayList;

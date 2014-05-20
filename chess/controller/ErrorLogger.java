@@ -1,4 +1,4 @@
-package chess.viewmodel;
+package chess.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
