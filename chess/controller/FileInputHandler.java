@@ -119,7 +119,7 @@ public class FileInputHandler {
 
 	// DEBUG LOGIC
 	private void sayInvalid(String piecePattern) {
-		System.out.println(piecePattern + " twas an invalid move");
+		System.err.println(piecePattern + " twas an invalid move");
 	}
 	// DEBUG LOGIC
 

@@ -1,5 +1,7 @@
 package chess.model.pieces;
 
+import chess.model.board.BoardLocation;
+
 /**
  * Created by Stephen on 5/9/2014.
  */
@@ -18,6 +20,7 @@ public abstract class ChessPiece {
         this.isWhite = isWhite;
     }
 
+    public abstract boolean isValidMove(BoardLocation start, BoardLocation destination);
     public boolean isWhite() {
         return isWhite;
     }

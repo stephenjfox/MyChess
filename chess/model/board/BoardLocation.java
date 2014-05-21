@@ -9,8 +9,8 @@ public class BoardLocation {
     /**
      * This class is the 1-based board locations on a standard 8x8 chessboard
      */
-    int x, y;
-    String name;
+    private int x, y;
+    private String name;
     ChessPiece presentPiece = null;
 
 
@@ -72,6 +72,10 @@ public class BoardLocation {
     	ChessPiece toReturn = this.presentPiece;
     	this.presentPiece = null;
     	return toReturn;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getX() {

@@ -14,7 +14,7 @@ public class MovePieceInstruction extends Instruction {
     }
 
     public void execute() {
-        System.out.println("For DEBUG\n"+instruction[0] + " " + instruction[1]);
+//        System.out.println("For DEBUG\n"+instruction[0] + " " + instruction[1]);
         try {
             GameController.containerForTheGame.movePiece(
                     instruction[0], instruction[1]

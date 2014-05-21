@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.controller.ChessHelp;
 import chess.model.pieces.*;
 
 /**
@@ -29,13 +30,24 @@ public class ChessBoard {
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
-        // fetch the piece from the array
-        ChessPiece removed =
-                functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset].remove();
-        tempDest.placePiece(removed);
+        if(
+                ChessHelp.isValidMove(functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset],
+                        functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset])
+                )
+        {
 
-        // assign the board location to the array where appropriate
-        functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
+            // fetch the piece from the array
+            ChessPiece removed =
+                    functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset].remove();
+            tempDest.placePiece(removed);
+
+            // assign the board location to the array where appropriate
+            functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
+        }
+
+        else {
+            System.err.println("%s to %s was an invalid move");
+        }
 
     }
 
@@ -64,6 +76,10 @@ public class ChessBoard {
         // TODO: This method should be receiving a valid King-Rook pairing, SO DON'T MESS UP
         movePiece(o1, d1);
         movePiece(o2, d2);
+    }
+
+    public BoardLocation[][] getFunctionalBoard() {
+        return functionalBoard.clone();
     }
 
     public void printBoard(){

@@ -2,3 +2,58 @@ Tue May 20 11:22:27 MDT 2014
 chess.controller.ChessHelp$1.isValidKingMove()
 The methodMap in ChessHelp needs HELP!
 
+Tue May 20 13:39:53 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove()
+The methodMap in ChessHelp needs HELP!
+
+Tue May 20 13:40:36 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove(BoardLocation start, BoardLocation destination)()
+The methodMap in ChessHelp needs HELP!
+
+Tue May 20 13:46:26 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove()
+The methodMap in ChessHelp needs HELP!
+
+Tue May 20 13:46:26 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:47:35 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove()
+The methodMap in ChessHelp needs HELP!
+
+Tue May 20 13:47:35 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:47:35 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:49:46 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove()
+The methodMap in ChessHelp needs HELP!
+
+Tue May 20 13:49:46 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:49:46 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:49:46 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:52:15 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove()
+The methodMap in ChessHelp needs HELP!
+
+Tue May 20 13:58:28 MDT 2014
+chess.controller.ChessHelp$1.isValidKingMove()
+The methodMap in ChessHelp needs HELP!
+
+Tue May 20 13:58:28 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:58:28 MDT 2014
+Something in the movePiece() threw an error.
+
+Tue May 20 13:58:28 MDT 2014
+Something in the movePiece() threw an error.
+
