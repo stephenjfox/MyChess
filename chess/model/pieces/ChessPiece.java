@@ -10,10 +10,11 @@ public abstract class ChessPiece {
 
     private boolean moved; // false initially
 
-    protected void setMoved(){
+    public void setMoved(){
         moved = true;
     }
-    protected boolean isMoved() {
+
+    public boolean isMoved() {
         return moved;
     }
     protected ChessPiece(boolean isWhite) {

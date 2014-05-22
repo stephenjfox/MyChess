@@ -86,7 +86,7 @@ public class ChessHelp {
 
         BoardLocation[][] referenceBoard = containerForTheGame.getFunctionalBoard();
 
-
+// TODO: Collision checking
         if (modeOfTravel == ModeOfTravel.STRAIGHT) {
 
             for (int i = referenceBoard.length - 1; i >= 0; i--) { // so we can look at the from white's side

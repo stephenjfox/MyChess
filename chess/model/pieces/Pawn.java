@@ -11,27 +11,13 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public void setMoved() {
-        super.setMoved();
-    }
-
-    // If the piece was moved from the starting position
-    @Override
-    public boolean isMoved() {
-        return super.isMoved();
-    }
-
-    @Override
     public boolean isValidMove(BoardLocation start, BoardLocation destination) {
         int dX = start.getX() - destination.getX();
         int dY = start.getY() - destination.getY();
 
-        if(isMoved()) {
-            //
-        } else {
-            //
-        }
-        return ( dY == (isMoved() ? 1 : 2 | 1) && dX == (destination.getPresentPiece() == null ? 0 : 0 | 1) );
+
+        return ( (Math.abs(dY) < (isMoved() ? 2 : (3)) ) // less than 2 or 3 is to insure it sticks
+                && ( Math.abs(dX) == ((destination.getPresentPiece() == null) ? 0 : (1)) ) );
     }
 
     @Override

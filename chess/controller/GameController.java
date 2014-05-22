@@ -16,6 +16,7 @@ public class GameController {
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
+//        containerForTheGame.init();
         ConsoleUI chessView = new ConsoleUI(containerForTheGame);
         runFileGame(starterArgs[0], fIH);
         chessView.drawBoard();

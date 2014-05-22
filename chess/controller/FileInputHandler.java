@@ -127,7 +127,6 @@ public class FileInputHandler {
 		String[] parts = new String[3];
 		char[] wordSplit = parseAble.toLowerCase().toCharArray();
 		// will be 4 characters long
-		// TODO: if you ever need pieceCharRelator again, it's going in ChessHelp
         parts[0] = pieceCharRelator.get(wordSplit[0]); // Pawn, king, queen,
 														// rook, knight, bishop
 		parts[1] = wordSplit[1] == 'd' ? "d" : "l"; // black or white

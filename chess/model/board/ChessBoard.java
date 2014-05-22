@@ -31,22 +31,21 @@ public class ChessBoard {
         BoardLocation tempDest = new BoardLocation(destination);
 
         if(
-                ChessHelp.isValidMove(functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset],
-                        functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset])
-                )
+                (functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset])
+                        .getPresentPiece().isValidMove(tempOrigin,tempDest) )
         {
 
             // fetch the piece from the array
             ChessPiece removed =
                     functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset].remove();
             tempDest.placePiece(removed);
-
+            removed.setMoved();
             // assign the board location to the array where appropriate
             functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
         }
 
         else {
-            System.err.println("%s to %s was an invalid move");
+            System.err.printf("%s to %s was an invalid move\n", origin, destination);
         }
 
     }
