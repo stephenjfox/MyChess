@@ -17,7 +17,8 @@ public class Bishop extends ChessPiece {
         int dY = start.getY() - destination.getY();
 
         // If the slope is good, the move is valid enough. BoardLocation needs range constraint
-        return (Math.abs(dX / dY) == 1);
+
+        return (Math.abs(dX) / (double) Math.abs(dY)) == 1.0;
     }
 
     @Override
