@@ -26,20 +26,35 @@ public class ChessBoard {
 
     }
 
+    /**
+     *
+     * @param origin: The origin board square
+     * @param destination: The destination board square
+     */
     public void movePiece(String origin, String destination) {
+
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
-// TODO: No backwards movement
+
+
         if(    (functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset])
-                        .getPresentPiece().isValidMove(tempOrigin,tempDest)
+                        .getPresentPiece()
+                .isValidMove(
+                        tempOrigin,
+                        tempDest)
                )
         {
 
             // fetch the piece from the array
             ChessPiece removed =
                     functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset].remove();
+
             tempDest.placePiece(removed);
-            if ( removed.isMoved() ) removed.setMoved();
+
+            if ( !removed.isMoved() ) removed.setMoved();
+            if( functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] != null)
+                System.err.println("Moving to capture");
+
             // assign the board location to the array where appropriate
             functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
         }

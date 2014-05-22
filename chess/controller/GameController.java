@@ -16,7 +16,7 @@ public class GameController {
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
-//        containerForTheGame.init();
+        containerForTheGame.init();
         ConsoleUI chessView = new ConsoleUI(containerForTheGame);
         runFileGame(starterArgs[0], fIH);
         chessView.drawBoard();
@@ -42,6 +42,7 @@ public class GameController {
             // [2] = board index for a piece2
             // [3] = board index for the movement destination2
             instruction.execute();
+
         }
     }
 

@@ -16,8 +16,15 @@ public class Pawn extends ChessPiece {
         int dY = start.getY() - destination.getY();
 
 
-        return ( (Math.abs(dY) < (isMoved() ? 2 : (3)) ) // less than 2 or 3 is to insure it sticks
-                && ( Math.abs(dX) == ((destination.getPresentPiece() == null) ? 0 : (1)) ) );
+        if ( isWhite() ) {
+            return (dY > (isMoved() ? -2 : -3) && dY < 0) &&
+                (Math.abs(dX) == ((destination.getPresentPiece() == null) ? 0 : ( 1) ) );
+        }
+        else {
+            //
+            return (dY < (isMoved() ? 2 : 3 ) && dY > 0) &&
+                ( Math.abs(dX) == ( (destination.getPresentPiece() == null) ? 0 : ( 1 ) ) );
+        }
     }
 
     @Override
