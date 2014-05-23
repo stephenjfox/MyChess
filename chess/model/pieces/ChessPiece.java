@@ -21,6 +21,10 @@ public abstract class ChessPiece {
         this.isWhite = isWhite;
     }
 
+    public boolean colorMatches(ChessPiece piece) {
+        return this.isWhite() == piece.isWhite();
+    }
+
     public abstract boolean isValidMove(BoardLocation start, BoardLocation destination);
     public boolean isWhite() {
         return isWhite;

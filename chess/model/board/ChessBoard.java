@@ -32,31 +32,46 @@ public class ChessBoard {
      * @param destination: The destination board square
      */
     public void movePiece(String origin, String destination) {
-
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
-
-        if(    (functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset])
-                        .getPresentPiece()
-                .isValidMove(
-                        tempOrigin,
-                        tempDest)
-               )
+        if(    getPieceAtLocation(tempOrigin)
+                    .isValidMove(
+                        getActualBoardSquare(tempOrigin),
+                        getActualBoardSquare(tempDest)) )
         {
 
             // fetch the piece from the array
             ChessPiece removed =
-                    functionalBoard[tempOrigin.getY() - offset][tempOrigin.getX() - offset].remove();
+                    getActualBoardSquare(tempOrigin).remove();
 
-            tempDest.placePiece(removed);
+//            // place it on the virtual board square
+//            tempDest.placePiece(removed);
 
-            if ( !removed.isMoved() ) removed.setMoved();
-            if( functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] != null)
-                System.err.println("Moving to capture");
 
             // assign the board location to the array where appropriate
-            functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
+            ChessPiece destinationPiece = getPieceAtLocation(tempDest);
+            if ( destinationPiece != null) {
+
+                if( removed.colorMatches(destinationPiece) ) {
+
+                    // If the color matches after passing in a decent move arg
+                    System.err.println("No taking allied pieces");
+                    getActualBoardSquare(tempOrigin).placePiece(removed);
+
+                }
+                else {
+                    // Must be opposite color, so commence capture
+                    getActualBoardSquare(tempDest).placePiece(removed);
+                    removed.setMoved();
+                }
+
+            }
+            else {
+                // Put back anything that was changed inappropriately
+                getActualBoardSquare(tempDest).placePiece(removed);
+                removed.setMoved();
+            }
         }
 
         else {
@@ -90,6 +105,21 @@ public class ChessBoard {
         // TODO: This method should be receiving a valid King-Rook pairing, SO DON'T MESS UP
         movePiece(o1, d1);
         movePiece(o2, d2);
+    }
+
+    private ChessPiece getPieceAtLocation(BoardLocation boardLocation) {
+        return functionalBoard[boardLocation.getY()-offset][boardLocation.getX()-offset].getPresentPiece();
+    }
+
+    private BoardLocation getActualBoardSquare(BoardLocation falsePositive) {
+        if (functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset] == null) {
+
+            functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset]
+                    = new BoardLocation(falsePositive.getName());
+        }
+
+        return functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset];
+
     }
 
     public BoardLocation[][] getFunctionalBoard() {

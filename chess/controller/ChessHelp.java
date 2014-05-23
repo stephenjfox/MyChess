@@ -84,6 +84,9 @@ public class ChessHelp {
         int destX = destination.getX();
         int destY = destination.getY();
 
+        int deltaX = startX - destX;
+        int deltaY = startY - destY;
+
         BoardLocation[][] referenceBoard = containerForTheGame.getFunctionalBoard();
 
 // TODO: Collision checking
@@ -96,7 +99,9 @@ public class ChessHelp {
                     BoardLocation thisLocation;
 
                     if (referenceBoard[i][j] != null) {
+
                         thisLocation = referenceBoard[i][j];
+
                         if ( (startY < destY) && ((startX - destX) == 0) ) { // White side pawns and Rooks and Queens
                             if (thisLocation.getY() < destY && thisLocation.getY() > startY) {
 
@@ -118,11 +123,25 @@ public class ChessHelp {
                             }
                         }
                         else if ( (startX < destX) && ((startY - destY) == 0)) { // To the right
-                            // TODO: straight movement to the left
+                            if (thisLocation.getX() < startX && thisLocation.getX() > destX) {
+
+                                if(thisLocation.getY() == startY) // Catch if it's in the right row
+                                {
+                                    conflictPieces.add(thisLocation);
+                                }
+
+                            }
 
                         }
                         else if ( (startX > destX) && ((startY - destY) == 0) ) { // To the left
-                            // TODO: straight movement to the right
+                            if (thisLocation.getX() < startX && thisLocation.getX() > destX) {
+
+                                if(thisLocation.getY() == startY) // Catch if it's in the right row
+                                {
+                                    conflictPieces.add(thisLocation);
+                                }
+
+                            }
                         }
 
 
@@ -140,7 +159,7 @@ public class ChessHelp {
 
                     BoardLocation thisLocation;
                     if(referenceBoard[i][j] != null){
-
+                        // TODO: Diagonals towrads black side of the board
                         thisLocation = referenceBoard[i][j];
                         if (thisLocation.getY() <= destY && thisLocation.getY() > startY) {
 
