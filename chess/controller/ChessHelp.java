@@ -1,11 +1,8 @@
 package chess.controller;
 
 import chess.model.board.BoardLocation;
-import chess.model.board.ChessBoard;
 import chess.model.pieces.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -61,7 +58,7 @@ public class ChessHelp {
 
             // Knights don't worry about paths, for they jump
             if(pieceToMove.toString().equalsIgnoreCase("n")) return pieceToMove.isValidMove(start, destination);
-            return pieceToMove.isValidMove(start, destination) /*&& pathIsClear(start, destination)*/;
+            return pieceToMove.isValidMove(start, destination) && pathIsClear(start, destination);
         }
         return false;
     }
@@ -188,13 +185,40 @@ public class ChessHelp {
     public static boolean pathIsClear(BoardLocation start, BoardLocation destination){
         ModeOfTravel modeOfTravel;
 
-        int dX = Math.abs( start.getX() - destination.getX() );
-        int dY = Math.abs( start.getY() - destination.getY() );
+        int startX = start.getX();
+        int startY = start.getX();
+        int destX = destination.getX();
+        int destY = destination.getY();
+        // if its a vertical move
+        int dX, dY;
+        if (startX == destX) {
+            dX = 0;
+        }
+        else { // Diagonal typed setter
+            dX = (startX - destY) / Math.abs(startX - destX);
+        }
+
+        // if it's a horizontal
+        if (startY == destY) {
+            dY = 0;
+        }
+        else { // Diagonal typed setter
+            dY = (startY - destY) / Math.abs(startY - destY);
+        }
 
         modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
 
+        while (startX != destX || startY != destY ) {
+            if (containerForTheGame.getFunctionalBoard()[startY][startX] != null) {
+                return true;
+            }
+            startX += dX;
+            startY += dY;
+        }
+
+        return false;
         // Return false if something is in the way
-        return (pathObstacles(start, destination, modeOfTravel).isEmpty());
+//        return (pathObstacles(start, destination, modeOfTravel).isEmpty());
     }
 
     private enum ModeOfTravel {
