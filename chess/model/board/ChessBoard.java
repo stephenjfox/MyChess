@@ -1,6 +1,5 @@
 package chess.model.board;
 
-import chess.controller.ChessHelp;
 import chess.model.pieces.*;
 
 /**
@@ -68,7 +67,7 @@ public class ChessBoard {
 
             }
             else {
-                // Put back anything that was changed inappropriately
+                // Place piece, because the destination is empty
                 getActualBoardSquare(tempDest).placePiece(removed);
                 removed.setMoved();
             }
