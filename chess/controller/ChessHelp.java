@@ -65,8 +65,16 @@ public class ChessHelp {
 
 
 
-    public static boolean isValidCastle() {
+    public static boolean isValidCastle(BoardLocation kingSquare, BoardLocation rookSquare,
+                                        BoardLocation kingDest, BoardLocation rookDest) {
         // TODO: validate for the castling maneuver
+        // After making sure they are a valid King and Rook
+        if(kingSquare.getPresentPiece() instanceof King && rookSquare.getPresentPiece() instanceof Rook) {
+            // Make sure they haven't moved
+            if (!kingSquare.getPresentPiece().isMoved() && !rookSquare.getPresentPiece().isMoved()) {
+                // Which color side are we on
+            }
+        }
         return false;
     }
 
@@ -189,8 +197,8 @@ public class ChessHelp {
         int startY = start.getX();
         int destX = destination.getX();
         int destY = destination.getY();
-        // if its a vertical move
         int dX, dY;
+        // if its a vertical move
         if (startX == destX) {
             dX = 0;
         }
@@ -206,14 +214,17 @@ public class ChessHelp {
             dY = (startY - destY) / Math.abs(startY - destY);
         }
 
-        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
+//        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
 
-        while (startX != destX || startY != destY ) {
+        while (startX != destX || startY != destY) {
+            // Increment to check along the algebraically determined path
+            startX += dX;
+            startY += dY;
+
+            // If there isn't a piece
             if (containerForTheGame.getFunctionalBoard()[startY][startX] != null) {
                 return true;
             }
-            startX += dX;
-            startY += dY;
         }
 
         return false;

@@ -14,6 +14,7 @@ public class MoveTwoInstruction extends Instruction {
 
     public void execute() {
         GameController.containerForTheGame.moveTwoPiece(instruction);
+
         System.out.println("Move two pieces simultaneously");
     }
 

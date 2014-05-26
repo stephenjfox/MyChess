@@ -13,7 +13,6 @@ public class BoardLocation {
     private String name;
     ChessPiece presentPiece = null;
 
-
     /**
      * Creates a BoardLocation object to be placed in the board array of arrays.
      * @param lowercase the column letter on a valid chess board (i.e. a-h)

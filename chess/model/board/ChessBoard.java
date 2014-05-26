@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.controller.ChessHelp;
 import chess.model.pieces.*;
 
 /**
@@ -10,7 +11,7 @@ public class ChessBoard {
 	final int rowCount = 8;
 	final int columnCount = 8;
     final int offset = 1; // 1-based offset because regulars count from 1
-	BoardLocation[][] functionalBoard = new BoardLocation[columnCount][rowCount];
+	private BoardLocation[][] functionalBoard = new BoardLocation[columnCount][rowCount];
 
     /**
      * Primary for the initialization of the board
@@ -34,10 +35,9 @@ public class ChessBoard {
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
-        if(    getPieceAtLocation(tempOrigin)
-                    .isValidMove(
-                        getActualBoardSquare(tempOrigin),
-                        getActualBoardSquare(tempDest)) )
+        if(    ChessHelp.isValidMove(
+                getActualBoardSquare(tempOrigin),
+                getActualBoardSquare(tempDest)) )
         {
 
             // fetch the piece from the array
@@ -83,9 +83,17 @@ public class ChessBoard {
         moveTwoPiece(locations[0], locations[1], locations[2], locations[3]);
     }
 
+    /**
+     * Perform the castinlg maneuver
+     * @param o1: origin chessboard index for piece 1
+     * @param d1: destination chessboard index for piece 1
+     * @param o2: origin chessboard index for piece 2
+     * @param d2: destination chessboard index for piece 2
+     */
     public void moveTwoPiece(String o1, String d1, String o2, String d2) {
         BoardLocation castler1Location = new BoardLocation(o1), castler2Location = new BoardLocation(o2);
         BoardLocation moveForC1 = new BoardLocation(d1), moveForC2 = new BoardLocation(d2);
+
 
         // Position integers
         int c1LocX = castler1Location.getX(), c1LocY = castler1Location.getY(),

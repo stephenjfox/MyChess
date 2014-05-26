@@ -43,6 +43,7 @@ public class GameController {
             // [3] = board index for the movement destination2
             instruction.execute();
 
+            // TODO: print the board for every iteration
         }
     }
 

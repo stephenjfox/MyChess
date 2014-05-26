@@ -23,4 +23,5 @@ public class MovePieceInstruction extends Instruction {
             ErrorLogger.logError("Something in the movePiece() threw an error.");
         }
     }
+
 }
