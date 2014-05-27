@@ -16,6 +16,7 @@ public class GameController {
 
     public static ChessBoard containerForTheGame = new ChessBoard();
     private static UserInterface chessView;
+    private static boolean whiteTurn = true;
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
@@ -38,6 +39,7 @@ public class GameController {
                 fIH.executeFromFile(new File(starterArg));
 
         for (Instruction instruction : executionInstructions) {
+            // Contained in the instruction
             /* Place piece  */
             // [0] = Piece type: "King", "Queen", etc.
             // [1] = Piece color: 'l' or 'd'
@@ -53,8 +55,6 @@ public class GameController {
             // [2] = board index for a piece2
             // [3] = board index for the movement destination2
             instruction.execute();
-
-            chessView.drawBoard();
         }
 
     }
@@ -63,4 +63,11 @@ public class GameController {
 
     }
 
+    public static boolean isWhiteTurn() {
+        return whiteTurn;
+    }
+    public static void flipPlayerTurn() {
+        chessView.drawBoard();
+        whiteTurn = !whiteTurn;
+    }
 }

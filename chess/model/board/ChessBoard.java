@@ -1,6 +1,7 @@
 package chess.model.board;
 
 import chess.controller.ChessHelp;
+import chess.controller.GameController;
 import chess.model.pieces.*;
 
 /**
@@ -64,6 +65,7 @@ public class ChessBoard {
                     // Must be opposite color, so commence capture
                     getActualBoardSquare(tempDest).placePiece(removed);
                     removed.setMoved();
+                    GameController.flipPlayerTurn();
                 }
 
             }
@@ -71,6 +73,7 @@ public class ChessBoard {
                 // Place piece, because the destination is empty
                 getActualBoardSquare(tempDest).placePiece(removed);
                 removed.setMoved();
+                GameController.flipPlayerTurn();
             }
         }
 

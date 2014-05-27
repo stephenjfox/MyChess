@@ -56,6 +56,10 @@ public class ChessHelp {
 //                ErrorLogger.logError(e.getLocalizedMessage()+"\nReflection invocation failed ");
 //            }
 
+            if (pieceToMove.isWhite() != GameController.isWhiteTurn()) {
+                System.err.println("It's not "+ (isWhiteTurn() ? "White's" : "Black's") +" turn to play.");
+                return false;
+            }
             // Knights don't worry about paths, for they jump
             if(pieceToMove.toString().equalsIgnoreCase("n")) return pieceToMove.isValidMove(start, destination);
             return pieceToMove.isValidMove(start, destination) && pathIsClear(start, destination);
@@ -76,6 +80,10 @@ public class ChessHelp {
             }
         }
         return false;
+    }
+
+    private static boolean isWhiteTurn() {
+        return GameController.isWhiteTurn();
     }
 
     public static ArrayList<BoardLocation> pathObstacles
