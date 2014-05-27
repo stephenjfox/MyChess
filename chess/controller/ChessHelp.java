@@ -60,9 +60,11 @@ public class ChessHelp {
                 System.err.println("It's not "+ (isWhiteTurn() ? "White's" : "Black's") +" turn to play.");
                 return false;
             }
+
             // Knights don't worry about paths, for they jump
-            if(pieceToMove.toString().equalsIgnoreCase("n")) return pieceToMove.isValidMove(start, destination);
-            return pieceToMove.isValidMove(start, destination) && pathIsClear(start, destination);
+            if(pieceToMove.toString().equalsIgnoreCase("n") || pathIsClear(start, destination))
+                return pieceToMove.isValidMove(start, destination);
+
         }
         return false;
     }

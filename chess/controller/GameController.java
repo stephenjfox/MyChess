@@ -66,6 +66,7 @@ public class GameController {
     public static boolean isWhiteTurn() {
         return whiteTurn;
     }
+
     public static void flipPlayerTurn() {
         chessView.drawBoard();
         whiteTurn = !whiteTurn;
