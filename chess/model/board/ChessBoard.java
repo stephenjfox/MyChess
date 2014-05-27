@@ -148,8 +148,8 @@ public class ChessBoard {
 			}
 			System.out.println();
 	    }
-
-	}
+        System.out.println("\n");
+    }
 
     // Initialize for user play
     public void init(){
