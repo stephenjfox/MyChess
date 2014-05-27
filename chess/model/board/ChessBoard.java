@@ -55,7 +55,8 @@ public class ChessBoard {
                 if( removed.colorMatches(destinationPiece) ) {
 
                     // If the color matches after passing in a decent move arg
-                    System.err.println("No taking allied pieces");
+                    System.err.println(removed.fancyName() + " at " + tempOrigin.getName()+
+                            " tried taking allied " + destinationPiece.fancyName() + " at " + tempDest.getName());
                     getActualBoardSquare(tempOrigin).placePiece(removed);
 
                 }

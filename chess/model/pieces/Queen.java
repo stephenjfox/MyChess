@@ -15,7 +15,8 @@ public class Queen extends ChessPiece {
         int dX = start.getX() - destination.getX();
         int dY = start.getY() - destination.getY();
 
-        return (Math.abs(dX / dY) == 1) || ((dX == 0) ^ (dY == 0));
+        // Dodge ArithmeticException by checking Rook compatibility first
+        return ((dX == 0) ^ (dY == 0)) || (Math.abs(dX / dY) == 1) ;
     }
 
     @Override

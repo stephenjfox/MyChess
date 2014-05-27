@@ -22,11 +22,18 @@ public abstract class ChessPiece {
     }
 
     public boolean colorMatches(ChessPiece piece) {
+        if (piece == null) {
+            return false;
+        }
         return this.isWhite() == piece.isWhite();
     }
 
     public abstract boolean isValidMove(BoardLocation start, BoardLocation destination);
     public boolean isWhite() {
         return isWhite;
+    }
+
+    public String fancyName() {
+        return (isWhite() ? "White ":"Black ") + this.getClass().getSimpleName();
     }
 }

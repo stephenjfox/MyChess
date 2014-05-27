@@ -28,7 +28,7 @@ public class BoardLocation {
      * @param location: a valid chess board location (i.e. e3)
      */
     public BoardLocation(String location) {
-    	this(location.charAt(0), Integer.parseInt(String.valueOf(location.charAt(1))));
+    	this(location.charAt(0), Integer.parseInt(String.valueOf(location.charAt(1))) );
     	this.name = location;
     }
 
@@ -95,7 +95,7 @@ public class BoardLocation {
      * @return  a string representation of this point
      */
     public String toString() {
-//        return getClass().getName() + "[x=" + x + ",y=" + y + "]";
-    	return this.name;
+        return getClass().getSimpleName() + "[x=" + x + ",y=" + y + "]";
+//    	return this.name;
     }
 }

@@ -17,7 +17,7 @@ public class Knight extends ChessPiece {
 
         int absDX = Math.abs(dX), absDY = Math.abs(dY);
 
-        return ( ((absDX == 2) && (absDY == 1) ) || ((absDX == 1) && (absDY == 2))) && this.colorMatches(destination.getPresentPiece());
+        return ( ((absDX == 2) && (absDY == 1) ) || ((absDX == 1) && (absDY == 2))) && !this.colorMatches(destination.getPresentPiece());
     }
 
     @Override

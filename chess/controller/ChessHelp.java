@@ -190,39 +190,61 @@ public class ChessHelp {
         return conflictPieces;
     }
 
+    /**
+     * Calculates the total distance that needs to be moved, pulled from BoardLocation
+     * and then gets the number of steps that should be necessary by dividing
+     * the calculated distance
+     * i.e.: 5 right, 5 up for a slope of 1/1, stepped through 5 times
+     * @param start BoardLocation that should have the moving piece
+     * @param destination BoardLocation of the destination
+     * @return where or not the path is clear based on the math
+     */
     public static boolean pathIsClear(BoardLocation start, BoardLocation destination){
         ModeOfTravel modeOfTravel;
 
         int startX = start.getX();
-        int startY = start.getX();
+        int startY = start.getY();
+
         int destX = destination.getX();
         int destY = destination.getY();
-        int dX, dY;
+
+        int dX, dY; // Deltas of movement
+
         // if its a vertical move
         if (startX == destX) {
             dX = 0;
         }
-        else { // Diagonal typed setter
-            dX = (startX - destY) / Math.abs(startX - destX);
+        else { // Diagonal typed incrementer setter
+            dX = (startX - destX) / Math.abs(startX - destX);
         }
 
         // if it's a horizontal
         if (startY == destY) {
             dY = 0;
         }
-        else { // Diagonal typed setter
+        else { // Diagonal typed incrementer setter
             dY = (startY - destY) / Math.abs(startY - destY);
         }
 
 //        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
 
+        int iterationCounter = 1;
+        // Not equal because we can increment up or down, depending on the piece and side of the board
         while (startX != destX || startY != destY) {
-            // Increment to check along the algebraically determined path
-            startX += dX;
-            startY += dY;
 
-            // If there isn't a piece
+            // Increment to check along the algebraically determined path
+
+            startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
+            startY -= dY;// ^^^^
+
+            // If the board square exists
             if (containerForTheGame.getFunctionalBoard()[startY][startX] != null) {
+                // If there isn't a piece there
+                if (containerForTheGame.getFunctionalBoard()[startY][startX].getPresentPiece() == null)
+                    return true;
+            }
+            else if (containerForTheGame.getFunctionalBoard()[startY][startX] == null) {
+                // Because if a square is null, nothing is on it (early game states only)
                 return true;
             }
         }
