@@ -3,6 +3,8 @@ package chess.controller;
 import chess.controller.instruction.Instruction;
 import chess.model.board.ChessBoard;
 import chess.view.ConsoleUI;
+import chess.view.GraphicUI;
+import chess.view.UserInterface;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,13 +15,22 @@ import java.util.ArrayList;
 public class GameController {
 
     public static ChessBoard containerForTheGame = new ChessBoard();
+    private static UserInterface chessView;
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
         containerForTheGame.init();
-        ConsoleUI chessView = new ConsoleUI(containerForTheGame);
-        runFileGame(starterArgs[0], fIH);
-        chessView.drawBoard();
+
+        if(starterArgs.length > 0) {
+            chessView = new ConsoleUI(containerForTheGame);
+            runFileGame(starterArgs[0], fIH);
+//            chessView.drawBoard();
+        }
+        else {
+            chessView = new GraphicUI(containerForTheGame);
+            runGraphicGame();
+            chessView.drawBoard();
+        }
     }
 
     private static void runFileGame(String starterArg, FileInputHandler fIH) {
@@ -43,9 +54,13 @@ public class GameController {
             // [3] = board index for the movement destination2
             instruction.execute();
 
-            // TODO: print the board for every iteration
+            chessView.drawBoard();
         }
+
     }
 
+    private static void runGraphicGame() {
+
+    }
 
 }
