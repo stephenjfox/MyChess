@@ -26,6 +26,19 @@ public class ChessBoard {
 
         functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
         tempDest.placePiece(c);
+    }
+
+    /**
+     * Not overloaded, because its purpose is defined in its name, not
+     * in the similarity to its older brother
+     *
+     * Will only be receiving valid BoardLocations.
+     * This method dodges the need for arithmetic hokum by simply
+     * placing the pieces down, after plucking.
+     * @param c, King or rook to be castled
+     * @param destination is the end location for that castle
+     */
+    private void placePieceForCastle(ChessPiece c, BoardLocation destination) {
 
     }
 
@@ -35,6 +48,7 @@ public class ChessBoard {
      * @param destination: The destination board square
      */
     public void movePiece(String origin, String destination) {
+
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
@@ -60,13 +74,17 @@ public class ChessBoard {
                     // If the color matches after passing in a decent move arg
                     System.err.println(removed.fancyName() + " at " + tempOrigin.getName()+
                             " tried taking allied " + destinationPiece.fancyName() + " at " + tempDest.getName());
+
                     getActualBoardSquare(tempOrigin).placePiece(removed);
 
                 }
                 else {
                     // Must be opposite color, so commence capture
                     getActualBoardSquare(tempDest).placePiece(removed);
+
                     removed.setMoved();
+
+                    GameController.triggerDrawBoard();
                     GameController.flipPlayerTurn();
                 }
 
@@ -74,7 +92,10 @@ public class ChessBoard {
             else {
                 // Place piece, because the destination is empty
                 getActualBoardSquare(tempDest).placePiece(removed);
+
                 removed.setMoved();
+
+                GameController.triggerDrawBoard();
                 GameController.flipPlayerTurn();
             }
         }
@@ -107,8 +128,8 @@ public class ChessBoard {
                 c2LocX = castler2Location.getX(), c2LocY = castler2Location.getY();
 
         // Chess pieces at those board locations
-        ChessPiece c1 = functionalBoard[c1LocY- offset][c1LocX - offset].getPresentPiece(),
-                c2 = functionalBoard[c2LocY- offset][c2LocX - offset].getPresentPiece();
+        ChessPiece c1 = getPieceAtLocation(castler1Location),
+                c2 = getPieceAtLocation(castler2Location);
 
         // Just check the starting locations (FIRST OFF)
         if( !(c1 instanceof King) ){
@@ -116,16 +137,58 @@ public class ChessBoard {
             return; // Leave the method
         }
 
+        if( !(c2 instanceof Rook)) {
+            System.err.println("You're not even moving a Rook, so we're DEFINITELY not castling.");
+            return; // Leave the method
+        }
+
+        King king = (King) removePieceAtLocation(castler1Location); // If we're good, we should be good
+        Rook rook = (Rook) removePieceAtLocation(castler2Location);
+
         // TODO: This method should be receiving a valid King-Rook pairing, SO DON'T MESS UP
-        movePiece(o1, d1);
-        movePiece(o2, d2);
+        performCastleManeuver(king, moveForC1, rook, moveForC2);
     }
 
+    private void performCastleManeuver(King king, BoardLocation kingDest, Rook rook, BoardLocation rookDest) {
+
+        // TODO: Placepiece() based castling method
+        BoardLocation kingTrueDest = getActualBoardSquare(kingDest);
+        BoardLocation rookTrueDest = getActualBoardSquare(rookDest);
+
+        placePieceForCastle(king, kingTrueDest);
+        placePieceForCastle(rook, rookTrueDest);
+    }
+
+    /**
+     * @param boardLocation any BoardLocation object with desired, 1-based x and y coordinates
+     * @return the piece in the 2-d at the compensated, proper location
+     */
     private ChessPiece getPieceAtLocation(BoardLocation boardLocation) {
         return functionalBoard[boardLocation.getY()-offset][boardLocation.getX()-offset].getPresentPiece();
     }
 
+    /**
+     * @param boardLocation any BoardLocation object with desired, 1-based x and y coordinates
+     * @return the piece in the 2-d at the compensated, proper location
+     */
+    private ChessPiece removePieceAtLocation(BoardLocation boardLocation) {
+        return functionalBoard[boardLocation.getY()-offset][boardLocation.getX()-offset].remove();
+    }
+
+    /**
+     * This method pulls the x and y properties from the BoardLocation passed.
+     * From there, the values are offset to compensate for the 1-based counting,
+     * we retrieve BoardLocation at those indices and return it.
+     *
+     * @param falsePositive the wrapper object for the desired indices
+     * @return the true BoardLocation at the index in the 2-D array
+     */
     private BoardLocation getActualBoardSquare(BoardLocation falsePositive) {
+
+        /*
+        Compensate for the 1-based counting and return the actual square with the proper
+        properties
+        */
         if (functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset] == null) {
 
             functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset]
@@ -134,21 +197,6 @@ public class ChessBoard {
 
         return functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset];
 
-    }
-
-    private ArrayList<BoardLocation> pullPieceSquares() {
-        ArrayList<BoardLocation> piecesExist = new ArrayList<>();
-
-        for (BoardLocation[] boardLocations : functionalBoard) {
-
-            for (BoardLocation boardLocation : boardLocations) {
-                if(boardLocation.getPresentPiece() != null)
-                    piecesExist.add(boardLocation);
-            }
-
-        }
-
-        return piecesExist;
     }
 
     public BoardLocation[][] getFunctionalBoard() {
@@ -203,7 +251,7 @@ public class ChessBoard {
         placePiece(new Pawn(white), "f2");
         placePiece(new Pawn(white), "g2");
         placePiece(new Pawn(white), "h2");
-        
+
         placePiece(new Rook(white), "a1");
         placePiece(new Knight(white), "b1");
         placePiece(new Bishop(white), "c1");
@@ -212,6 +260,56 @@ public class ChessBoard {
         placePiece(new Bishop(white), "f1");
         placePiece(new Knight(white), "g1");
         placePiece(new Rook(white), "h1");
+    }
+
+    class BoardSquareLocator {
+
+        private ArrayList<BoardLocation> pullSquaresWithPieces()
+        { // Get the squares that have pieces on them
+            ArrayList<BoardLocation> piecesExist = new ArrayList<>();
+
+            for (BoardLocation[] boardLocations : functionalBoard) {
+
+                for (BoardLocation boardLocation : boardLocations) {
+
+                    if(boardLocation.getPresentPiece() != null)
+                        piecesExist.add(boardLocation);
+                }
+
+            }
+
+            return piecesExist;
+        }
+
+        public ArrayList<BoardLocation> pullSquaresWithWhites() {
+            ArrayList<BoardLocation> returner = new ArrayList<>();
+
+            // Returner array of BoardLocations with White Pieces
+            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
+
+                if(boardLocation.getPresentPiece().isWhite())
+                    returner.add(boardLocation); // Add the squares to the returner
+            }
+
+            return returner;
+        }
+
+        public ArrayList<BoardLocation> pullSquaresWithBlacks() {
+            ArrayList<BoardLocation> returner = new ArrayList<>();
+
+            // Returner array of BoardLocations with Black Pieces
+            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
+
+                if(!boardLocation.getPresentPiece().isWhite())
+                    returner.add(boardLocation); // Add the squares to the returner
+            }
+
+            return returner;
+        }
+    }
+
+    class CheckFinder {
+
     }
 
 }
