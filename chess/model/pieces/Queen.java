@@ -4,6 +4,7 @@ import chess.model.board.BoardLocation;
 
 /**
  * Created by Stephen on 5/9/2014.
+ * In project: MyChess
  */
 public class Queen extends ChessPiece {
     public Queen(boolean isWhite) {
@@ -16,7 +17,7 @@ public class Queen extends ChessPiece {
         int dY = start.getY() - destination.getY();
 
         // Dodge ArithmeticException by checking Rook compatibility first
-        return ((dX == 0) ^ (dY == 0)) || (Math.abs(dX / dY) == 1) ;
+        return ((dX == 0) ^ (dY == 0)) || (Math.abs(dX / (double) dY) == 1);
     }
 
     @Override
