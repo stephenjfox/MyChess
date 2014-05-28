@@ -4,6 +4,8 @@ import chess.controller.ChessHelp;
 import chess.controller.GameController;
 import chess.model.pieces.*;
 
+import java.util.ArrayList;
+
 /**
  * This class is meant to facilitate the 2-D array that is to be the board.
  * The class is called "ChessBoard" because all of the things to be done are ON the board.
@@ -78,7 +80,8 @@ public class ChessBoard {
         }
 
         else {
-            System.err.printf("%s to %s was an invalid move\n", origin, destination);
+            System.err.printf("%s to %s was an invalid move, maybe the %s or pathIsClear()\n",
+                    origin, destination, getPieceAtLocation(tempOrigin).fancyName());
         }
 
     }
@@ -133,6 +136,21 @@ public class ChessBoard {
 
     }
 
+    private ArrayList<BoardLocation> pullPieceSquares() {
+        ArrayList<BoardLocation> piecesExist = new ArrayList<>();
+
+        for (BoardLocation[] boardLocations : functionalBoard) {
+
+            for (BoardLocation boardLocation : boardLocations) {
+                if(boardLocation.getPresentPiece() != null)
+                    piecesExist.add(boardLocation);
+            }
+
+        }
+
+        return piecesExist;
+    }
+
     public BoardLocation[][] getFunctionalBoard() {
         return functionalBoard.clone();
     }
@@ -156,42 +174,44 @@ public class ChessBoard {
 
     // Initialize for user play
     public void init(){
+        boolean black = false, white = true;
         // Black royalty
-        placePiece(new Rook(false), "a8");
-        placePiece(new Knight(false), "b8");
-        placePiece(new Bishop(false), "c8");
-        placePiece(new Queen(false), "d8");
-        placePiece(new King(false), "e8");
-        placePiece(new Bishop(false), "f8");
-        placePiece(new Knight(false), "g8");
-        placePiece(new Rook(false), "h8");
+        placePiece(new Rook(black), "a8");
+        placePiece(new Knight(black), "b8");
+        placePiece(new Bishop(black), "c8");
+        placePiece(new Queen(black), "d8");
+        placePiece(new King(black), "e8");
+        placePiece(new Bishop(black), "f8");
+        placePiece(new Knight(black), "g8");
+        placePiece(new Rook(black), "h8");
 
-        placePiece(new Pawn(false), "a7");
-        placePiece(new Pawn(false), "b7");
-        placePiece(new Pawn(false), "c7");
-        placePiece(new Pawn(false), "d7");
-        placePiece(new Pawn(false), "e7");
-        placePiece(new Pawn(false), "f7");
-        placePiece(new Pawn(false), "g7");
-        placePiece(new Pawn(false), "h7");
+        placePiece(new Pawn(black), "a7");
+        placePiece(new Pawn(black), "b7");
+        placePiece(new Pawn(black), "c7");
+        placePiece(new Pawn(black), "d7");
+        placePiece(new Pawn(black), "e7");
+        placePiece(new Pawn(black), "f7");
+        placePiece(new Pawn(black), "g7");
+        placePiece(new Pawn(black), "h7");
 
-        placePiece(new Pawn(true), "a2");
-        placePiece(new Pawn(true), "b2");
-        placePiece(new Pawn(true), "c2");
-        placePiece(new Pawn(true), "d2");
-        placePiece(new Pawn(true), "e2");
-        placePiece(new Pawn(true), "f2");
-        placePiece(new Pawn(true), "g2");
-        placePiece(new Pawn(true), "h2");
         // White royalty
-        placePiece(new Rook(true), "a1");
-        placePiece(new Knight(true), "b1");
-        placePiece(new Bishop(true), "c1");
-        placePiece(new Queen(true), "d1");
-        placePiece(new King(true), "e1");
-        placePiece(new Bishop(true), "f1");
-        placePiece(new Knight(true), "g1");
-        placePiece(new Rook(true), "h1");
+        placePiece(new Pawn(white), "a2");
+        placePiece(new Pawn(white), "b2");
+        placePiece(new Pawn(white), "c2");
+        placePiece(new Pawn(white), "d2");
+        placePiece(new Pawn(white), "e2");
+        placePiece(new Pawn(white), "f2");
+        placePiece(new Pawn(white), "g2");
+        placePiece(new Pawn(white), "h2");
+        
+        placePiece(new Rook(white), "a1");
+        placePiece(new Knight(white), "b1");
+        placePiece(new Bishop(white), "c1");
+        placePiece(new Queen(white), "d1");
+        placePiece(new King(white), "e1");
+        placePiece(new Bishop(white), "f1");
+        placePiece(new Knight(white), "g1");
+        placePiece(new Rook(white), "h1");
     }
 
 }

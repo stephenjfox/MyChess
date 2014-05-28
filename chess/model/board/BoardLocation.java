@@ -9,7 +9,7 @@ public class BoardLocation {
     /**
      * This class is the 1-based board locations on a standard 8x8 chessboard
      */
-    private int x, y;
+    private final int x, y; // I hope final won't be a problem
     private String name;
     ChessPiece presentPiece = null;
 

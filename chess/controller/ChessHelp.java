@@ -205,9 +205,10 @@ public class ChessHelp {
      * and then gets the number of steps that should be necessary by dividing
      * the calculated distance
      * i.e.: 5 right, 5 up for a slope of 1/1, stepped through 5 times
+     *
      * @param start BoardLocation that should have the moving piece
      * @param destination BoardLocation of the destination
-     * @return where or not the path is clear based on the math
+     * @return whether or not the path is clear based on the math
      */
     public static boolean pathIsClear(BoardLocation start, BoardLocation destination){
         ModeOfTravel modeOfTravel;
@@ -238,22 +239,25 @@ public class ChessHelp {
 
 //        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
 
-        int iterationCounter = 1;
         // Not equal because we can increment up or down, depending on the piece and side of the board
         while (startX != destX || startY != destY) {
 
             // Increment to check along the algebraically determined path
 
+            // TODO: Fix bug where Kasparov can't move Bishop, because diagonals don't work anymore
+            System.out.println(dX+"\n"+dY+"\n"+start + "\n" + destination); // DEBUG
+            // TODO: NOTE - pathing randomly makes two new BoardLocation with different values
+
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
             startY -= dY;// ^^^^
 
             // If the board square exists
-            if (containerForTheGame.getFunctionalBoard()[startY][startX] != null) {
+            if (containerForTheGame.getFunctionalBoard()[startY- 1][startX -1] != null) {
                 // If there isn't a piece there
-                if (containerForTheGame.getFunctionalBoard()[startY][startX].getPresentPiece() == null)
+                if (containerForTheGame.getFunctionalBoard()[startY -1][startX -1].getPresentPiece() == null)
                     return true;
             }
-            else if (containerForTheGame.getFunctionalBoard()[startY][startX] == null) {
+            else if (containerForTheGame.getFunctionalBoard()[startY -1][startX-1] == null) {
                 // Because if a square is null, nothing is on it (early game states only)
                 return true;
             }
