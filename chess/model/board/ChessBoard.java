@@ -157,6 +157,9 @@ public class ChessBoard {
 
         placePieceForCastle(king, kingTrueDest);
         placePieceForCastle(rook, rookTrueDest);
+
+        GameController.triggerDrawBoard();
+        GameController.flipPlayerTurn();
     }
 
     /**
