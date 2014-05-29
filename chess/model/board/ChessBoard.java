@@ -306,6 +306,24 @@ public class ChessBoard {
 
             return returner;
         }
+
+        public BoardLocation getWhiteKingSquare() {
+
+            for (BoardLocation boardLocation : pullSquaresWithWhites()) {
+                if (boardLocation.getPresentPiece().toString().equals("K"))
+                    return boardLocation;
+            }
+            return new NullBoardLocation(); // Null-rep board square
+        }
+
+        public BoardLocation getBlackKingSquare() {
+
+            for (BoardLocation boardLocation : pullSquaresWithBlacks()) {
+                if (boardLocation.getPresentPiece().toString().equals("K"))
+                    return boardLocation;
+            }
+            return new NullBoardLocation(); // Null-rep board square
+        }
     }
 
     class CheckFinder {
