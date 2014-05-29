@@ -13,6 +13,7 @@ import java.util.Date;
 public class ErrorLogger {
 
     static File errorLog = new File("chess\\logs\\errors " + new SimpleDateFormat("MMddYYYY").format(new Date()) + ".txt");
+    static int logCount = 1;
     public static void logError(String error) {
 
         if(!errorLog.exists()) try {
@@ -20,6 +21,7 @@ public class ErrorLogger {
         } catch (IOException e) {
             System.err.println(e.getLocalizedMessage()+"errorLog file couldn't be instantiated");
         }
+
         try(FileOutputStream fos = new FileOutputStream(errorLog, true)) {
             // Make an append-able FileOutputStream
 

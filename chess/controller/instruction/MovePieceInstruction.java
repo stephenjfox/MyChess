@@ -20,7 +20,7 @@ public class MovePieceInstruction extends Instruction {
                     instruction[0], instruction[1]
             );
         } catch (NullPointerException e) {
-            ErrorLogger.logError("Something in the movePiece() threw an error.");
+            ErrorLogger.logError("Moving() nulls results in errors.\n" + e.getLocalizedMessage());
         }
     }
 
