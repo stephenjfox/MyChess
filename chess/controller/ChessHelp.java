@@ -251,6 +251,8 @@ public class ChessHelp {
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
             startY -= dY;// ^^^^
 
+            if( (Math.abs(startX - destX) == 1) && (Math.abs(startY - destY) == 1) )
+                return true; // They're moving one square. Who cares what is about to go down
             // If the board square exists
             if (containerForTheGame.getFunctionalBoard()[startY- 1][startX -1] != null) {
                 // If there isn't a piece there

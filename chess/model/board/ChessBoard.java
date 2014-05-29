@@ -101,7 +101,7 @@ public class ChessBoard {
         }
 
         else {
-            System.err.printf("%s to %s was an invalid move, maybe the %s or pathIsClear()\n",
+            System.err.printf("%s to %s was an invalid move. It might be the %s or pathIsClear()\n",
                     origin, destination, getPieceAtLocation(tempOrigin).fancyName());
         }
 
