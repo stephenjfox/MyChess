@@ -358,7 +358,6 @@ public class ChessBoard {
             return returner;
         }
 
-        // TODO： Get Professor Halladay's opinion on the boolean comparator ^^^
         public BoardLocation getWhiteKingSquare() {
 
             // Iterate thought the search with proper boolean for this color
