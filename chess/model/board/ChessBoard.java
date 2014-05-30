@@ -131,8 +131,14 @@ public class ChessBoard {
         int c1LocX = castler1Location.getX(), c1LocY = castler1Location.getY(),
                 c2LocX = castler2Location.getX(), c2LocY = castler2Location.getY();
 
-        // Check the difference in x and y
+        int c1DeltaX = castler1Location.getX() - moveForC1.getX();
+        int c2DeltaX = castler2Location.getX() - moveForC2.getX();
+
+        // Check the difference in x and y between the pieces
+
         // (delta-Y should be 0 and y == 1 | 8, delta-X == 5 - 1 | 5 - 8)
+
+        // TODO: in leisure, finish castling
         {
             int deltaX = c1LocX - c2LocX;
             int deltaY = c1LocY - c2LocY;
@@ -143,12 +149,14 @@ public class ChessBoard {
                 if(deltaX == 4 || deltaX == -3){
                     System.out.println("DEBUG: Passed horizontal castling test");
                 }
-            } else {
+            }
+            else {
                 System.out.println("DEBUG: Invalid castling maneuver was attempted");
 
             }
 
         }
+
 
 
         // Chess pieces at those board locations
