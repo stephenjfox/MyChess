@@ -13,6 +13,11 @@ public class BoardLocation {
     private String name;
     ChessPiece presentPiece = null;
 
+    public BoardLocation(int paramX, int paramY) {
+        this.x = paramX;
+        this.y = paramY;
+    }
+
     /**
      * Creates a BoardLocation object to be placed in the board array of arrays.
      * @param lowercase the column letter on a valid chess board (i.e. a-h)
@@ -33,11 +38,11 @@ public class BoardLocation {
     }
 
     /**
-     * @param xVal: char of horizontal value
+     * @param c: char of horizontal value
      * @return appropriate int ('a' becomes 1, 'b' becomes 2, etc)
      */
-    private int intSwap(char xVal) {
-        switch (xVal) {
+    private int intSwap(char c) {
+        switch (c) {
             case 'a':
                 return 1;
             case 'b':
@@ -56,6 +61,29 @@ public class BoardLocation {
                 return 8;
             default:
                 return 0;
+        }
+    }
+
+    private char charSwap(int xVal) {
+        switch (xVal) {
+            case 1:
+                return 'a';
+            case 2:
+                return 'b';
+            case 3:
+                return 'c';
+            case 4:
+                return 'd';
+            case 5:
+                return 'e';
+            case 6:
+                return 'f';
+            case 7:
+                return 'g';
+            case 8:
+                return 'h';
+            default:
+                return 'i';
         }
     }
     

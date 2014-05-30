@@ -387,7 +387,7 @@ public class ChessBoard {
      * The inner CheckFinder class's sole purpose is it tell the [ChessHelp]
      * that a King is in check. And which one.
      */
-    class CheckFinder {
+    public class CheckFinder {
         // TODO: determine check and give the shot out
         BoardSquareLocator forTheKings = new BoardSquareLocator();
 

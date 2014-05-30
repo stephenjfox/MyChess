@@ -238,11 +238,18 @@ public class ChessHelp {
 
 //        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
 
-        if( (start.getPresentPiece().toString().equalsIgnoreCase("q") ||
-             start.getPresentPiece().toString().equalsIgnoreCase("b"))
-                && (Math.abs(startX - destX) == 1) && (Math.abs(startY - destY) == 1) )
+        if((start.getPresentPiece().toString().equalsIgnoreCase("q") ||
+            start.getPresentPiece().toString().equalsIgnoreCase("b") ||
+            start.getPresentPiece().toString().equalsIgnoreCase("p") ||
+            start.getPresentPiece().toString().equalsIgnoreCase("k"))
+                && ((Math.abs(startX - destX) == 1) && (Math.abs(startY - destY) == 1)) )
             return true; // They're moving one square. Who cares what is about to go down
 
+        if((start.getPresentPiece().toString().equalsIgnoreCase("q") ||
+            start.getPresentPiece().toString().equalsIgnoreCase("r") ||
+            start.getPresentPiece().toString().equalsIgnoreCase("k"))
+                && ((Math.abs(startX - destX) == 1) ^ (Math.abs(startY - destY) == 1)) )
+            return true;
 
         // Not equal because we can increment up or down, depending on the piece and side of the board
         while (startX != destX || startY != destY) {
@@ -256,14 +263,17 @@ public class ChessHelp {
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
             startY -= dY;// ^^^^
 
+            BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
 
-            // If the board square exists
             if (containerForTheGame.getFunctionalBoard()[startY- 1][startX -1] != null) {
                 // If there isn't a piece there
-                return containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
+                if (containerForTheGame.getFunctionalBoard()[startY -1][startX -1].getPresentPiece() == null)
+                    return true;
             }
-            else // Because if a square is null, nothing is on it (early game states only)
-                return containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] == null;
+            else if (containerForTheGame.getFunctionalBoard()[startY -1][startX-1] == null) {
+                // Because if a square is null, nothing is on it (early game states only)
+                return true;
+            }
         }
 
         return false;
