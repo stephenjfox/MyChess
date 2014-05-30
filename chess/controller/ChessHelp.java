@@ -67,9 +67,8 @@ public class ChessHelp {
 
         }
         return false;
+
     }
-
-
 
     public static boolean isValidCastle(BoardLocation kingSquare, BoardLocation rookSquare,
                                         BoardLocation kingDest, BoardLocation rookDest) {
@@ -271,6 +270,10 @@ public class ChessHelp {
         return false;
         // Return false if something is in the way
 //        return (pathObstacles(start, destination, modeOfTravel).isEmpty());
+    }
+
+    public static void printPlayerTurn() {
+        System.out.println(GameController.isWhiteTurn()? "White's turn" : "Black's turn");
     }
 
     private enum ModeOfTravel {

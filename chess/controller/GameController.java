@@ -55,6 +55,7 @@ public class GameController {
             // [2] = board index for a piece2
             // [3] = board index for the movement destination2
             instruction.execute();
+            ChessHelp.printPlayerTurn();
         }
 
     }

@@ -340,3 +340,139 @@ Something in the movePiece() threw an error.
 Thu May 29 16:20:11 MDT 2014
 Something in the movePiece() threw an error.
 
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:07:22 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:17:34 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:17:34 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:40:53 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:40:53 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:41:18 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:41:18 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:53:00 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 20:53:00 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 21:04:17 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 21:04:17 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 21:05:17 MDT 2014
+Moving() nulls results in errors.
+null
+
+Thu May 29 21:05:39 MDT 2014
+Moving() nulls results in errors.
+null
+
