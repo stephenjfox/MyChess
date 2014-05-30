@@ -35,11 +35,11 @@ public class ChessBoard {
      * Will only be receiving valid BoardLocations.
      * This method dodges the need for arithmetic hokum by simply
      * placing the pieces down, after plucking.
-     * @param c, King or rook to be castled
+     * @param castlePiece, King or rook to be castled
      * @param destination is the end location for that castle
      */
-    private void placePieceForCastle(ChessPiece c, BoardLocation destination) {
-
+    private void placePieceForCastle(ChessPiece castlePiece, BoardLocation destination) {
+        getActualBoardSquare(destination).placePiece(castlePiece);
     }
 
     /**
@@ -107,6 +107,10 @@ public class ChessBoard {
 
     }
 
+    /**
+     * Simply a relay to the realy method
+     * @param locations an String[] array of size 4; no exceptions
+     */
     public void moveTwoPiece(String[] locations) {
         moveTwoPiece(locations[0], locations[1], locations[2], locations[3]);
     }
@@ -122,10 +126,30 @@ public class ChessBoard {
         BoardLocation castler1Location = new BoardLocation(o1), castler2Location = new BoardLocation(o2);
         BoardLocation moveForC1 = new BoardLocation(d1), moveForC2 = new BoardLocation(d2);
 
-//
-//        // Position integers
-//        int c1LocX = castler1Location.getX(), c1LocY = castler1Location.getY(),
-//                c2LocX = castler2Location.getX(), c2LocY = castler2Location.getY();
+
+        // Position integers
+        int c1LocX = castler1Location.getX(), c1LocY = castler1Location.getY(),
+                c2LocX = castler2Location.getX(), c2LocY = castler2Location.getY();
+
+        // Check the difference in x and y
+        // (delta-Y should be 0 and y == 1 | 8, delta-X == 5 - 1 | 5 - 8)
+        {
+            int deltaX = c1LocX - c2LocX;
+            int deltaY = c1LocY - c2LocY;
+
+            if(deltaY == 0 && (c1LocY == 8 || c2LocY == 1)) {
+                System.out.println("DEBUG: Passed vertical castling test");
+
+                if(deltaX == 4 || deltaX == -3){
+                    System.out.println("DEBUG: Passed horizontal castling test");
+                }
+            } else {
+                System.out.println("DEBUG: Invalid castling maneuver was attempted");
+
+            }
+
+        }
+
 
         // Chess pieces at those board locations
         ChessPiece c1 = getPieceAtLocation(castler1Location),
@@ -134,21 +158,19 @@ public class ChessBoard {
         // Just check the starting locations (FIRST OFF)
         if( !(c1 instanceof King) ){
             System.err.println("If it's not a king, it can't castle");
-            return; // Leave the method
         }
 
         else if( !(c2 instanceof Rook)) {
             System.err.println("You're not even moving a Rook, so we're DEFINITELY not castling.");
-            return; // Leave the method
         }
 
         else {
 
-            King king = (King) removePieceAtLocation(castler1Location); // If we're good, we should be good
+            King king = (King) removePieceAtLocation(castler1Location); // If we're here, we should be good
             Rook rook = (Rook) removePieceAtLocation(castler2Location);
 
             System.out.println("Castling INITIATED");
-            // TODO: This method should be receiving a valid King-Rook pairing, SO DON'T MESS UP
+            // This method should be receiving a valid King-Rook pairing, SOOOO no worries
             performCastleManeuver(king, moveForC1, rook, moveForC2);
         }
 
@@ -156,10 +178,10 @@ public class ChessBoard {
 
     private void performCastleManeuver(King king, BoardLocation kingDest, Rook rook, BoardLocation rookDest) {
 
-        // TODO: Placepiece() based castling method
-        BoardLocation kingTrueDest = getActualBoardSquare(kingDest);
         BoardLocation rookTrueDest = getActualBoardSquare(rookDest);
+        BoardLocation kingTrueDest = getActualBoardSquare(kingDest);
 
+        // Place the piece on a specific square
         placePieceForCastle(king, kingTrueDest);
         placePieceForCastle(rook, rookTrueDest);
 
@@ -289,26 +311,39 @@ public class ChessBoard {
             return piecesExist;
         }
 
-        public ArrayList<BoardLocation> pullSquaresWithWhites() {
+//        public ArrayList<BoardLocation> pullSquaresWithWhites() {
+//            ArrayList<BoardLocation> returner = new ArrayList<>();
+//
+//            // Returner array of BoardLocations with White Pieces
+//            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
+//
+//                if(boardLocation.getPresentPiece().isWhite())
+//                    returner.add(boardLocation); // Add the squares to the returner
+//            }
+//
+//            return returner;
+//        }
+//
+//        public ArrayList<BoardLocation> pullSquaresWithBlacks() {
+//            ArrayList<BoardLocation> returner = new ArrayList<>();
+//
+//            // Returner array of BoardLocations with Black Pieces
+//            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
+//
+//                if(!boardLocation.getPresentPiece().isWhite())
+//                    returner.add(boardLocation); // Add the squares to the returner
+//            }
+//
+//            return returner;
+//        }
+
+        public ArrayList<BoardLocation> pullSquaresWithColor(boolean isWhite) {
             ArrayList<BoardLocation> returner = new ArrayList<>();
 
             // Returner array of BoardLocations with White Pieces
             for (BoardLocation boardLocation : pullSquaresWithPieces()) {
 
-                if(boardLocation.getPresentPiece().isWhite())
-                    returner.add(boardLocation); // Add the squares to the returner
-            }
-
-            return returner;
-        }
-
-        public ArrayList<BoardLocation> pullSquaresWithBlacks() {
-            ArrayList<BoardLocation> returner = new ArrayList<>();
-
-            // Returner array of BoardLocations with Black Pieces
-            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
-
-                if(!boardLocation.getPresentPiece().isWhite())
+                if(boardLocation.getPresentPiece().isWhite() == isWhite)
                     returner.add(boardLocation); // Add the squares to the returner
             }
 
@@ -317,7 +352,9 @@ public class ChessBoard {
 
         public BoardLocation getWhiteKingSquare() {
 
-            for (BoardLocation boardLocation : pullSquaresWithWhites()) {
+            // Iterate thought the search with proper boolean for this color
+
+            for (BoardLocation boardLocation : pullSquaresWithColor(true)) {
                 if (boardLocation.getPresentPiece().toString().equals("K"))
                     return boardLocation;
             }
@@ -326,14 +363,21 @@ public class ChessBoard {
 
         public BoardLocation getBlackKingSquare() {
 
-            for (BoardLocation boardLocation : pullSquaresWithBlacks()) {
-                if (boardLocation.getPresentPiece().toString().equals("K"))
+            // Iterate thought the search with proper boolean for this color
+
+            for (BoardLocation boardLocation : pullSquaresWithColor(false)) {
+
+                if (boardLocation.getPresentPiece().toString().equals("k"))
                     return boardLocation;
             }
             return new NullBoardLocation(); // Null-rep board square
         }
     }
 
+    /**
+     * The inner CheckFinder class's sole purpose is it tell the [ChessHelp]
+     * that a King is in check. And which one.
+     */
     class CheckFinder {
         // TODO: determine check and give the shot out
         BoardSquareLocator forTheKings = new BoardSquareLocator();
@@ -343,7 +387,7 @@ public class ChessBoard {
 
         boolean whiteIsInCheck() {
             // Tell someone that IntelliJ auto-suggested black as enemy to white
-            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithBlacks();
+            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithColor(true);
             boolean whiteInCheck = false;
 
             for (BoardLocation blackLocation : enemyLocation) {
@@ -361,7 +405,7 @@ public class ChessBoard {
 
         boolean blackIsInCheck() {
             // Tell someone that IntelliJ auto-suggested white as enemy to black
-            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithWhites();
+            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithColor(false);
             boolean blackInCheck = false;
 
             for (BoardLocation whiteLocation : enemyLocation) {
