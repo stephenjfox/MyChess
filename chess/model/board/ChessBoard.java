@@ -330,7 +330,47 @@ public class ChessBoard {
     }
 
     class CheckFinder {
+        // TODO: determine check and give the shot out
+        BoardSquareLocator forTheKings = new BoardSquareLocator();
 
+        BoardLocation whiteKingLocation = forTheKings.getWhiteKingSquare();
+        BoardLocation blackKingLocation = forTheKings.getBlackKingSquare();
+
+        boolean whiteIsInCheck() {
+            // Tell someone that IntelliJ auto-suggested black as enemy to white
+            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithBlacks();
+            boolean whiteInCheck = false;
+
+            for (BoardLocation blackLocation : enemyLocation) {
+
+                if(ChessHelp.isValidMove(blackLocation, whiteKingLocation)) {
+
+                    System.out.println("The White King is in Check by "
+                            + blackLocation.getPresentPiece().fancyName());
+                    whiteInCheck = true;
+                }
+
+            }
+            return whiteInCheck;
+        }
+
+        boolean blackIsInCheck() {
+            // Tell someone that IntelliJ auto-suggested white as enemy to black
+            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithWhites();
+            boolean blackInCheck = false;
+
+            for (BoardLocation whiteLocation : enemyLocation) {
+
+                if(ChessHelp.isValidMove(whiteLocation, blackKingLocation)) {
+
+                    System.out.println("The Black King is in Check by "
+                            + whiteLocation.getPresentPiece().fancyName());
+                    blackInCheck = true;
+                }
+
+            }
+            return blackInCheck;
+        }
     }
 
 }
