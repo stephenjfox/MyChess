@@ -122,10 +122,10 @@ public class ChessBoard {
         BoardLocation castler1Location = new BoardLocation(o1), castler2Location = new BoardLocation(o2);
         BoardLocation moveForC1 = new BoardLocation(d1), moveForC2 = new BoardLocation(d2);
 
-
-        // Position integers
-        int c1LocX = castler1Location.getX(), c1LocY = castler1Location.getY(),
-                c2LocX = castler2Location.getX(), c2LocY = castler2Location.getY();
+//
+//        // Position integers
+//        int c1LocX = castler1Location.getX(), c1LocY = castler1Location.getY(),
+//                c2LocX = castler2Location.getX(), c2LocY = castler2Location.getY();
 
         // Chess pieces at those board locations
         ChessPiece c1 = getPieceAtLocation(castler1Location),
@@ -137,16 +137,21 @@ public class ChessBoard {
             return; // Leave the method
         }
 
-        if( !(c2 instanceof Rook)) {
+        else if( !(c2 instanceof Rook)) {
             System.err.println("You're not even moving a Rook, so we're DEFINITELY not castling.");
             return; // Leave the method
         }
 
-        King king = (King) removePieceAtLocation(castler1Location); // If we're good, we should be good
-        Rook rook = (Rook) removePieceAtLocation(castler2Location);
+        else {
 
-        // TODO: This method should be receiving a valid King-Rook pairing, SO DON'T MESS UP
-        performCastleManeuver(king, moveForC1, rook, moveForC2);
+            King king = (King) removePieceAtLocation(castler1Location); // If we're good, we should be good
+            Rook rook = (Rook) removePieceAtLocation(castler2Location);
+
+            System.out.println("Castling INITIATED");
+            // TODO: This method should be receiving a valid King-Rook pairing, SO DON'T MESS UP
+            performCastleManeuver(king, moveForC1, rook, moveForC2);
+        }
+
     }
 
     private void performCastleManeuver(King king, BoardLocation kingDest, Rook rook, BoardLocation rookDest) {
