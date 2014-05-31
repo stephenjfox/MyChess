@@ -58,6 +58,8 @@ public class GameController {
             ChessHelp.printPlayerTurn();
         }
 
+        ChessHelp.callCheck();
+
     }
 
     private static void runGraphicGame() {

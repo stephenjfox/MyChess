@@ -97,7 +97,7 @@ public class ChessBoard {
 
                     GameController.triggerDrawBoard();
                     GameController.flipPlayerTurn();
-                    ChessHelp.callCheck();
+//                    ChessHelp.callCheck();
                 }
 
             }
@@ -109,7 +109,7 @@ public class ChessBoard {
 
                 GameController.triggerDrawBoard();
                 GameController.flipPlayerTurn();
-                ChessHelp.callCheck();
+//                ChessHelp.callCheck();
             }
 
         }
@@ -314,11 +314,6 @@ public class ChessBoard {
         placePiece(new Rook(white), "h1");
     }
 
-    class BoardSquareLocator {
-
-
-    }
-
     /**
      * The inner CheckFinder class's sole purpose is it tell the [ChessHelp]
      * that a King is in check. And which one.
@@ -336,20 +331,22 @@ public class ChessBoard {
 //            System.out.println("Why do you skip the rest");
 
             whiteKingLocation = getWhiteKingSquare();
-            System.out.println("Goose goose");
+//            System.out.println("Goose goose");
+            System.out.println(whiteKingLocation.getPresentPiece().fancyName());
 
             blackKingLocation = getBlackKingSquare();
-            System.out.println("King locations successfully initialized");
+//            System.out.println("King locations successfully initialized");
+            System.out.println(blackKingLocation.getPresentPiece().fancyName());
         }
 
         public boolean whiteIsInCheck() {
             // Tell someone that IntelliJ auto-suggested black as enemy to white
-            ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(true);
+            ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(false);
             boolean whiteInCheck = false;
 
             for (BoardLocation blackLocation : enemyLocation) {
 
-                if(ChessHelp.isValidMove(blackLocation, whiteKingLocation)) {
+                if(blackLocation.getPresentPiece().isValidMove(blackLocation, whiteKingLocation)) {
 
                     System.out.println("The White King is in Check by "
                             + blackLocation.getPresentPiece().fancyName());
@@ -363,12 +360,12 @@ public class ChessBoard {
 
         public boolean blackIsInCheck() {
             // Tell someone that IntelliJ auto-suggested white as enemy to black
-            ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(false);
+            ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(true);
             boolean blackInCheck = false;
 
             for (BoardLocation whiteLocation : enemyLocation) {
 
-                if(ChessHelp.isValidMove(whiteLocation, blackKingLocation)) {
+                if(whiteLocation.getPresentPiece().isValidMove(whiteLocation, blackKingLocation)) {
 
                     System.out.println("The Black King is in Check by "
                             + whiteLocation.getPresentPiece().fancyName());
@@ -403,11 +400,6 @@ public class ChessBoard {
 
             }
 
-            piecesExist.forEach(
-                    location ->
-                            System.out.println(location.getPresentPiece().fancyName())
-            );
-
             return piecesExist;
         }
 
@@ -429,6 +421,9 @@ public class ChessBoard {
             // Iterate thought the search with proper boolean for this color
 
             for (BoardLocation boardLocation : pullSquaresWithColor(true)) {
+
+                System.out.println(boardLocation.getPresentPiece());
+
                 if (boardLocation.getPresentPiece().toString().equals("K"))
                     return boardLocation;
             }
@@ -440,6 +435,8 @@ public class ChessBoard {
             // Iterate thought the search with proper boolean for this color
 
             for (BoardLocation boardLocation : pullSquaresWithColor(false)) {
+
+                System.out.println(boardLocation.getPresentPiece());
 
                 if (boardLocation.getPresentPiece().toString().equals("k"))
                     return boardLocation;

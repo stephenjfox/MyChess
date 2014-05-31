@@ -258,10 +258,10 @@ public class ChessHelp {
         while (startX != destX || startY != destY) {
 
             // Increment to check along the algebraically determined path
-
-            // TODO: Fix bug where Kasparov can't move Bishop, because diagonals don't work anymore
-            System.out.println("deltaX: "+dX + "\n" + "deltaY: "+dY + "\n" + start + "\n" + destination); // DEBUG
-            // TODO: NOTE - pathing randomly makes two new BoardLocation with different values
+        //
+        //            // TODO: Fix bug where Kasparov can't move Bishop, because diagonals don't work anymore
+        //            System.out.println("deltaX: "+dX + "\n" + "deltaY: "+dY + "\n" + start + "\n" + destination); // DEBUG
+        //            // TODO: NOTE - pathing randomly makes two new BoardLocation with different values
 
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
             startY -= dY;// ^^^^
