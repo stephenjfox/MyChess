@@ -14,8 +14,15 @@ public class ChessBoard {
 	final int rowCount = 8;
 	final int columnCount = 8;
     final int offset = 1; // 1-based offset because regulars count from 1
+
 	private BoardLocation[][] functionalBoard = new BoardLocation[columnCount][rowCount];
 
+//    CheckFinder searchForCheck = null;
+
+    public CheckFinder getCheckFinder() {
+//        return searchForCheck;
+        return new CheckFinder();
+    }
     /**
      * Primary for the initialization of the board
      * @param c ChessPiece object to be placed on the board
@@ -48,6 +55,10 @@ public class ChessBoard {
      * @param destination: The destination board square
      */
     public void movePiece(String origin, String destination) {
+//
+//        if(searchForCheck == null){
+//            searchForCheck = new CheckFinder();
+//        }
 
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
@@ -86,6 +97,7 @@ public class ChessBoard {
 
                     GameController.triggerDrawBoard();
                     GameController.flipPlayerTurn();
+                    ChessHelp.callCheck();
                 }
 
             }
@@ -97,7 +109,9 @@ public class ChessBoard {
 
                 GameController.triggerDrawBoard();
                 GameController.flipPlayerTurn();
+                ChessHelp.callCheck();
             }
+
         }
 
         else {
@@ -302,6 +316,75 @@ public class ChessBoard {
 
     class BoardSquareLocator {
 
+
+    }
+
+    /**
+     * The inner CheckFinder class's sole purpose is it tell the [ChessHelp]
+     * that a King is in check. And which one.
+     */
+    public class CheckFinder {
+        // TODO: determine check and give the shout out
+//        BoardSquareLocator forTheKings = new BoardSquareLocator();
+
+        BoardLocation whiteKingLocation;
+        BoardLocation blackKingLocation;
+
+        public CheckFinder() {
+            System.out.println("Successfully created CheckFinder");
+
+//            System.out.println("Why do you skip the rest");
+
+            whiteKingLocation = getWhiteKingSquare();
+            System.out.println("Goose goose");
+
+            blackKingLocation = getBlackKingSquare();
+            System.out.println("King locations successfully initialized");
+        }
+
+        public boolean whiteIsInCheck() {
+            // Tell someone that IntelliJ auto-suggested black as enemy to white
+            ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(true);
+            boolean whiteInCheck = false;
+
+            for (BoardLocation blackLocation : enemyLocation) {
+
+                if(ChessHelp.isValidMove(blackLocation, whiteKingLocation)) {
+
+                    System.out.println("The White King is in Check by "
+                            + blackLocation.getPresentPiece().fancyName());
+                    whiteInCheck = true;
+                }
+
+            }
+
+            return whiteInCheck;
+        }
+
+        public boolean blackIsInCheck() {
+            // Tell someone that IntelliJ auto-suggested white as enemy to black
+            ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(false);
+            boolean blackInCheck = false;
+
+            for (BoardLocation whiteLocation : enemyLocation) {
+
+                if(ChessHelp.isValidMove(whiteLocation, blackKingLocation)) {
+
+                    System.out.println("The Black King is in Check by "
+                            + whiteLocation.getPresentPiece().fancyName());
+                    blackInCheck = true;
+                }
+
+            }
+
+            return blackInCheck;
+        }
+
+
+        /**
+         * Search the entire 2D array for BoardLocation's that have pieces
+         * @return An ArrayList<BoardLocation> fully populated
+         */
         private ArrayList<BoardLocation> pullSquaresWithPieces()
         { // Get the squares that have pieces on them
             ArrayList<BoardLocation> piecesExist = new ArrayList<>();
@@ -310,40 +393,23 @@ public class ChessBoard {
 
                 for (BoardLocation boardLocation : boardLocations) {
 
-                    if(boardLocation.getPresentPiece() != null)
-                        piecesExist.add(boardLocation);
+                    if (boardLocation != null) {
+                            if(boardLocation.getPresentPiece() != null) {
+                            piecesExist.add(boardLocation);
+    //                        System.out.println("Added a piece");
+                        }
+                    }
                 }
 
             }
 
+            piecesExist.forEach(
+                    location ->
+                            System.out.println(location.getPresentPiece().fancyName())
+            );
+
             return piecesExist;
         }
-
-//        public ArrayList<BoardLocation> pullSquaresWithWhites() {
-//            ArrayList<BoardLocation> returner = new ArrayList<>();
-//
-//            // Returner array of BoardLocations with White Pieces
-//            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
-//
-//                if(boardLocation.getPresentPiece().isWhite())
-//                    returner.add(boardLocation); // Add the squares to the returner
-//            }
-//
-//            return returner;
-//        }
-//
-//        public ArrayList<BoardLocation> pullSquaresWithBlacks() {
-//            ArrayList<BoardLocation> returner = new ArrayList<>();
-//
-//            // Returner array of BoardLocations with Black Pieces
-//            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
-//
-//                if(!boardLocation.getPresentPiece().isWhite())
-//                    returner.add(boardLocation); // Add the squares to the returner
-//            }
-//
-//            return returner;
-//        }
 
         public ArrayList<BoardLocation> pullSquaresWithColor(boolean isWhite) {
             ArrayList<BoardLocation> returner = new ArrayList<>();
@@ -379,54 +445,6 @@ public class ChessBoard {
                     return boardLocation;
             }
             return new NullBoardLocation(); // Null-rep board square
-        }
-    }
-
-    /**
-     * The inner CheckFinder class's sole purpose is it tell the [ChessHelp]
-     * that a King is in check. And which one.
-     */
-    public class CheckFinder {
-        // TODO: determine check and give the shot out
-        BoardSquareLocator forTheKings = new BoardSquareLocator();
-
-        BoardLocation whiteKingLocation = forTheKings.getWhiteKingSquare();
-        BoardLocation blackKingLocation = forTheKings.getBlackKingSquare();
-
-        boolean whiteIsInCheck() {
-            // Tell someone that IntelliJ auto-suggested black as enemy to white
-            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithColor(true);
-            boolean whiteInCheck = false;
-
-            for (BoardLocation blackLocation : enemyLocation) {
-
-                if(ChessHelp.isValidMove(blackLocation, whiteKingLocation)) {
-
-                    System.out.println("The White King is in Check by "
-                            + blackLocation.getPresentPiece().fancyName());
-                    whiteInCheck = true;
-                }
-
-            }
-            return whiteInCheck;
-        }
-
-        boolean blackIsInCheck() {
-            // Tell someone that IntelliJ auto-suggested white as enemy to black
-            ArrayList<BoardLocation> enemyLocation = forTheKings.pullSquaresWithColor(false);
-            boolean blackInCheck = false;
-
-            for (BoardLocation whiteLocation : enemyLocation) {
-
-                if(ChessHelp.isValidMove(whiteLocation, blackKingLocation)) {
-
-                    System.out.println("The Black King is in Check by "
-                            + whiteLocation.getPresentPiece().fancyName());
-                    blackInCheck = true;
-                }
-
-            }
-            return blackInCheck;
         }
     }
 

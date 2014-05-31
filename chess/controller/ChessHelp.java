@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.model.board.BoardLocation;
+import chess.model.board.ChessBoard;
 import chess.model.pieces.*;
 
 import java.util.ArrayList;
@@ -62,8 +63,10 @@ public class ChessHelp {
             }
 
             // Knights don't worry about paths, for they jump
-            if(pieceToMove.toString().equalsIgnoreCase("n") || pathIsClear(start, destination))
+            if(pieceToMove.toString().equalsIgnoreCase("n") )
                 return pieceToMove.isValidMove(start, destination);
+            else
+                return pieceToMove.isValidMove(start, destination) && pathIsClear(start, destination);
 
         }
         return false;
@@ -257,7 +260,7 @@ public class ChessHelp {
             // Increment to check along the algebraically determined path
 
             // TODO: Fix bug where Kasparov can't move Bishop, because diagonals don't work anymore
-            System.out.println(dX + "\n" + dY + "\n" + start + "\n" + destination); // DEBUG
+            System.out.println("deltaX: "+dX + "\n" + "deltaY: "+dY + "\n" + start + "\n" + destination); // DEBUG
             // TODO: NOTE - pathing randomly makes two new BoardLocation with different values
 
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
@@ -283,6 +286,24 @@ public class ChessHelp {
 
     public static void printPlayerTurn() {
         System.out.println(GameController.isWhiteTurn()? "White's turn" : "Black's turn");
+    }
+
+    public static void callCheck() {
+        ChessBoard.CheckFinder finder = containerForTheGame.getCheckFinder();
+
+        if(finder.blackIsInCheck()) {
+            System.out.println("See the above");
+            System.exit(0);
+        } else {
+            System.out.println("Black King is not in check");
+        }
+
+        if(finder.whiteIsInCheck()) {
+            System.out.println("See the above");
+            System.exit(0);
+        } else {
+            System.out.println("White King is not in check");
+        }
     }
 
     private enum ModeOfTravel {

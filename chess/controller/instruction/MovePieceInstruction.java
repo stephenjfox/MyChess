@@ -21,6 +21,7 @@ public class MovePieceInstruction extends Instruction {
             );
         } catch (NullPointerException e) {
             ErrorLogger.logError("Moving() nulls results in errors.\n" + e.getLocalizedMessage());
+            e.printStackTrace();
         }
     }
 
