@@ -2,6 +2,9 @@ package chess.controller;
 
 import chess.model.board.BoardLocation;
 import chess.model.board.ChessBoard;
+import chess.model.pieces.ChessPiece;
+
+import java.util.ArrayList;
 
 /**
  * Created by Stephen on 5/31/2014.
@@ -27,6 +30,16 @@ public class MoveProjector {
     private void projectMove(BoardLocation pieceLocation, int range) {
         // TODO: Simulate movement of <code> piece </code> range squares in every valid direction
 
+        ChessPiece mover = pieceLocation.getPresentPiece();
+
+        ArrayList<BoardLocation> testMoveLocations = new ArrayList<>();
+
+        for(int i = 0; i < range; i++) {
+
+            // TODO: check valid move against all the directions for the piece
+
+        }
     }
 
+    // TODO: In the AI, use T-tree to determine the best moves (T-Tree is Ternary Tree)
 }

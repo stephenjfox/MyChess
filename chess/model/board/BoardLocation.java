@@ -113,6 +113,20 @@ public class BoardLocation {
         return y;
     }
 
+
+    public BoardLocation add(int xInc, int yInc) {
+
+        // Handle the math up a level
+        return new BoardLocation(this.x + xInc, this.y + yInc);
+
+    }
+
+    public BoardLocation subtract(int xDec, int yDec) {
+
+        return new BoardLocation(this.x - xDec, this.y - yDec);
+
+    }
+
     /**
      * Returns a string representation of this point and its location
      * in the {@code (x,y)} coordinate space. This method is
