@@ -34,11 +34,14 @@ public class MoveProjector {
 
         ArrayList<BoardLocation> testMoveLocations = new ArrayList<>();
 
-        for(int i = 0; i < range; i++) {
-
-            // TODO: check valid move against all the directions for the piece
-
-        }
+        testMoveLocations.add( pieceLocation.add(1, 1) );
+        testMoveLocations.add( pieceLocation.add(0, 1) );
+        testMoveLocations.add( pieceLocation.add(-1, 1) );
+        testMoveLocations.add( pieceLocation.add(-1, 0) );
+        testMoveLocations.add( pieceLocation.add(-1, -1) );
+        testMoveLocations.add( pieceLocation.add(0, -1) );
+        testMoveLocations.add( pieceLocation.add(1, -1) );
+        testMoveLocations.add( pieceLocation.add(1, 0) );
     }
 
     // TODO: In the AI, use T-tree to determine the best moves (T-Tree is Ternary Tree)

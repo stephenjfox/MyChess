@@ -292,15 +292,17 @@ public class ChessHelp {
         ChessBoard.CheckFinder finder = containerForTheGame.getCheckFinder();
 
         if(finder.blackIsInCheck()) {
-            System.out.println("See the above");
-            System.exit(0);
+            System.out.println("Black King is in check");
+
+//            System.exit(0);
         } else {
             System.out.println("Black King is not in check");
         }
 
         if(finder.whiteIsInCheck()) {
-            System.out.println("See the above");
-            System.exit(0);
+            System.out.println("White King is in check");
+
+//            System.exit(0);
         } else {
             System.out.println("White King is not in check");
         }

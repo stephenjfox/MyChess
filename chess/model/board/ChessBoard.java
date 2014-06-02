@@ -5,6 +5,7 @@ import chess.controller.GameController;
 import chess.model.pieces.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * This class is meant to facilitate the 2-D array that is to be the board.
@@ -332,11 +333,15 @@ public class ChessBoard {
 
             whiteKingLocation = getWhiteKingSquare();
 //            System.out.println("Goose goose");
-            System.out.println(whiteKingLocation.getPresentPiece().fancyName());
+
+            // DEBUG
+//            System.out.println(whiteKingLocation.getPresentPiece().fancyName());
 
             blackKingLocation = getBlackKingSquare();
 //            System.out.println("King locations successfully initialized");
-            System.out.println(blackKingLocation.getPresentPiece().fancyName());
+
+            // DEBUG
+//            System.out.println(blackKingLocation.getPresentPiece().fancyName());
         }
 
         public boolean whiteIsInCheck() {
@@ -348,8 +353,8 @@ public class ChessBoard {
 
                 if(blackLocation.getPresentPiece().isValidMove(blackLocation, whiteKingLocation)) {
 
-                    System.out.println("The White King is in Check by "
-                            + blackLocation.getPresentPiece().fancyName());
+//                    System.out.println("The White King is in Check by " + blackLocation.getPresentPiece().fancyName());
+
                     whiteInCheck = true;
                 }
 
@@ -363,12 +368,14 @@ public class ChessBoard {
             ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(true);
             boolean blackInCheck = false;
 
-            for (BoardLocation whiteLocation : enemyLocation) {
+            for (Iterator<BoardLocation> iterator = enemyLocation.iterator(); iterator.hasNext() && !blackInCheck; ) {
 
-                if(whiteLocation.getPresentPiece().isValidMove(whiteLocation, blackKingLocation)) {
+                BoardLocation whiteLocation = iterator.next();
 
-                    System.out.println("The Black King is in Check by "
-                            + whiteLocation.getPresentPiece().fancyName());
+                if (whiteLocation.getPresentPiece().isValidMove(whiteLocation, blackKingLocation)) {
+
+//                     System.out.println("The Black King is in Check by " + whiteLocation.getPresentPiece().fancyName());
+
                     blackInCheck = true;
                 }
 
@@ -386,9 +393,9 @@ public class ChessBoard {
         { // Get the squares that have pieces on them
             ArrayList<BoardLocation> piecesExist = new ArrayList<>();
 
-            for (BoardLocation[] boardLocations : functionalBoard) {
+            for (BoardLocation[] row : functionalBoard) {
 
-                for (BoardLocation boardLocation : boardLocations) {
+                for (BoardLocation boardLocation : row) {
 
                     if (boardLocation != null) {
                             if(boardLocation.getPresentPiece() != null) {
@@ -422,7 +429,9 @@ public class ChessBoard {
 
             for (BoardLocation boardLocation : pullSquaresWithColor(true)) {
 
-                System.out.println(boardLocation.getPresentPiece());
+                // DEBUG
+//                System.out.println(boardLocation.getPresentPiece());
+                // DEBUG
 
                 if (boardLocation.getPresentPiece().toString().equals("K"))
                     return boardLocation;
@@ -436,7 +445,9 @@ public class ChessBoard {
 
             for (BoardLocation boardLocation : pullSquaresWithColor(false)) {
 
-                System.out.println(boardLocation.getPresentPiece());
+                // DEBUG
+//                System.out.println(boardLocation.getPresentPiece());
+                // DEBUG
 
                 if (boardLocation.getPresentPiece().toString().equals("k"))
                     return boardLocation;
