@@ -1,0 +1,8 @@
+Tue Jun 03 10:38:24 MDT 2014
+Moving() nulls results in errors.
+null
+
+Tue Jun 03 10:38:24 MDT 2014
+Moving() nulls results in errors.
+null
+

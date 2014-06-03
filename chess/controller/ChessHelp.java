@@ -270,10 +270,6 @@ public class ChessHelp {
         while (startX != destX || startY != destY) {
 
             // Increment to check along the algebraically determined path
-        //
-        //            // TODO: Fix bug where Kasparov can't move Bishop, because diagonals don't work anymore
-        //            System.out.println("deltaX: "+dX + "\n" + "deltaY: "+dY + "\n" + start + "\n" + destination); // DEBUG
-        //            // TODO: NOTE - pathing randomly makes two new BoardLocation with different values
 
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
             startY -= dY;// ^^^^
@@ -282,10 +278,12 @@ public class ChessHelp {
             nextSquareOnPath.placePiece(startPiece);
 
             BoardLocation squareBeforeDest = destination.subtract(1, 1);
-            
-            if (containerForTheGame.getFunctionalBoard()[startY- 1][startX -1] != null) {
+
+            if(start.isSameSquare(destination)) return true;
+
+            if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] != null) {
                 // If there isn't a piece there at the start
-                if (containerForTheGame.getFunctionalBoard()[startY -1][startX -1].getPresentPiece() == null)
+                if (containerForTheGame.getFunctionalBoard()[startY -1][startX - 1].getPresentPiece() == null)
                     return true;
             }
             else if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] == null) {
@@ -296,6 +294,10 @@ public class ChessHelp {
                 // If the destination is clear
                 return pathIsClear(start, squareBeforeDest);
             }
+            // TODO: recurse along the path and return if that piece they hit hold the square that is the destination
+            /*
+
+             */
 
         }
 
