@@ -128,7 +128,8 @@ public class BoardLocation {
     }
 
     public boolean isSameSquare(BoardLocation location) {
-        return this.x == location.getX() && this.y == location.getY();
+        return this.x == location.getX() && this.y == location.getY()
+                && this.getPresentPiece().toString().equals(location.getPresentPiece().toString());
     }
     /**
      * Returns a string representation of this point and its location

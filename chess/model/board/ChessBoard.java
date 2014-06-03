@@ -346,12 +346,13 @@ public class ChessBoard {
 
         public boolean whiteIsInCheck() {
             // Tell someone that IntelliJ auto-suggested black as enemy to white
-            ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(false);
+            ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(false);
             boolean whiteInCheck = false;
 
-            for (BoardLocation blackLocation : enemyLocation) {
+            for (Iterator<BoardLocation> iterator = enemyLocations.iterator(); iterator.hasNext() && !whiteInCheck; ) {
+                BoardLocation blackLocation = iterator.next();
 
-                if(ChessHelp.movePutsKingInCheck(blackLocation, whiteKingLocation)) {
+                if (ChessHelp.putsKingInCheck(blackLocation, whiteKingLocation)) {
 
 //                    System.out.println("The White King is in Check by " + blackLocation.getPresentPiece().fancyName());
 
@@ -372,7 +373,7 @@ public class ChessBoard {
 
                 BoardLocation whiteLocation = iterator.next();
 
-                if (ChessHelp.movePutsKingInCheck(whiteLocation, blackKingLocation)) {
+                if (ChessHelp.putsKingInCheck(whiteLocation, blackKingLocation)) {
 
 //                     System.out.println("The Black King is in Check by " + whiteLocation.getPresentPiece().fancyName());
 

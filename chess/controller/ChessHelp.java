@@ -73,7 +73,7 @@ public class ChessHelp {
 
     }
 
-    public static boolean movePutsKingInCheck(BoardLocation start, BoardLocation destination) {
+    public static boolean putsKingInCheck(BoardLocation start, BoardLocation destination) {
         assert start.getPresentPiece() != null;
         ChessPiece pieceToMove = start.getPresentPiece(); // FIXED : That's going to throw a NullPointer
 
@@ -271,29 +271,41 @@ public class ChessHelp {
 
             // Increment to check along the algebraically determined path
 
+//            System.out.println(
+//                    "dX: "+dX + "\ndy: " + dY + "\nStart: " + start + "\nDestination: " + destination
+//                    +"\nstartX: " + startX + "\nstartY: " + startY
+//            );
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
             startY -= dY;// ^^^^
 
             BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
             nextSquareOnPath.placePiece(startPiece);
+//            System.out.println(startPiece.fancyName());
+//            System.out.println(nextSquareOnPath);
 
             BoardLocation squareBeforeDest = destination.subtract(1, 1);
+//            System.out.println(squareBeforeDest);
 
-            if(start.isSameSquare(destination)) return true;
+            if (start.isSameSquare(destination)) return true;
 
             if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] != null) {
                 // If there isn't a piece there at the start
-                if (containerForTheGame.getFunctionalBoard()[startY -1][startX - 1].getPresentPiece() == null)
-                    return true;
+                return containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
             }
-            else if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] == null) {
-                // If square their moving to is null, it's clear
+            else if (start.isSameSquare(destination)) return true;
+            else {
                 return pathIsClear(nextSquareOnPath, destination);
             }
-            else if (containerForTheGame.getFunctionalBoard()[destY - 1][destX - 1] == null) {
-                // If the destination is clear
-                return pathIsClear(start, squareBeforeDest);
-            }
+
+//            else if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] == null) {
+//                // If square their moving to is null, it's clear
+//                return pathIsClear(nextSquareOnPath, destination);
+//            } else if (containerForTheGame.getFunctionalBoard()[destY - 1][destX - 1] == null) {
+//                // If the destination is clear
+//                return pathIsClear(nextSquareOnPath, squareBeforeDest);
+//            }
+
+
             // TODO: recurse along the path and return if that piece they hit hold the square that is the destination
             /*
 
