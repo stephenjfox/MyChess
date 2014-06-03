@@ -281,21 +281,22 @@ public class ChessHelp {
             BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
             nextSquareOnPath.placePiece(startPiece);
 
+            BoardLocation squareBeforeDest = destination.subtract(1, 1);
             
             if (containerForTheGame.getFunctionalBoard()[startY- 1][startX -1] != null) {
                 // If there isn't a piece there at the start
                 if (containerForTheGame.getFunctionalBoard()[startY -1][startX -1].getPresentPiece() == null)
                     return true;
             }
-            else if (containerForTheGame.getFunctionalBoard()[destY - 1][destX - 1] == null) {
-                return true;
-            }
-            else {
-
-                // TODO: Bug with out of bounds exception
+            else if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] == null) {
+                // If square their moving to is null, it's clear
                 return pathIsClear(nextSquareOnPath, destination);
-
             }
+            else if (containerForTheGame.getFunctionalBoard()[destY - 1][destX - 1] == null) {
+                // If the destination is clear
+                return pathIsClear(start, squareBeforeDest);
+            }
+
         }
 
         return false;
