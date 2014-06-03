@@ -63,14 +63,24 @@ public class ChessHelp {
             }
 
             // Knights don't worry about paths, for they jump
-            if(pieceToMove.toString().equalsIgnoreCase("n") )
+            if(pathIsClear(start, destination) || pieceToMove.toString().equalsIgnoreCase("n") )
                 return pieceToMove.isValidMove(start, destination);
-            else
-                return pieceToMove.isValidMove(start, destination) && pathIsClear(start, destination);
+//            else
+//                return pieceToMove.isValidMove(start, destination) ;
 
         }
         return false;
 
+    }
+
+    public static boolean movePutsKingInCheck(BoardLocation start, BoardLocation destination) {
+        assert start.getPresentPiece() != null;
+        ChessPiece pieceToMove = start.getPresentPiece(); // FIXED : That's going to throw a NullPointer
+
+        if(pathIsClear(start, destination) || pieceToMove.toString().equalsIgnoreCase("n") )
+            return pieceToMove.isValidMove(start, destination);
+//
+        return false;
     }
 
     public static boolean isValidCastle(BoardLocation kingSquare, BoardLocation rookSquare,
@@ -215,6 +225,8 @@ public class ChessHelp {
     public static boolean pathIsClear(BoardLocation start, BoardLocation destination){
         ModeOfTravel modeOfTravel;
 
+        ChessPiece startPiece = start.getPresentPiece();
+        
         int startX = start.getX();
         int startY = start.getY();
 
@@ -241,16 +253,16 @@ public class ChessHelp {
 
 //        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
 
-        if((start.getPresentPiece().toString().equalsIgnoreCase("q") ||
-            start.getPresentPiece().toString().equalsIgnoreCase("b") ||
-            start.getPresentPiece().toString().equalsIgnoreCase("p") ||
-            start.getPresentPiece().toString().equalsIgnoreCase("k"))
+        if((startPiece.toString().equalsIgnoreCase("q") ||
+            startPiece.toString().equalsIgnoreCase("b") ||
+            startPiece.toString().equalsIgnoreCase("p") ||
+            startPiece.toString().equalsIgnoreCase("k"))
                 && ((Math.abs(startX - destX) == 1) && (Math.abs(startY - destY) == 1)) )
             return true; // They're moving one square. Who cares what is about to go down
 
-        if((start.getPresentPiece().toString().equalsIgnoreCase("q") ||
-            start.getPresentPiece().toString().equalsIgnoreCase("r") ||
-            start.getPresentPiece().toString().equalsIgnoreCase("k"))
+        if((startPiece.toString().equalsIgnoreCase("q") ||
+            startPiece.toString().equalsIgnoreCase("r") ||
+            startPiece.toString().equalsIgnoreCase("k"))
                 && ((Math.abs(startX - destX) == 1) ^ (Math.abs(startY - destY) == 1)) )
             return true;
 
@@ -267,15 +279,22 @@ public class ChessHelp {
             startY -= dY;// ^^^^
 
             BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
+            nextSquareOnPath.placePiece(startPiece);
 
+            
             if (containerForTheGame.getFunctionalBoard()[startY- 1][startX -1] != null) {
-                // If there isn't a piece there
+                // If there isn't a piece there at the start
                 if (containerForTheGame.getFunctionalBoard()[startY -1][startX -1].getPresentPiece() == null)
                     return true;
             }
-            else if (containerForTheGame.getFunctionalBoard()[startY -1][startX-1] == null) {
-                // Because if a square is null, nothing is on it (early game states only)
+            else if (containerForTheGame.getFunctionalBoard()[destY - 1][destX - 1] == null) {
                 return true;
+            }
+            else {
+
+                // TODO: Bug with out of bounds exception
+                return pathIsClear(nextSquareOnPath, destination);
+
             }
         }
 

@@ -351,7 +351,7 @@ public class ChessBoard {
 
             for (BoardLocation blackLocation : enemyLocation) {
 
-                if(blackLocation.getPresentPiece().isValidMove(blackLocation, whiteKingLocation)) {
+                if(ChessHelp.movePutsKingInCheck(blackLocation, whiteKingLocation)) {
 
 //                    System.out.println("The White King is in Check by " + blackLocation.getPresentPiece().fancyName());
 
@@ -372,7 +372,7 @@ public class ChessBoard {
 
                 BoardLocation whiteLocation = iterator.next();
 
-                if (whiteLocation.getPresentPiece().isValidMove(whiteLocation, blackKingLocation)) {
+                if (ChessHelp.movePutsKingInCheck(whiteLocation, blackKingLocation)) {
 
 //                     System.out.println("The Black King is in Check by " + whiteLocation.getPresentPiece().fancyName());
 
