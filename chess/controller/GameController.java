@@ -59,6 +59,7 @@ public class GameController {
         }
 
         ChessHelp.callCheck();
+//        ChessHelp.callCheckMate();
 
     }
 

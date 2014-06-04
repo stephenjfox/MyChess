@@ -27,22 +27,36 @@ public class MoveProjector {
      *              Practically, the distance for the piece to move, ON the
      *              simulatedBoard. To be tested in every direction.
      */
-    private void projectMove(BoardLocation pieceLocation, int range) {
+    public ArrayList<BoardLocation> projectMoves(BoardLocation pieceLocation, int range) {
         // TODO: Simulate movement of <code> piece </code> range squares in every valid direction
 
         ChessPiece mover = pieceLocation.getPresentPiece();
 
         ArrayList<BoardLocation> testMoveLocations = new ArrayList<>();
 
-        testMoveLocations.add( pieceLocation.add(1, 1) );
-        testMoveLocations.add( pieceLocation.add(0, 1) );
-        testMoveLocations.add( pieceLocation.add(-1, 1) );
-        testMoveLocations.add( pieceLocation.add(-1, 0) );
-        testMoveLocations.add( pieceLocation.add(-1, -1) );
-        testMoveLocations.add( pieceLocation.add(0, -1) );
-        testMoveLocations.add( pieceLocation.add(1, -1) );
-        testMoveLocations.add( pieceLocation.add(1, 0) );
+        for(int i = 1; i == range; i++ )
+        {
+            testMoveLocations.add( pieceLocation.add(i, i) );
+            testMoveLocations.add( pieceLocation.add(0, i) );
+            testMoveLocations.add( pieceLocation.add(-i, i) );
+            testMoveLocations.add( pieceLocation.add(-i, 0) );
+            testMoveLocations.add( pieceLocation.add(-i, -i) );
+            testMoveLocations.add( pieceLocation.add(0, -i) );
+            testMoveLocations.add( pieceLocation.add(i, -i) );
+            testMoveLocations.add( pieceLocation.add(i, 0) );
+        }
+
+        ArrayList<BoardLocation> validMoveLocations = new ArrayList<>();
+        testMoveLocations.forEach(
+                location -> {
+                    if (ChessHelp.putsKingInCheck(pieceLocation, location)) {
+                        validMoveLocations.add(location);
+                    }
+                }
+        );
+
+        return validMoveLocations;
     }
 
-    // TODO: In the AI, use T-tree to determine the best moves (T-Tree is Ternary Tree)
+
 }

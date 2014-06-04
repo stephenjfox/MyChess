@@ -24,6 +24,7 @@ public class ChessBoard {
 //        return searchForCheck;
         return new CheckFinder();
     }
+
     /**
      * Primary for the initialization of the board
      * @param c ChessPiece object to be placed on the board
@@ -385,6 +386,15 @@ public class ChessBoard {
             return blackInCheck;
         }
 
+        public boolean blackIsInCheckMate() {
+            // TODO: pull the MoveProjector ArrayList with the valid moves and check those against attack on black
+            return false;
+        }
+
+        public boolean whiteIsInCheckMate() {
+            // TODO: pull the MoveProjector ArrayList with the valid moves and check those against attack on white
+            return false;
+        }
 
         /**
          * Search the entire 2D array for BoardLocation's that have pieces
