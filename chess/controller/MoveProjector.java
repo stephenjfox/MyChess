@@ -49,6 +49,7 @@ public class MoveProjector {
         }
 
         testMoveLocations.removeIf(problem -> problem instanceof NullBoardLocation);
+
         // TODO: filter the list down to valid boardLocations
         testMoveLocations.stream()
                 .filter(boardLocation -> boardLocation.getY() <= 8)

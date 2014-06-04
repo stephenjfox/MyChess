@@ -119,10 +119,8 @@ public class BoardLocation {
 
         int newX = this.x + xInc, newY = this.y + yInc;
         // Handle the math up a level
-        if( (newX < 9 && newX > 0) && (newY < 9 && newY > 0))
-            return new BoardLocation(newX, newY);
-        else
-            return new NullBoardLocation();
+        return (newX < 9 && newX > 0) && (newY < 9 && newY > 0) ?
+                new BoardLocation(newX, newY) : new NullBoardLocation();
     }
 
     public BoardLocation subtract(int xDec, int yDec) {
