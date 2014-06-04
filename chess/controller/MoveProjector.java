@@ -48,11 +48,18 @@ public class MoveProjector {
             testMoveLocations.add( pieceLocation.add(i, 0) );
         }
 
+        testMoveLocations.removeIf(problem -> problem instanceof NullBoardLocation);
         // TODO: filter the list down to valid boardLocations
         testMoveLocations.stream()
-                .filter(boardLocation ->
-                    boardLocation.getY() <= 8 && !(boardLocation instanceof NullBoardLocation))
+                .filter(boardLocation -> boardLocation.getY() <= 8)
                 .collect(Collectors.toList());
+
+
+
+        testMoveLocations.removeIf(problemLocation ->
+                testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null);
+
+//        testMoveLocations.forEach(System.out::println);
 
         ArrayList<BoardLocation> possibleMoveLocations = new ArrayList<>();
 

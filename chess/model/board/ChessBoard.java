@@ -405,7 +405,7 @@ public class ChessBoard {
                 for (BoardLocation enemyLocation : enemyLocations) {
 
                     blackInCheckmate = (ChessHelp.testMoveForCheck(enemyLocation, potentialMove));
-
+                    if(blackInCheckmate) System.out.println("Black is in checkmate");
                 }
 
             }
@@ -423,6 +423,8 @@ public class ChessBoard {
 
             // TODO: pull the MoveProjector ArrayList with the valid moves and check those against attack on black
             for (BoardLocation potentialMove : potentialMoves) {
+
+                System.out.println(potentialMove.getName());
 
                 for (BoardLocation enemyLocation : enemyLocations) {
 

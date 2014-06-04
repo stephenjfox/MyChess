@@ -74,6 +74,7 @@ public class ChessHelp {
     }
 
     public static boolean testMoveForCheck(BoardLocation start, BoardLocation destination) {
+
         assert start.getPresentPiece() != null;
         ChessPiece pieceToMove = start.getPresentPiece(); // FIXED : That's going to throw a NullPointer
 
@@ -257,13 +258,13 @@ public class ChessHelp {
             startPiece.toString().equalsIgnoreCase("b") ||
             startPiece.toString().equalsIgnoreCase("p") ||
             startPiece.toString().equalsIgnoreCase("k"))
-                && ((Math.abs(startX - destX) == 1) && (Math.abs(startY - destY) == 1)) )
+                && ((Math.abs(startX - destX) == 1) && (Math.abs(startY - destY) == 1) && !startPiece.colorMatches(destination.getPresentPiece())) )
             return true; // They're moving one square. Who cares what is about to go down
 
-        if((startPiece.toString().equalsIgnoreCase("q") ||
+        if( (startPiece.toString().equalsIgnoreCase("q") ||
             startPiece.toString().equalsIgnoreCase("r") ||
             startPiece.toString().equalsIgnoreCase("k"))
-                && ((Math.abs(startX - destX) == 1) ^ (Math.abs(startY - destY) == 1)) )
+                && ((Math.abs(startX - destX) == 1) ^ (Math.abs(startY - destY) == 1) && !startPiece.colorMatches(destination.getPresentPiece())) )
             return true;
 
         // Not equal because we can increment up or down, depending on the piece and side of the board
@@ -271,10 +272,6 @@ public class ChessHelp {
 
             // Increment to check along the algebraically determined path
 
-//            System.out.println(
-//                    "dX: "+dX + "\ndy: " + dY + "\nStart: " + start + "\nDestination: " + destination
-//                    +"\nstartX: " + startX + "\nstartY: " + startY
-//            );
             startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
             startY -= dY;// ^^^^
 
