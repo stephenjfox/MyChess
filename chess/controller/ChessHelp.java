@@ -73,13 +73,13 @@ public class ChessHelp {
 
     }
 
-    public static boolean putsKingInCheck(BoardLocation start, BoardLocation destination) {
+    public static boolean testMoveForCheck(BoardLocation start, BoardLocation destination) {
         assert start.getPresentPiece() != null;
         ChessPiece pieceToMove = start.getPresentPiece(); // FIXED : That's going to throw a NullPointer
 
         if(pathIsClear(start, destination) || pieceToMove.toString().equalsIgnoreCase("n") )
             return pieceToMove.isValidMove(start, destination);
-//
+
         return false;
     }
 
@@ -326,7 +326,12 @@ public class ChessHelp {
         ChessBoard.CheckFinder finder = containerForTheGame.getCheckFinder();
 
         if(finder.blackIsInCheck()) {
-            System.out.println("Black King is in check");
+
+            if(finder.blackIsInCheckMate()) {
+                System.out.println("Black King is in check");
+            }
+            else
+                System.out.println("Black King is in check");
 
 //            System.exit(0);
         } else {
@@ -334,7 +339,12 @@ public class ChessHelp {
         }
 
         if(finder.whiteIsInCheck()) {
-            System.out.println("White King is in check");
+
+            if(finder.whiteIsInCheckMate()) {
+                System.out.println("White King is in checkmate");
+            }
+            else
+                System.out.println("White King is in check");
 
 //            System.exit(0);
         } else {

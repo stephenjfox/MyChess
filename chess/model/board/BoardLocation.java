@@ -16,6 +16,7 @@ public class BoardLocation {
     public BoardLocation(int paramX, int paramY) {
         this.x = paramX;
         this.y = paramY;
+        this.name = charSwap(paramX) + "" + paramY;
     }
 
     /**
@@ -116,9 +117,12 @@ public class BoardLocation {
 
     public BoardLocation add(int xInc, int yInc) {
 
+        int newX = this.x + xInc, newY = this.y + yInc;
         // Handle the math up a level
-        return new BoardLocation(this.x + xInc, this.y + yInc);
-
+        if( (newX < 9 && newX > 0) && (newY < 9 && newY > 0))
+            return new BoardLocation(newX, newY);
+        else
+            return new NullBoardLocation();
     }
 
     public BoardLocation subtract(int xDec, int yDec) {

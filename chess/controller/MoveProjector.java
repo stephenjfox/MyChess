@@ -2,9 +2,11 @@ package chess.controller;
 
 import chess.model.board.BoardLocation;
 import chess.model.board.ChessBoard;
+import chess.model.board.NullBoardLocation;
 import chess.model.pieces.ChessPiece;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by Stephen on 5/31/2014.
@@ -46,16 +48,24 @@ public class MoveProjector {
             testMoveLocations.add( pieceLocation.add(i, 0) );
         }
 
-        ArrayList<BoardLocation> validMoveLocations = new ArrayList<>();
+        // TODO: filter the list down to valid boardLocations
+        testMoveLocations.stream()
+                .filter(boardLocation ->
+                    boardLocation.getY() <= 8 && !(boardLocation instanceof NullBoardLocation))
+                .collect(Collectors.toList());
+
+        ArrayList<BoardLocation> possibleMoveLocations = new ArrayList<>();
+
+        // Add only the valid moves
         testMoveLocations.forEach(
                 location -> {
-                    if (ChessHelp.putsKingInCheck(pieceLocation, location)) {
-                        validMoveLocations.add(location);
+                    if (ChessHelp.testMoveForCheck(pieceLocation, location)) {
+                        possibleMoveLocations.add(location);
                     }
                 }
         );
 
-        return validMoveLocations;
+        return possibleMoveLocations;
     }
 
 

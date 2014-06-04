@@ -2,6 +2,7 @@ package chess.model.board;
 
 import chess.controller.ChessHelp;
 import chess.controller.GameController;
+import chess.controller.MoveProjector;
 import chess.model.pieces.*;
 
 import java.util.ArrayList;
@@ -326,9 +327,11 @@ public class ChessBoard {
 
         BoardLocation whiteKingLocation;
         BoardLocation blackKingLocation;
+        MoveProjector projector;
 
         public CheckFinder() {
-            System.out.println("Successfully created CheckFinder");
+
+//            System.out.println("Successfully created CheckFinder");
 
 //            System.out.println("Why do you skip the rest");
 
@@ -341,6 +344,7 @@ public class ChessBoard {
             blackKingLocation = getBlackKingSquare();
 //            System.out.println("King locations successfully initialized");
 
+            projector = new MoveProjector(ChessBoard.this);
             // DEBUG
 //            System.out.println(blackKingLocation.getPresentPiece().fancyName());
         }
@@ -353,7 +357,7 @@ public class ChessBoard {
             for (Iterator<BoardLocation> iterator = enemyLocations.iterator(); iterator.hasNext() && !whiteInCheck; ) {
                 BoardLocation blackLocation = iterator.next();
 
-                if (ChessHelp.putsKingInCheck(blackLocation, whiteKingLocation)) {
+                if (ChessHelp.testMoveForCheck(blackLocation, whiteKingLocation)) {
 
 //                    System.out.println("The White King is in Check by " + blackLocation.getPresentPiece().fancyName());
 
@@ -374,7 +378,7 @@ public class ChessBoard {
 
                 BoardLocation whiteLocation = iterator.next();
 
-                if (ChessHelp.putsKingInCheck(whiteLocation, blackKingLocation)) {
+                if (ChessHelp.testMoveForCheck(whiteLocation, blackKingLocation)) {
 
 //                     System.out.println("The Black King is in Check by " + whiteLocation.getPresentPiece().fancyName());
 
@@ -387,13 +391,48 @@ public class ChessBoard {
         }
 
         public boolean blackIsInCheckMate() {
+
+            ArrayList<BoardLocation> potentialMoves = projector.projectMoves(blackKingLocation, 1),
+            enemyLocations = pullSquaresWithColor(true);
+
+            boolean blackInCheckmate = false;
+
             // TODO: pull the MoveProjector ArrayList with the valid moves and check those against attack on black
-            return false;
+            for (BoardLocation potentialMove : potentialMoves) {
+
+                System.out.println(potentialMove.getName());
+
+                for (BoardLocation enemyLocation : enemyLocations) {
+
+                    blackInCheckmate = (ChessHelp.testMoveForCheck(enemyLocation, potentialMove));
+
+                }
+
+            }
+
+
+            return blackInCheckmate;
         }
 
         public boolean whiteIsInCheckMate() {
-            // TODO: pull the MoveProjector ArrayList with the valid moves and check those against attack on white
-            return false;
+
+            ArrayList<BoardLocation> potentialMoves = projector.projectMoves(whiteKingLocation, 1),
+                    enemyLocations = pullSquaresWithColor(false);
+
+            boolean whiteInCheckmate = false;
+
+            // TODO: pull the MoveProjector ArrayList with the valid moves and check those against attack on black
+            for (BoardLocation potentialMove : potentialMoves) {
+
+                for (BoardLocation enemyLocation : enemyLocations) {
+
+                    whiteInCheckmate = (ChessHelp.testMoveForCheck(enemyLocation, potentialMove));
+
+                }
+
+            }
+
+            return whiteInCheckmate;
         }
 
         /**
