@@ -405,7 +405,7 @@ public class ChessBoard {
                 for (BoardLocation enemyLocation : enemyLocations) {
 
                     blackInCheckmate = (ChessHelp.testMoveForCheck(enemyLocation, potentialMove));
-                    if(blackInCheckmate) System.out.println("Black is in checkmate");
+//                    if(blackInCheckmate) System.out.println("Black is in checkmate");
                 }
 
             }

@@ -322,10 +322,11 @@ public class ChessHelp {
     public static void callCheck() {
         ChessBoard.CheckFinder finder = containerForTheGame.getCheckFinder();
 
+        // TODO: Stalemate call
         if(finder.blackIsInCheck()) {
 
             if(finder.blackIsInCheckMate()) {
-                System.out.println("Black King is in check");
+                System.out.println("Black King is in checkmate");
             }
             else
                 System.out.println("Black King is in check");
