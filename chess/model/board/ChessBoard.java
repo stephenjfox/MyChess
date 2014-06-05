@@ -430,6 +430,26 @@ public class ChessBoard {
 
             // TODO: Check if either can move but be sure they aren't in check
 
+            boolean state1 = whiteIsInCheck(), state2 = false;
+            // state 1 is initially in check, state 2 is "The next move puts into check"
+
+            if(!state1) {
+
+                // TODO: Check to see if White got put in stalemate
+
+            }
+            else {
+
+                state1 = blackIsInCheck();
+
+                if(!state1) {
+
+                    // TODO: Check to see if Black got put in stalemate
+
+                }
+
+            }
+
             return false; // temporary
         }
 
