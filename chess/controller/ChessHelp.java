@@ -327,6 +327,8 @@ public class ChessHelp {
 
             if(finder.blackIsInCheckMate()) {
                 System.out.println("Black King is in checkmate");
+
+                System.exit(0);
             }
             else
                 System.out.println("Black King is in check");
@@ -340,14 +342,24 @@ public class ChessHelp {
 
             if(finder.whiteIsInCheckMate()) {
                 System.out.println("White King is in checkmate");
-            }
-            else
-                System.out.println("White King is in check");
 
-//            System.exit(0);
+                System.exit(0);
+            }
+            else {
+                System.out.println("White King is in check");
+            }
+
         } else {
             System.out.println("White King is not in check");
         }
+
+        if(finder.gameIsInStaleMate()) {
+            System.out.println("The game has reached stalemate, on "
+                    + (isWhiteTurn() ? "white's" : "black's") + " turn." );
+
+            System.exit(0);
+        }
+
     }
 
     private enum ModeOfTravel {

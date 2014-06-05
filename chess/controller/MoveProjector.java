@@ -3,7 +3,6 @@ package chess.controller;
 import chess.model.board.BoardLocation;
 import chess.model.board.ChessBoard;
 import chess.model.board.NullBoardLocation;
-import chess.model.pieces.ChessPiece;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -29,23 +28,21 @@ public class MoveProjector {
      *              Practically, the distance for the piece to move, ON the
      *              simulatedBoard. To be tested in every direction.
      */
-    public ArrayList<BoardLocation> projectMoves(BoardLocation pieceLocation, int range) {
+    public ArrayList<BoardLocation> projectValidMoves(BoardLocation pieceLocation, int range) {
         // TODO: Simulate movement of <code> piece </code> range squares in every valid direction
-
-        ChessPiece mover = pieceLocation.getPresentPiece();
 
         ArrayList<BoardLocation> testMoveLocations = new ArrayList<>();
 
         for(int i = 1; i == range; i++ )
         {
-            testMoveLocations.add( pieceLocation.add(i, i) );
-            testMoveLocations.add( pieceLocation.add(0, i) );
+            testMoveLocations.add( pieceLocation.add(i, i)  );
+            testMoveLocations.add( pieceLocation.add(0, i)  );
             testMoveLocations.add( pieceLocation.add(-i, i) );
             testMoveLocations.add( pieceLocation.add(-i, 0) );
-            testMoveLocations.add( pieceLocation.add(-i, -i) );
+            testMoveLocations.add( pieceLocation.add(-i, -i));
             testMoveLocations.add( pieceLocation.add(0, -i) );
             testMoveLocations.add( pieceLocation.add(i, -i) );
-            testMoveLocations.add( pieceLocation.add(i, 0) );
+            testMoveLocations.add( pieceLocation.add(i, 0)  );
         }
 
         testMoveLocations.removeIf(problem -> problem instanceof NullBoardLocation);
