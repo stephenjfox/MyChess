@@ -435,7 +435,11 @@ public class ChessBoard {
 
             if(!state1) {
 
-                // TODO: Check to see if White got put in stalemate
+                for (BoardLocation location : projector.projectValidMoves(whiteKingLocation, 1)) {
+
+                    state2 = ChessHelp.testMoveForCheck(whiteKingLocation, location);
+
+                }
 
             }
             else {
@@ -444,13 +448,18 @@ public class ChessBoard {
 
                 if(!state1) {
 
-                    // TODO: Check to see if Black got put in stalemate
+                    for (BoardLocation location : projector.projectValidMoves(blackKingLocation, 1)) {
+
+                        // Reassign every iteration
+                        state2 = ChessHelp.testMoveForCheck(blackKingLocation, location);
+
+                    }
 
                 }
 
             }
 
-            return false; // temporary
+            return state2; // temporary
         }
 
         /**

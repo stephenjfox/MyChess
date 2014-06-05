@@ -20,7 +20,7 @@ public class GameController {
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
-        containerForTheGame.init();
+//        containerForTheGame.init();
 
         if(starterArgs.length > 0) {
             chessView = new ConsoleUI(containerForTheGame);

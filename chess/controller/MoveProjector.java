@@ -55,7 +55,8 @@ public class MoveProjector {
 
 
         testMoveLocations.removeIf(problemLocation ->
-                testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null);
+                testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
+                        testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null);
 
 //        testMoveLocations.forEach(System.out::println);
 
