@@ -382,15 +382,23 @@ public class ChessBoard {
 
         public boolean blackIsInCheckMate() {
 
+            ArrayList<ChessPiece> alliedPieces = new ArrayList<>();
+            // Get the pieces of the color
+            for (BoardLocation blackLocation : pullSquaresWithColor(false)) {
+
+                alliedPieces.add(blackLocation.getPresentPiece());
+
+            }
+
             ArrayList<BoardLocation> potentialMoves = projector.projectValidMoves(blackKingLocation, 1),
-            enemyLocations = pullSquaresWithColor(true);
+
+                    enemyLocations = pullSquaresWithColor(true);
 
             boolean blackInCheckmate = false;
 
-            // TODO: pull the MoveProjector ArrayList with the valid moves and check those against attack on black
             for (BoardLocation potentialMove : potentialMoves) {
 
-                System.out.println(potentialMove.getName());
+                // Check every potential move for the entire team
 
                 for (BoardLocation enemyLocation : enemyLocations) {
 
@@ -407,13 +415,14 @@ public class ChessBoard {
         public boolean whiteIsInCheckMate() {
 
             ArrayList<BoardLocation> potentialMoves = projector.projectValidMoves(whiteKingLocation, 1),
-                    enemyLocations = pullSquaresWithColor(false);
+
+            enemyLocations = pullSquaresWithColor(false);
 
             boolean whiteInCheckmate = false;
 
             for (BoardLocation potentialMove : potentialMoves) {
 
-                System.out.println(potentialMove.getName());
+                // Check every potential move for the entire team
 
                 for (BoardLocation enemyLocation : enemyLocations) {
 
@@ -433,9 +442,14 @@ public class ChessBoard {
             boolean state1 = whiteIsInCheck(), state2 = false;
             // state 1 is initially in check, state 2 is "The next move puts into check"
 
+            ArrayList<BoardLocation> enemyLocations;
             if(!state1) {
 
-                for (BoardLocation location : projector.projectValidMoves(whiteKingLocation, 1)) {
+                enemyLocations = projector.projectValidMoves(whiteKingLocation, 1);
+
+                // Check every potential move for the entire team
+
+                for (BoardLocation location : enemyLocations) {
 
                     state2 = ChessHelp.testMoveForCheck(whiteKingLocation, location);
 
@@ -448,7 +462,9 @@ public class ChessBoard {
 
                 if(!state1) {
 
-                    for (BoardLocation location : projector.projectValidMoves(blackKingLocation, 1)) {
+                    enemyLocations = projector.projectValidMoves(blackKingLocation, 1);
+
+                    for (BoardLocation location : enemyLocations) {
 
                         // Reassign every iteration
                         state2 = ChessHelp.testMoveForCheck(blackKingLocation, location);
@@ -458,8 +474,9 @@ public class ChessBoard {
                 }
 
             }
+            // IF the king has valid moves, state2 == true and that means the game isn't in Stalemate
 
-            return state2; // temporary
+            return !state2; // temporary
         }
 
         /**

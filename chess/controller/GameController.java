@@ -20,7 +20,7 @@ public class GameController {
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
-//        containerForTheGame.init();
+        containerForTheGame.init();
 
         if(starterArgs.length > 0) {
             chessView = new ConsoleUI(containerForTheGame);
@@ -35,6 +35,7 @@ public class GameController {
     }
 
     private static void runFileGame(String starterArg, FileInputHandler fIH) {
+
         ArrayList<Instruction> executionInstructions =
                 fIH.executeFromFile(new File(starterArg));
 
@@ -56,6 +57,7 @@ public class GameController {
             // [3] = board index for the movement destination2
             instruction.execute();
             ChessHelp.printPlayerTurn();
+//            triggerDrawBoard();
         }
 
         ChessHelp.callCheck();

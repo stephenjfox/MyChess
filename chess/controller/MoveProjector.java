@@ -45,6 +45,7 @@ public class MoveProjector {
             testMoveLocations.add( pieceLocation.add(i, 0)  );
         }
 
+        // Remove squares off the board
         testMoveLocations.removeIf(problem -> problem instanceof NullBoardLocation);
 
         // Filter the list down to valid boardLocations
@@ -54,9 +55,12 @@ public class MoveProjector {
 
 
 
+
         testMoveLocations.removeIf(problemLocation ->
-                testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
-                        testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null);
+                (testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
+                        testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
+                && testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1]
+                        .getPresentPiece().colorMatches(pieceLocation.getPresentPiece()) );
 
 //        testMoveLocations.forEach(System.out::println);
 
@@ -70,6 +74,7 @@ public class MoveProjector {
                     }
                 }
         );
+
 
         return possibleMoveLocations;
     }
