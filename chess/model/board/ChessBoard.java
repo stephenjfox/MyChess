@@ -505,7 +505,7 @@ public class ChessBoard {
 
         public boolean gameIsInStaleMate() {
 
-            // TODO: modify body to complient with MoveProjector API
+            // TODO: modify body to compliance with MoveProjector API
 
             boolean state1 = whiteIsInCheck(), state2 = false;
             // state 1 is initially in check, state 2 is "The next move puts into check"
