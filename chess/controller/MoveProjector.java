@@ -75,9 +75,88 @@ public class MoveProjector {
                 }
         );
 
-
         return possibleMoveLocations;
     }
 
+
+    /**
+     * Makes changes to fake board and determines check status
+     * @param kingLocation square with the king to be captured against
+     * @param enemyLocations every enemy square, to check if they can hit the king
+     * @param allyLocations The King's team to attempt all moves
+     * @param potentialAlliedMoves
+     * @return where the king is still in check afterward
+     */
+    public boolean projectCheckScenario(BoardLocation kingLocation, ArrayList<BoardLocation> enemyLocations,
+                                        ArrayList<BoardLocation> allyLocations, ArrayList<BoardLocation> potentialAlliedMoves) {
+
+        boolean whichKing = kingLocation.getPresentPiece().isWhite();
+        boolean kingStillInCheck = false;
+
+        BoardLocation[][] boardArray = testBoard.getFunctionalBoard();
+
+        ArrayList<BoardLocation> kingValidMoves = projectValidMoves(kingLocation, 1);
+
+        ChessBoard focusChessBoard = new ChessBoard(boardArray);
+
+        // For every possible king Location
+        for (BoardLocation kingValidMove : kingValidMoves) {
+
+            // If path is clear in the old state
+            if (ChessHelp.pathIsClear(kingLocation, kingValidMove)) {
+
+                // move to new state
+                focusChessBoard.movePieceWithoutTurnCheck(kingLocation.getName(), kingValidMove.getName());
+
+                // Check if "the King can still be hit"
+                kingStillInCheck = whichKing ?
+                        focusChessBoard.getCheckFinder().whiteIsInCheck() :
+                        focusChessBoard.getCheckFinder().blackIsInCheck();
+
+                // undo back to the old state
+                focusChessBoard.movePieceWithoutTurnCheck(kingValidMove.getName(), kingLocation.getName());
+            }
+
+        }
+
+        // If it looks like Checkmate, check against every move the allies can make
+        if(kingStillInCheck) {
+
+            // Every piece against every move validation. See if the king is check after
+
+            // For-Each allied location
+            for (BoardLocation allyLocation : allyLocations) {
+
+                // For-each allied move
+                for (BoardLocation potentialAlliedMove : potentialAlliedMoves) {
+
+                    // That could be valid
+                    if(ChessHelp.pathIsClear(allyLocation, potentialAlliedMove, focusChessBoard)) {
+
+                        // Move the piece
+                        focusChessBoard.movePieceWithoutTurnCheck(allyLocation.getName(), potentialAlliedMove.getName());
+
+                        // Check for Check-condition
+                        for (BoardLocation enemyLocation : enemyLocations) {
+
+                            if(ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard))
+                            {
+                                kingStillInCheck = true;
+                            }
+
+                        }
+
+                        // Undo the move, rinse, repeat
+                        focusChessBoard.movePieceWithoutTurnCheck(potentialAlliedMove.getName(), allyLocation.getName());
+
+                    }
+
+                }
+            }
+
+        }
+
+        return kingStillInCheck;
+    }
 
 }

@@ -21,6 +21,14 @@ public class ChessBoard {
 
 //    CheckFinder searchForCheck = null;
 
+
+    public ChessBoard() {
+    }
+
+    public ChessBoard(BoardLocation[][] functionalBoard) {
+        this.functionalBoard = functionalBoard;
+    }
+
     public CheckFinder getCheckFinder() {
 //        return searchForCheck;
         return new CheckFinder();
@@ -67,6 +75,73 @@ public class ChessBoard {
         BoardLocation tempDest = new BoardLocation(destination);
 
         if(    ChessHelp.isValidMove(
+                getActualBoardSquare(tempOrigin),
+                getActualBoardSquare(tempDest)) )
+        {
+
+            // fetch the piece from the array
+            ChessPiece removed =
+                    getActualBoardSquare(tempOrigin).remove();
+
+//            // place it on the virtual board square
+//            tempDest.placePiece(removed);
+
+
+            // assign the board location to the array where appropriate
+            ChessPiece destinationPiece = getPieceAtLocation(tempDest);
+            if ( destinationPiece != null) {
+
+                if( removed.colorMatches(destinationPiece) ) {
+
+                    // If the color matches after passing in a decent move arg
+                    System.err.println(removed.fancyName() + " at " + tempOrigin.getName()+
+                            " tried taking allied " + destinationPiece.fancyName() + " at " + tempDest.getName());
+
+                    getActualBoardSquare(tempOrigin).placePiece(removed);
+
+                }
+                else {
+                    // Must be opposite color, so commence capture
+                    getActualBoardSquare(tempDest).placePiece(removed);
+
+                    removed.setMoved();
+
+                    GameController.triggerDrawBoard();
+                    GameController.flipPlayerTurn();
+//                    ChessHelp.callCheck();
+                }
+
+            }
+            else {
+                // Place piece, because the destination is empty
+                getActualBoardSquare(tempDest).placePiece(removed);
+
+                removed.setMoved();
+
+                GameController.triggerDrawBoard();
+                GameController.flipPlayerTurn();
+//                ChessHelp.callCheck();
+            }
+
+        }
+
+        else {
+            System.err.printf("%s to %s was an invalid move. It might be the %s or pathIsClear()\n",
+                    origin, destination, getPieceAtLocation(tempOrigin).fancyName());
+        }
+
+    }
+
+    public void movePieceWithoutTurnCheck(String origin, String destination) {
+//
+//        if(searchForCheck == null){
+//            searchForCheck = new CheckFinder();
+//        }
+
+        BoardLocation tempOrigin = new BoardLocation(origin);
+        BoardLocation tempDest = new BoardLocation(destination);
+
+        if(    getPieceAtLocation(tempOrigin).isValidMove(
                 getActualBoardSquare(tempOrigin),
                 getActualBoardSquare(tempDest)) )
         {
@@ -409,28 +484,23 @@ public class ChessBoard {
             ArrayList<BoardLocation> allies = pullSquaresWithColor(false);
             // The allied board squares : BlackPiece squares
 
-            ArrayList<BoardLocation> potentialMoves = projector.projectValidMoves(blackKingLocation, 1);
+            // DEBUG
+//            ArrayList<BoardLocation> potentialAlliedMoves = projector.projectValidMoves(blackKingLocation, 1);
+            // DEBUG
+            ArrayList<BoardLocation> potentialAlliedMoves = new ArrayList<>();
+
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(true);
 
             for (BoardLocation allyLocation : allies) { // get all possible moves for all the animals
-                potentialMoves.addAll( projector.projectValidMoves(
-                        allyLocation, nr.pieceMaxRange(allyLocation.getPresentPiece())) );
+                potentialAlliedMoves.addAll(projector.projectValidMoves(
+                        allyLocation, nr.pieceMaxRange(allyLocation.getPresentPiece())));
             }
 
-            boolean blackInCheckmate = false;
+            potentialAlliedMoves.removeIf(location -> projector.projectValidMoves(blackKingLocation, 1).contains(location));
 
-            for (BoardLocation potentialMove : potentialMoves) {
+            boolean blackInCheckmate;
 
-                // Check every potential move for the entire team
-
-                for (BoardLocation enemyLocation : enemyLocations) {
-
-                    blackInCheckmate = (ChessHelp.testMoveForCheck(enemyLocation, potentialMove));
-
-                }
-
-            }
-
+            blackInCheckmate = projector.projectCheckScenario(blackKingLocation, enemyLocations, allies, potentialAlliedMoves);
 
             return blackInCheckmate;
         }

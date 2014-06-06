@@ -294,25 +294,86 @@ public class ChessHelp {
                 return pathIsClear(nextSquareOnPath, destination);
             }
 
-//            else if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] == null) {
-//                // If square their moving to is null, it's clear
-//                return pathIsClear(nextSquareOnPath, destination);
-//            } else if (containerForTheGame.getFunctionalBoard()[destY - 1][destX - 1] == null) {
-//                // If the destination is clear
-//                return pathIsClear(nextSquareOnPath, squareBeforeDest);
-//            }
-
-
-            // TODO: recurse along the path and return if that piece they hit hold the square that is the destination
-            /*
-
-             */
-
         }
 
         return false;
         // Return false if something is in the way
 //        return (pathObstacles(start, destination, modeOfTravel).isEmpty());
+    }
+
+    public static boolean pathIsClear(BoardLocation start, BoardLocation destination, ChessBoard toOperate)
+    {
+        ChessPiece startPiece = start.getPresentPiece();
+
+        int startX = start.getX();
+        int startY = start.getY();
+
+        int destX = destination.getX();
+        int destY = destination.getY();
+
+        int dX, dY; // Deltas of movement
+
+        // if its a vertical move
+        if (startX == destX) {
+            dX = 0;
+        }
+        else { // Diagonal typed incrementer setter
+            dX = (startX - destX) / Math.abs(startX - destX);
+        }
+
+        // if it's a horizontal
+        if (startY == destY) {
+            dY = 0;
+        }
+        else { // Diagonal typed incrementer setter
+            dY = (startY - destY) / Math.abs(startY - destY);
+        }
+
+//        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
+
+        if((startPiece.toString().equalsIgnoreCase("q") ||
+                startPiece.toString().equalsIgnoreCase("b") ||
+                startPiece.toString().equalsIgnoreCase("p") ||
+                startPiece.toString().equalsIgnoreCase("k"))
+                && ((Math.abs(startX - destX) == 1) && (Math.abs(startY - destY) == 1) && !startPiece.colorMatches(destination.getPresentPiece())) )
+            return true; // They're moving one square. Who cares what is about to go down
+
+        if( (startPiece.toString().equalsIgnoreCase("q") ||
+                startPiece.toString().equalsIgnoreCase("r") ||
+                startPiece.toString().equalsIgnoreCase("k"))
+                && ((Math.abs(startX - destX) == 1) ^ (Math.abs(startY - destY) == 1) && !startPiece.colorMatches(destination.getPresentPiece())) )
+            return true;
+
+        // Not equal because we can increment up or down, depending on the piece and side of the board
+        while (startX != destX || startY != destY) {
+
+            // Increment to check along the algebraically determined path
+
+            startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
+            startY -= dY;// ^^^^
+
+            BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
+            nextSquareOnPath.placePiece(startPiece);
+//            System.out.println(startPiece.fancyName());
+//            System.out.println(nextSquareOnPath);
+
+//            BoardLocation squareBeforeDest = destination.subtract(1, 1);
+//            System.out.println(squareBeforeDest);
+
+            if (start.isSameSquare(destination)) return true;
+
+            if (toOperate.getFunctionalBoard()[startY - 1][startX - 1] != null) {
+                // If there isn't a piece there at the start
+                return toOperate.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
+            }
+            else if (start.isSameSquare(destination)) return true;
+            else {
+                return pathIsClear(nextSquareOnPath, destination);
+            }
+
+        }
+
+        return false;
     }
 
     public static void printPlayerTurn() {
