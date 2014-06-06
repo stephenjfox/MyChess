@@ -453,33 +453,8 @@ public class ChessBoard {
             return whiteInCheck;
         }
 
-        class NumberCruncher {
-
-            int pieceMaxRange(ChessPiece chessPiece) {
-
-                switch (chessPiece.toString().toLowerCase()) {
-
-                    case "k":
-                        return 1;
-                    case "r":
-                    case "b":
-                    case "q":
-                        return 8;
-                    case "n":
-                        return 3;
-//                    case "p":
-//                        return 2;
-                    default:
-                        return 1;
-                }
-
-            }
-
-        }
 
         public boolean blackIsInCheckMate() {
-
-            NumberCruncher nr = new NumberCruncher();
 
             ArrayList<BoardLocation> allies = pullSquaresWithColor(false);
             // The allied board squares : BlackPiece squares
@@ -487,97 +462,56 @@ public class ChessBoard {
             // DEBUG
 //            ArrayList<BoardLocation> potentialAlliedMoves = projector.projectValidMoves(blackKingLocation, 1);
             // DEBUG
-            ArrayList<BoardLocation> potentialAlliedMoves = new ArrayList<>();
+
+//            ArrayList<BoardLocation> potentialAlliedMoves = new ArrayList<>();
 
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(true);
 
-            for (BoardLocation allyLocation : allies) { // get all possible moves for all the animals
-                potentialAlliedMoves.addAll(projector.projectValidMoves(
-                        allyLocation, nr.pieceMaxRange(allyLocation.getPresentPiece())));
-            }
-
-            potentialAlliedMoves.removeIf(location -> projector.projectValidMoves(blackKingLocation, 1).contains(location));
+//            for (BoardLocation allyLocation : allies) { // get all possible moves for all the animals
+//                potentialAlliedMoves.addAll(projector.projectValidMoves(
+//                        allyLocation, NumberCruncher.pieceMaxRange(allyLocation.getPresentPiece())));
+//            }
+//
+//            potentialAlliedMoves.removeIf(location -> projector.projectValidMoves(blackKingLocation, 1).contains(location));
+//
 
             boolean blackInCheckmate;
 
-            blackInCheckmate = projector.projectCheckScenario(blackKingLocation, enemyLocations, allies, potentialAlliedMoves);
+            blackInCheckmate = projector.projectCheckScenario(blackKingLocation, enemyLocations, allies);
 
             return blackInCheckmate;
         }
 
         public boolean whiteIsInCheckMate() {
 
-            NumberCruncher nr = new NumberCruncher();
-
             ArrayList<BoardLocation> allies = pullSquaresWithColor(true);
             // The allied board squares : WhitePiece squares
 
-            ArrayList<BoardLocation> potentialMoves = projector.projectValidMoves(whiteKingLocation, 1);
+//            ArrayList<BoardLocation> potentialMoves = projector.projectValidMoves(whiteKingLocation, 1);
+
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(false);
 
-            for (BoardLocation allyLocation : allies) { // get all possible moves for all the animals
-                potentialMoves.addAll( projector.projectValidMoves(
-                        allyLocation, nr.pieceMaxRange(allyLocation.getPresentPiece())) );
-            }
+//            for (BoardLocation allyLocation : allies) { // get all possible moves for all the animals
+//                potentialMoves.addAll( projector.projectValidMoves(
+//                        allyLocation, NumberCruncher.pieceMaxRange(allyLocation.getPresentPiece())) );
+//            }
 
-            // TODO: Check against the completed move board, nothing else
+            boolean whiteInCheckmate;
 
-            boolean whiteInCheckmate = false;
-
-            for (BoardLocation potentialMove : potentialMoves) {
-
-                // Check every potential move for the entire team
-
-                for (BoardLocation enemyLocation : enemyLocations) {
-
-                    whiteInCheckmate = (ChessHelp.testMoveForCheck(enemyLocation, potentialMove));
-
-                }
-
-            }
+            whiteInCheckmate = projector.projectCheckScenario(whiteKingLocation, enemyLocations, allies);
 
             return whiteInCheckmate;
         }
 
         public boolean gameIsInStaleMate() {
 
-            // TODO: Check if either can move but be sure they aren't in check
+            // TODO: modify body to complient with MoveProjector API
 
             boolean state1 = whiteIsInCheck(), state2 = false;
             // state 1 is initially in check, state 2 is "The next move puts into check"
 
-            ArrayList<BoardLocation> enemyLocations;
-            if(!state1) {
+            ArrayList<BoardLocation> enemyLocations, allies;
 
-                enemyLocations = projector.projectValidMoves(whiteKingLocation, 1);
-
-                // Check every potential move for the entire team
-
-                for (BoardLocation location : enemyLocations) {
-
-                    state2 = ChessHelp.testMoveForCheck(whiteKingLocation, location);
-
-                }
-
-            }
-            else {
-
-                state1 = blackIsInCheck();
-
-                if(!state1) {
-
-                    enemyLocations = projector.projectValidMoves(blackKingLocation, 1);
-
-                    for (BoardLocation location : enemyLocations) {
-
-                        // Reassign every iteration
-                        state2 = ChessHelp.testMoveForCheck(blackKingLocation, location);
-
-                    }
-
-                }
-
-            }
             // IF the king has valid moves, state2 == true and that means the game isn't in Stalemate
 
             return !state2; // temporary

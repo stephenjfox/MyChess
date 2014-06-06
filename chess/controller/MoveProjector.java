@@ -3,6 +3,8 @@ package chess.controller;
 import chess.model.board.BoardLocation;
 import chess.model.board.ChessBoard;
 import chess.model.board.NullBoardLocation;
+import chess.model.board.NumberCruncher;
+import chess.model.pieces.ChessPiece;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -84,11 +86,10 @@ public class MoveProjector {
      * @param kingLocation square with the king to be captured against
      * @param enemyLocations every enemy square, to check if they can hit the king
      * @param allyLocations The King's team to attempt all moves
-     * @param potentialAlliedMoves
      * @return where the king is still in check afterward
      */
     public boolean projectCheckScenario(BoardLocation kingLocation, ArrayList<BoardLocation> enemyLocations,
-                                        ArrayList<BoardLocation> allyLocations, ArrayList<BoardLocation> potentialAlliedMoves) {
+                                        ArrayList<BoardLocation> allyLocations) {
 
         boolean whichKing = kingLocation.getPresentPiece().isWhite();
         boolean kingStillInCheck = false;
@@ -127,8 +128,9 @@ public class MoveProjector {
             // For-Each allied location
             for (BoardLocation allyLocation : allyLocations) {
 
+                ChessPiece currentAlly = allyLocation.getPresentPiece();
                 // For-each allied move
-                for (BoardLocation potentialAlliedMove : potentialAlliedMoves) {
+                for (BoardLocation potentialAlliedMove : projectValidMoves(allyLocation, NumberCruncher.pieceMaxRange(currentAlly))) {
 
                     // That could be valid
                     if(ChessHelp.pathIsClear(allyLocation, potentialAlliedMove, focusChessBoard)) {
