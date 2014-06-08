@@ -141,10 +141,8 @@ public class MoveProjector {
                         // Check for Check-condition
                         for (BoardLocation enemyLocation : enemyLocations) {
 
-                            if(ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard))
-                            {
-                                kingStillInCheck = true;
-                            }
+
+                                kingStillInCheck = (ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard));
 
                         }
 

@@ -141,9 +141,9 @@ public class ChessBoard {
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
-        if(    getPieceAtLocation(tempOrigin).isValidMove(
-                getActualBoardSquare(tempOrigin),
-                getActualBoardSquare(tempDest)) )
+//        if(    getPieceAtLocation(tempOrigin).isValidMove(
+//                getActualBoardSquare(tempOrigin),
+//                getActualBoardSquare(tempDest)) )
         {
 
             // fetch the piece from the array
@@ -174,7 +174,7 @@ public class ChessBoard {
                     removed.setMoved();
 
                     GameController.triggerDrawBoard();
-                    GameController.flipPlayerTurn();
+//                    GameController.flipPlayerTurn();
 //                    ChessHelp.callCheck();
                 }
 
@@ -186,16 +186,16 @@ public class ChessBoard {
                 removed.setMoved();
 
                 GameController.triggerDrawBoard();
-                GameController.flipPlayerTurn();
+//                GameController.flipPlayerTurn();
 //                ChessHelp.callCheck();
             }
 
         }
 
-        else {
-            System.err.printf("%s to %s was an invalid move. It might be the %s or pathIsClear()\n",
-                    origin, destination, getPieceAtLocation(tempOrigin).fancyName());
-        }
+//        else {
+//            System.err.printf("%s to %s was an invalid move. It might be the %s or pathIsClear()\n",
+//                    origin, destination, getPieceAtLocation(tempOrigin).fancyName());
+//        }
 
     }
 
@@ -459,10 +459,6 @@ public class ChessBoard {
             ArrayList<BoardLocation> allies = pullSquaresWithColor(false);
             // The allied board squares : BlackPiece squares
 
-            // DEBUG
-//            ArrayList<BoardLocation> potentialAlliedMoves = projector.projectValidMoves(blackKingLocation, 1);
-            // DEBUG
-
 //            ArrayList<BoardLocation> potentialAlliedMoves = new ArrayList<>();
 
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(true);
@@ -473,7 +469,6 @@ public class ChessBoard {
 //            }
 //
 //            potentialAlliedMoves.removeIf(location -> projector.projectValidMoves(blackKingLocation, 1).contains(location));
-//
 
             boolean blackInCheckmate;
 
@@ -507,14 +502,18 @@ public class ChessBoard {
 
             // TODO: modify body to compliance with MoveProjector API
 
-            boolean state1 = whiteIsInCheck(), state2 = false;
-            // state 1 is initially in check, state 2 is "The next move puts into check"
+//            boolean state1 = whiteIsInCheck(), state2 = false;
 
-            ArrayList<BoardLocation> enemyLocations, allies;
+            boolean gameTurn = GameController.isWhiteTurn();
 
-            // IF the king has valid moves, state2 == true and that means the game isn't in Stalemate
+            ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(gameTurn);
+            ArrayList<BoardLocation> allies = pullSquaresWithColor(!gameTurn);
 
-            return !state2; // temporary
+            BoardLocation kingSquare = gameTurn ? blackKingLocation : whiteKingLocation;
+
+            boolean inStale = projector.projectCheckScenario(kingSquare, enemyLocations, allies);
+
+            return inStale; // temporary
         }
 
         /**
