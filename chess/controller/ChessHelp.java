@@ -414,12 +414,13 @@ public class ChessHelp {
             System.out.println("White King is not in check");
         }
 
-        if(finder.gameIsInStaleMate()) {
-            System.out.println("The game has reached stalemate, on "
-                    + (isWhiteTurn() ? "white's" : "black's") + " turn." );
-
-            System.exit(0);
-        }
+        System.out.println("The game is in stalemate: "+ finder.gameIsInStaleMate());
+//        if() {
+//            System.out.println("The game has reached stalemate, on "
+//                    + (isWhiteTurn() ? "white's" : "black's") + " turn." );
+//
+//            System.exit(0);
+//        }
 
     }
 

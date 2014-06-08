@@ -294,7 +294,8 @@ public class ChessBoard {
      * @return the piece in the 2-d at the compensated, proper location
      */
     private ChessPiece getPieceAtLocation(BoardLocation boardLocation) {
-        return functionalBoard[boardLocation.getY()-offset][boardLocation.getX()-offset].getPresentPiece();
+
+        return getActualBoardSquare(boardLocation).getPresentPiece();
     }
 
     /**
@@ -302,7 +303,7 @@ public class ChessBoard {
      * @return the piece in the 2-d at the compensated, proper location
      */
     private ChessPiece removePieceAtLocation(BoardLocation boardLocation) {
-        return functionalBoard[boardLocation.getY()-offset][boardLocation.getX()-offset].remove();
+        return getActualBoardSquare(boardLocation).remove();
     }
 
     /**
@@ -511,9 +512,7 @@ public class ChessBoard {
 
             BoardLocation kingSquare = gameTurn ? blackKingLocation : whiteKingLocation;
 
-            boolean inStale = projector.projectCheckScenario(kingSquare, enemyLocations, allies);
-
-            return inStale; // temporary
+            return projector.projectCheckScenario(kingSquare, enemyLocations, allies);
         }
 
         /**

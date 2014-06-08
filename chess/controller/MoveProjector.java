@@ -94,16 +94,17 @@ public class MoveProjector {
         boolean whichKing = kingLocation.getPresentPiece().isWhite();
         boolean kingStillInCheck = false;
 
-        BoardLocation[][] boardArray = testBoard.getFunctionalBoard();
+        BoardLocation[][] boardArray = testBoard.getFunctionalBoard(); // retrieve a copy of the board-array
 
+        // Get the King's valid moves
         ArrayList<BoardLocation> kingValidMoves = projectValidMoves(kingLocation, 1);
 
         ChessBoard focusChessBoard = new ChessBoard(boardArray);
 
-        // For every possible king Location
+        // For every possible king future Location
         for (BoardLocation kingValidMove : kingValidMoves) {
 
-            // If path is clear in the old state
+            // If path is clear to the new state
             if (ChessHelp.pathIsClear(kingLocation, kingValidMove)) {
 
                 // move to new state
@@ -120,6 +121,7 @@ public class MoveProjector {
 
         }
 
+        // TODO: This conditional needs to run
         // If it looks like Checkmate, check against every move the allies can make
         if(kingStillInCheck) {
 
@@ -132,7 +134,7 @@ public class MoveProjector {
                 // For-each allied move
                 for (BoardLocation potentialAlliedMove : projectValidMoves(allyLocation, NumberCruncher.pieceMaxRange(currentAlly))) {
 
-                    // That could be valid
+                    // That is valid
                     if(ChessHelp.pathIsClear(allyLocation, potentialAlliedMove, focusChessBoard)) {
 
                         // Move the piece
