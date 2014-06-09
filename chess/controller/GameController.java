@@ -19,8 +19,10 @@ public class GameController {
     private static boolean whiteTurn = true;
 
     public static void start(String[] starterArgs){
+
         FileInputHandler fIH = new FileInputHandler();
         UserInputHandler uIH = new UserInputHandler();
+
         containerForTheGame.init();
 
         if(starterArgs.length > 0) {
@@ -28,7 +30,7 @@ public class GameController {
             runFileGame(starterArgs[0], fIH);
 //            chessView.drawBoard();
         }
-        else {
+        else /*if(starterArgs[0].equals(""))*/ {
             chessView = new GraphicUI(containerForTheGame);
             runGraphicGame(uIH);
         }
@@ -69,6 +71,7 @@ public class GameController {
 
         GraphicUI view = (GraphicUI) chessView;
 
+        view.drawBoard();
         // TODO: do stuff
         uIH.runTextPromptGame();
 

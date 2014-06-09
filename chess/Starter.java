@@ -8,8 +8,14 @@ import chess.controller.GameController;
 public class Starter {
 
     public static void main(String[] args) {
-        if(args.length == 1) {
-            GameController.start(args);
-        }
+//        if(args.length == 1) {
+//            GameController.start(args);
+//        }
+//        else if(args == null) {
+//            GameController.start(args);
+//        }
+
+        GameController.start(args);
+
     }
 }
