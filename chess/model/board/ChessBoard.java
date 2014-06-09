@@ -230,7 +230,6 @@ public class ChessBoard {
 
         // (delta-Y should be 0 and y == 1 | 8, delta-X == 5 - 1 | 5 - 8)
 
-        // TODO: in leisure, finish castling
         {
             int deltaX = c1LocX - c2LocX;
             int deltaY = c1LocY - c2LocY;
@@ -398,7 +397,6 @@ public class ChessBoard {
      * that a King is in check. And which one.
      */
     public class CheckFinder {
-        // TODO: determine check and give the shout out
 //        BoardSquareLocator forTheKings = new BoardSquareLocator();
 
         BoardLocation whiteKingLocation;
@@ -500,8 +498,6 @@ public class ChessBoard {
         }
 
         public boolean gameIsInStaleMate() {
-
-            // TODO: modify body to compliance with MoveProjector API
 
 //            boolean state1 = whiteIsInCheck(), state2 = false;
 

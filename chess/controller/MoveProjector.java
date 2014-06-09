@@ -31,7 +31,6 @@ public class MoveProjector {
      *              simulatedBoard. To be tested in every direction.
      */
     public ArrayList<BoardLocation> projectValidMoves(BoardLocation pieceLocation, int range) {
-        // TODO: Simulate movement of <code> piece </code> range squares in every valid direction
 
         ArrayList<BoardLocation> testMoveLocations = new ArrayList<>();
 
@@ -121,7 +120,6 @@ public class MoveProjector {
 
         }
 
-        // TODO: This conditional needs to run
         // If it looks like Checkmate, check against every move the allies can make
         if(kingStillInCheck) {
 

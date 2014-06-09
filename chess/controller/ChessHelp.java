@@ -86,7 +86,6 @@ public class ChessHelp {
 
     public static boolean isValidCastle(BoardLocation kingSquare, BoardLocation rookSquare,
                                         BoardLocation kingDest, BoardLocation rookDest) {
-        // TODO: validate for the castling maneuver
         // After making sure they are a valid King and Rook
         if(kingSquare.getPresentPiece() instanceof King && rookSquare.getPresentPiece() instanceof Rook) {
             // Make sure they haven't moved
@@ -117,7 +116,6 @@ public class ChessHelp {
 
         BoardLocation[][] referenceBoard = containerForTheGame.getFunctionalBoard();
 
-// TODO: Collision checking
         if (modeOfTravel == ModeOfTravel.STRAIGHT) {
 
             for (int i = referenceBoard.length - 1; i >= 0; i--) { // so we can look at the from white's side
@@ -187,7 +185,6 @@ public class ChessHelp {
 
                     BoardLocation thisLocation;
                     if(referenceBoard[i][j] != null){
-                        // TODO: Diagonals towrads black side of the board
                         thisLocation = referenceBoard[i][j];
                         if (thisLocation.getY() <= destY && thisLocation.getY() > startY) {
 
@@ -199,7 +196,6 @@ public class ChessHelp {
 
                         }
                         else if (thisLocation.getY() > destY) {
-                            // TODO: Diagonal towards white side of the board
                         }
 
                     }
@@ -387,7 +383,6 @@ public class ChessHelp {
     public static void callCheck() {
         ChessBoard.CheckFinder finder = containerForTheGame.getCheckFinder();
 
-        // TODO: Stalemate call
         if(finder.blackIsInCheck()) {
 
             if(finder.blackIsInCheckMate()) {
