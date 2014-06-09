@@ -4,6 +4,7 @@ import chess.controller.instruction.Instruction;
 import chess.controller.instruction.MovePieceInstruction;
 import chess.model.board.BoardLocation;
 import chess.model.board.NumberCruncher;
+import chess.model.pieces.ChessPiece;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +24,9 @@ public class UserInputHandler {
 
         while (true) {
 
-            displayAvailablePieces(GameController.isWhiteTurn());
+            displayMovablePieces(
+                    getMovablePieces(GameController.isWhiteTurn())
+            );
 
             String prompted = promptForInput();
             boolean validCommand = analyzeMove(prompted);
@@ -84,33 +87,45 @@ public class UserInputHandler {
         return input.toString();
     }
 
-    private void displayAvailablePieces(boolean b) {
+    private void displayMovablePieces(ArrayList<BoardLocation> thePieces) {
+
+        if (thePieces.size() == 0) System.out.println("You're cutting me too much");
+        for (int i = 0, squaresWithColorSize = thePieces.size(); i < squaresWithColorSize; i++) {
+
+            BoardLocation boardLocation = thePieces.get(i);
+
+            System.out.println((i + 1) + ") " + boardLocation.getName());
+        }
+    }
+
+    private ArrayList<BoardLocation> getMovablePieces(boolean b) {
 
         ArrayList<BoardLocation> squaresWithColor =
                 GameController.containerForTheGame.getCheckFinder().pullSquaresWithColor(b);
 
+        squaresWithColor.forEach(
+                f -> System.out.println(f + " " + f.getPresentPiece().fancyName())
+        );
         MoveProjector mp = new MoveProjector(GameController.containerForTheGame);
 
-        squaresWithColor.removeIf(
+        ArrayList<BoardLocation> notUseables = new ArrayList<>();
 
-                square -> {
+        for (BoardLocation boardLocation : squaresWithColor) {
+            ChessPiece pieceInquestion = boardLocation.getPresentPiece();
 
-                    ArrayList<BoardLocation> temp = mp.projectValidMoves(
-                            square, NumberCruncher.pieceMaxRange(square.getPresentPiece())
-                    );
-                    temp.forEach(System.out::println);
 
-                    return temp.size() > 0;
-                }
-        );
+            if (mp.projectValidMoves(boardLocation, NumberCruncher.pieceMaxRange(pieceInquestion)).size() == 0 ) {
 
-        if(squaresWithColor.size() == 0) System.out.println("You're cutting too much");
-        for (int i = 0, squaresWithColorSize = squaresWithColor.size(); i < squaresWithColorSize; i++) {
-
-            BoardLocation boardLocation = squaresWithColor.get(i);
-
-            System.out.println( (i + 1) + ") " + boardLocation.getName());
+                notUseables.add(boardLocation);
+                System.out.println(boardLocation.getName() + " " + boardLocation.getPresentPiece().fancyName());
+            }
         }
+
+        squaresWithColor.removeIf(square -> notUseables.contains(square));
+
+        squaresWithColor.forEach(System.out::println);
+
+        return squaresWithColor;
 
     }
 

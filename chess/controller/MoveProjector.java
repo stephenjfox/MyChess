@@ -32,6 +32,7 @@ public class MoveProjector {
      */
     public ArrayList<BoardLocation> projectValidMoves(BoardLocation pieceLocation, int range) {
 
+        BoardLocation[][] actualTestBoard = testBoard.getFunctionalBoard();
         ArrayList<BoardLocation> testMoveLocations = new ArrayList<>();
 
         for(int i = 1; i == range; i++ )
@@ -54,11 +55,12 @@ public class MoveProjector {
                 .filter(boardLocation -> boardLocation.getY() <= 8)
                 .collect(Collectors.toList());
 
-
         testMoveLocations.removeIf(problemLocation ->
-                (testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
-                        testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
-                && testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1]
+                // if there is a piece on the square that is the same color.
+                // YES, its a lot of code to say so little... I don't care
+                (actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
+                        actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
+                && actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1]
                         .getPresentPiece().colorMatches(pieceLocation.getPresentPiece()) );
 
 //        testMoveLocations.forEach(System.out::println);
@@ -69,7 +71,9 @@ public class MoveProjector {
         testMoveLocations.forEach(
                 location -> {
                     if (ChessHelp.testMoveForCheck(pieceLocation, location)) {
+
                         possibleMoveLocations.add(location);
+
                     }
                 }
         );
