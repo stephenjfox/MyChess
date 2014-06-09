@@ -66,10 +66,13 @@ public class GameController {
 
     private static void runGraphicGame() {
 
-        assert chessView instanceof GraphicUI;
+        GraphicUI view = (GraphicUI) chessView;
 
+        // TODO: do stuff
 
     }
+
+
 
     public static boolean isWhiteTurn() {
         return whiteTurn;

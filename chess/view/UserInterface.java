@@ -6,4 +6,6 @@ package chess.view;
 public interface UserInterface {
     void drawBoard();
     void informTheUser(String input);
+
+
 }
