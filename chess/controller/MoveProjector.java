@@ -55,8 +55,6 @@ public class MoveProjector {
                 .collect(Collectors.toList());
 
 
-
-
         testMoveLocations.removeIf(problemLocation ->
                 (testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
                         testBoard.getFunctionalBoard()[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
@@ -91,7 +89,7 @@ public class MoveProjector {
                                         ArrayList<BoardLocation> allyLocations) {
 
         boolean whichKing = kingLocation.getPresentPiece().isWhite();
-        boolean kingStillInCheck = false;
+       // boolean kingStillInCheck = false;
 
         BoardLocation[][] boardArray = testBoard.getFunctionalBoard(); // retrieve a copy of the board-array
 
@@ -100,6 +98,8 @@ public class MoveProjector {
 
         ChessBoard focusChessBoard = new ChessBoard(boardArray);
 
+        boolean kingStillInCheck = (kingValidMoves.size() == 0);
+//            kingStillInCheck = true;
         // For every possible king future Location
         for (BoardLocation kingValidMove : kingValidMoves) {
 
@@ -116,6 +116,7 @@ public class MoveProjector {
 
                 // undo back to the old state
                 focusChessBoard.movePieceWithoutTurnCheck(kingValidMove.getName(), kingLocation.getName());
+
             }
 
         }

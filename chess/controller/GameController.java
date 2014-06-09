@@ -20,6 +20,7 @@ public class GameController {
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
+        UserInputHandler uIH = new UserInputHandler();
         containerForTheGame.init();
 
         if(starterArgs.length > 0) {
@@ -29,7 +30,7 @@ public class GameController {
         }
         else {
             chessView = new GraphicUI(containerForTheGame);
-            runGraphicGame();
+            runGraphicGame(uIH);
         }
     }
 
@@ -64,12 +65,12 @@ public class GameController {
 
     }
 
-    private static void runGraphicGame() {
+    private static void runGraphicGame(UserInputHandler uIH) {
 
         GraphicUI view = (GraphicUI) chessView;
 
         // TODO: do stuff
-        view.runTextPromptGame();
+        uIH.runTextPromptGame();
 
     }
 
