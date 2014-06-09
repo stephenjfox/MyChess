@@ -16,19 +16,26 @@ import java.util.ArrayList;
  */
 public class UserInputHandler {
 
+    final String SENTINEL = "32";
+
     public void runTextPromptGame() {
+
 
         while (true) {
 
             displayAvailablePieces(GameController.isWhiteTurn());
 
             String prompted = promptForInput();
-//            boolean validCommand = analyzeMove(prompted);
+            boolean validCommand = analyzeMove(prompted);
 
-            if (true) {
+            Instruction executable = getInstructionFromString(prompted);
+            if (executable != null) {
 
-                getInstructionFromString(prompted).execute();
+                executable.execute();
 
+            }
+            else {
+                System.err.println("Bad input, please try again");
             }
 
             ChessHelp.printPlayerTurn();
@@ -36,12 +43,11 @@ public class UserInputHandler {
         }
 
     }
-//
-//    private boolean analyzeMove(String prompted) {
-//
-//
-//        return false;
-//    }
+
+    private boolean analyzeMove(String prompted) {
+
+        return false;
+    }
 
     private String promptForInput() {
 
@@ -57,6 +63,8 @@ public class UserInputHandler {
             System.err.println("Failed to append to piece selection to the StringBuilder");
         }
 
+
+
         System.out.println("Please select a destination (in format [a-e][1-8]");
         try {
 
@@ -66,7 +74,13 @@ public class UserInputHandler {
             System.err.println("Failed to append to location selection to the StringBuilder");
         }
 
-        System.out.println("DEBUG:"+input.toString());
+        if(input.toString().contains(SENTINEL)) {
+
+            System.out.println("Process terminated");
+            System.exit(0);
+
+        }
+
         return input.toString();
     }
 
@@ -79,14 +93,18 @@ public class UserInputHandler {
 
         squaresWithColor.removeIf(
 
-                square ->
-                        mp.projectValidMoves(
-                                square, NumberCruncher.pieceMaxRange(square.getPresentPiece())
-                        ).size() == 0
+                square -> {
+
+                    ArrayList<BoardLocation> temp = mp.projectValidMoves(
+                            square, NumberCruncher.pieceMaxRange(square.getPresentPiece())
+                    );
+                    temp.forEach(System.out::println);
+
+                    return temp.size() > 0;
+                }
         );
 
-        squaresWithColor.forEach(System.out::println);
-
+        if(squaresWithColor.size() == 0) System.out.println("You're cutting too much");
         for (int i = 0, squaresWithColorSize = squaresWithColor.size(); i < squaresWithColorSize; i++) {
 
             BoardLocation boardLocation = squaresWithColor.get(i);

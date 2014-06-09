@@ -24,6 +24,7 @@ public class GameController {
         UserInputHandler uIH = new UserInputHandler();
 
         containerForTheGame.init();
+        System.out.println("Welcome to VirtuaChess");
 
         if(starterArgs.length > 0) {
             chessView = new ConsoleUI(containerForTheGame);
