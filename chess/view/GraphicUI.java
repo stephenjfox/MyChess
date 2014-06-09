@@ -22,4 +22,7 @@ public class GraphicUI implements UserInterface {
     public void informTheUser(String input) {
 
     }
+
+
+
 }

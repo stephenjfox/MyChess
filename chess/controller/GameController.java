@@ -20,7 +20,7 @@ public class GameController {
 
     public static void start(String[] starterArgs){
         FileInputHandler fIH = new FileInputHandler();
-//        containerForTheGame.init();
+        containerForTheGame.init();
 
         if(starterArgs.length > 0) {
             chessView = new ConsoleUI(containerForTheGame);
@@ -30,7 +30,6 @@ public class GameController {
         else {
             chessView = new GraphicUI(containerForTheGame);
             runGraphicGame();
-            chessView.drawBoard();
         }
     }
 
@@ -66,6 +65,9 @@ public class GameController {
     }
 
     private static void runGraphicGame() {
+
+        assert chessView instanceof GraphicUI;
+
 
     }
 

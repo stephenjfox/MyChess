@@ -173,7 +173,7 @@ public class ChessBoard {
 
                     removed.setMoved();
 
-                    GameController.triggerDrawBoard();
+//                    GameController.triggerDrawBoard();
 //                    GameController.flipPlayerTurn();
 //                    ChessHelp.callCheck();
                 }
@@ -185,7 +185,7 @@ public class ChessBoard {
 
                 removed.setMoved();
 
-                GameController.triggerDrawBoard();
+//                GameController.triggerDrawBoard();
 //                GameController.flipPlayerTurn();
 //                ChessHelp.callCheck();
             }

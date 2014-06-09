@@ -305,6 +305,10 @@ public class ChessHelp {
     {
         ChessPiece startPiece = start.getPresentPiece();
 
+        if (startPiece == null) {
+            return true;
+        }
+
         int startX = start.getX();
         int startY = start.getY();
 
