@@ -37,9 +37,8 @@ public class UserInputHandler {
                 executable.execute();
 
             }
-            else {
+            else
                 System.err.println("Bad input, please try again");
-            }
 
             ChessHelp.printPlayerTurn();
 

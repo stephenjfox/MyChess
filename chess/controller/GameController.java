@@ -73,7 +73,7 @@ public class GameController {
         GraphicUI view = (GraphicUI) chessView;
 
         view.drawBoard();
-        // TODO: do stuff
+
         uIH.runTextPromptGame();
 
     }
