@@ -79,7 +79,7 @@ public class ChessHelp {
         assert start.getPresentPiece() != null;
         ChessPiece pieceToMove = start.getPresentPiece(); // FIXED : That's going to throw a NullPointer
 
-        if(pathIsClear(start, destination) || pieceToMove.toString().equalsIgnoreCase("n") )
+        if(pathIsClear(start, destination/*, containerForTheGame*/) || pieceToMove.toString().equalsIgnoreCase("n") )
             return pieceToMove.isValidMove(start, destination);
 
         return false;
@@ -289,7 +289,7 @@ public class ChessHelp {
             }
 
         }
-
+        System.out.printf("Move from %s to %s for %s was invalid\n", start.getName(), destination.getName(), start.getPresentPiece().fancyName());
         return false;
         // Return false if something is in the way
 //        return (pathObstacles(start, destination, modeOfTravel).isEmpty());
@@ -367,7 +367,7 @@ public class ChessHelp {
             }
 
         }
-
+        System.out.printf("Move from %s to %s for %s was invalid\n", start.getName(), destination.getName(), start.getPresentPiece().fancyName());
         return false;
     }
 

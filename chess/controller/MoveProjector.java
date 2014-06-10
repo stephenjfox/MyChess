@@ -83,6 +83,7 @@ public class MoveProjector {
         ArrayList<BoardLocation> possibleMoveLocations = new ArrayList<>();
 
         // Add only the valid moves
+// TODO: fix filter
         testMoveLocations.forEach(
                 location -> {
                     if (ChessHelp.testMoveForCheck(pieceLocation, location)) {
@@ -95,7 +96,8 @@ public class MoveProjector {
 
         System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
 
-        if(possibleMoveLocations.size() > 0) {
+        if(possibleMoveLocations.size() > 0)
+        {
             possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
         }
         else {

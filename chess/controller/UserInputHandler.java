@@ -111,6 +111,7 @@ public class UserInputHandler {
 
         for (BoardLocation friendlySquare : squaresWithColor) {
 
+            System.out.printf("Testing %s\n", friendlySquare.getName());
             ArrayList<BoardLocation> validMoves =
                     mp.getValidMoves(friendlySquare);
 
