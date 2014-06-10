@@ -69,30 +69,38 @@ public class MoveProjector {
 //        testMoveLocations.forEach(System.out::println);
 
         testMoveLocations.removeIf(problemLocation ->
-                // if there is a piece on the square that is the same color.
-                // YES, its a lot of code to say so little... I don't care
-                (actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
-                        actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
-                && actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1]
-                        .getPresentPiece().colorMatches(pieceLocation.getPresentPiece())
+                        // if there is a piece on the square that is the same color.
+                        // YES, its a lot of code to say so little... I don't care
+                        (actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
+                                actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
+                                && actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1]
+                                .getPresentPiece().colorMatches(pieceLocation.getPresentPiece())
         );
 
-        System.out.println("Test foreach " + pieceLocation.getPresentPiece().fancyName());
-        testMoveLocations.forEach(System.out::println);
+//        System.out.println("Test foreach " + pieceLocation.getPresentPiece().fancyName());
+//        testMoveLocations.forEach(System.out::println);
 
         ArrayList<BoardLocation> possibleMoveLocations = new ArrayList<>();
 
         // Add only the valid moves
 // TODO: fix filter
-        testMoveLocations.forEach(
-                location -> {
-                    if (ChessHelp.testMoveForCheck(pieceLocation, location)) {
+//        testMoveLocations.forEach(
+//                location -> {
+//                    System.out.printf("\nValid Move filter on: %s and %s\n", pieceLocation.getName(), location.getName());
+//                    if (ChessHelp.testMoveForCheck(pieceLocation, location)) {
+//
+//                        possibleMoveLocations.add(location);
+//
+//                    }
+//                }
+//        );
 
-                        possibleMoveLocations.add(location);
-
-                    }
-                }
-        );
+        possibleMoveLocations.addAll(
+                testMoveLocations.stream()
+                        .filter(location -> {
+                            System.out.printf("\nValid Move filter on: %s and %s\n", pieceLocation.getName(), location.getName());
+                            return ChessHelp.testMoveForCheck(pieceLocation, location);
+                        }).collect(Collectors.toList()));
 
         System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
 
@@ -101,7 +109,7 @@ public class MoveProjector {
             possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
         }
         else {
-            System.out.println("MoveLocations aren't being populated");
+            System.out.printf("%s doesn't have any moves\n\n", pieceLocation.getPresentPiece().fancyName());
         }
 
         return possibleMoveLocations;

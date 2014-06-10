@@ -277,8 +277,6 @@ public class ChessHelp {
 //            System.out.println(startPiece.fancyName());
 //            System.out.println(nextSquareOnPath);
 
-            if (start.isSameSquare(destination)) return true;
-
             if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] != null) {
                 // If there isn't a piece there at the start
                 return containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
@@ -352,19 +350,16 @@ public class ChessHelp {
 
             BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
             nextSquareOnPath.placePiece(startPiece);
+
+//            if(nextSquareOnPath.isSameSquare(destination)) return true;
 //            System.out.println(startPiece.fancyName());
 //            System.out.println(nextSquareOnPath);
-
-            if (start.isSameSquare(destination)) return true;
 
             if (toOperate.getFunctionalBoard()[startY - 1][startX - 1] != null) {
                 // If there isn't a piece there at the start
                 return toOperate.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
             }
-            else if (start.isSameSquare(destination)) return true;
-            else {
-                return pathIsClear(nextSquareOnPath, destination, toOperate);
-            }
+            else return start.isSameSquare(destination) || pathIsClear(nextSquareOnPath, destination, toOperate);
 
         }
         System.out.printf("Move from %s to %s for %s was invalid\n", start.getName(), destination.getName(), start.getPresentPiece().fancyName());

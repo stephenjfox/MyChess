@@ -27,7 +27,7 @@ public class UserInputHandler {
         do {
             ChessHelp.printPlayerTurn();
 
-            displayMovablePieces(
+            displayMoves(
                     getMovablePieces(isWhiteTurn())
             );
 
@@ -36,6 +36,8 @@ public class UserInputHandler {
             if (analyzeMove(firstInput)) {
 
                 String secondInput = promptForInput("Enter the destination location in [a-h][1-8] format");
+
+
 
                 if (analyzeMove(secondInput)) {
 
@@ -83,7 +85,7 @@ public class UserInputHandler {
         return input.toString();
     }
 
-    private void displayMovablePieces(ArrayList<BoardLocation> thePieces) {
+    private void displayMoves(ArrayList<BoardLocation> thePieces) {
 
         if (thePieces.size() == 0) {
             System.out.println("You're cutting me too much");
