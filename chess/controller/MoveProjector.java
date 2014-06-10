@@ -91,6 +91,7 @@ public class MoveProjector {
         return projectValidMoves(pieceLocation, range);
 
     }
+
     /**
      * Makes changes to fake board and determines check status
      * @param kingLocation square with the king to be captured against

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class UserInputHandler {
 
-    final String SENTINEL = "32";
+    final String SENTINEL = "32", GOOD_INPUT = "[a-h][1-8]";
     private MoveProjector mp = new MoveProjector(GameController.containerForTheGame);
 
 
@@ -23,24 +23,21 @@ public class UserInputHandler {
 
 
         while (true) {
+            ChessHelp.printPlayerTurn();
 
             displayMovablePieces(
                     getMovablePieces(GameController.isWhiteTurn())
             );
 
-            String prompted = promptForInput();
-            boolean validCommand = analyzeMove(prompted);
+            String firstPrompt = promptForInput("Enter the board location in [a-h][1-8] format");
 
-            Instruction executable = getInstructionFromString(prompted);
-            if (executable != null) {
+            if(analyzeMove(firstPrompt)) {
 
-                executable.execute();
+                // TODO: Print the moves allocated to that piece, then verify the second prompt
+
+                Instruction executable = getInstructionFromString(firstPrompt);
 
             }
-            else
-                System.err.println("Bad input, please try again");
-
-            ChessHelp.printPlayerTurn();
 
         }
 
@@ -48,15 +45,15 @@ public class UserInputHandler {
 
     private boolean analyzeMove(String prompted) {
 
-        return false;
+        return prompted.matches(GOOD_INPUT);
     }
 
-    private String promptForInput() {
+    private String promptForInput(String prompt) {
 
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder input = new StringBuilder();
 
-        System.out.println("Please select a piece (in format [a-e][1-8]");
+        System.out.println(prompt);
         try {
 
             input.append(buff.readLine());
@@ -64,16 +61,6 @@ public class UserInputHandler {
         }
         catch (IOException e) {
             System.err.println("Failed to append to piece selection to the StringBuilder");
-        }
-
-        System.out.println("Please select a destination (in format [a-e][1-8]");
-        try {
-
-            input.append(" ").append(buff.readLine());
-
-        }
-        catch (IOException e) {
-            System.err.println("Failed to append to location selection to the StringBuilder");
         }
 
         if(input.toString().contains(SENTINEL)) {
