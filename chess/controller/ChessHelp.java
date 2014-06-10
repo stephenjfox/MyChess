@@ -277,9 +277,6 @@ public class ChessHelp {
 //            System.out.println(startPiece.fancyName());
 //            System.out.println(nextSquareOnPath);
 
-            BoardLocation squareBeforeDest = destination.subtract(1, 1);
-//            System.out.println(squareBeforeDest);
-
             if (start.isSameSquare(destination)) return true;
 
             if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] != null) {
@@ -357,9 +354,6 @@ public class ChessHelp {
             nextSquareOnPath.placePiece(startPiece);
 //            System.out.println(startPiece.fancyName());
 //            System.out.println(nextSquareOnPath);
-
-//            BoardLocation squareBeforeDest = destination.subtract(1, 1);
-//            System.out.println(squareBeforeDest);
 
             if (start.isSameSquare(destination)) return true;
 

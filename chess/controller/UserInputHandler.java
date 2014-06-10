@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static chess.controller.GameController.*;
+
 /**
  * Created by Stephen on 6/9/2014.
  * In project: NewChess
@@ -16,30 +18,38 @@ import java.util.ArrayList;
 public class UserInputHandler {
 
     final String SENTINEL = "32", GOOD_INPUT = "[a-h][1-8]";
-    private MoveProjector mp = new MoveProjector(GameController.containerForTheGame);
+    private MoveProjector mp = new MoveProjector(containerForTheGame);
 
 
     public void runTextPromptGame() {
 
 
-        while (true) {
+        do {
             ChessHelp.printPlayerTurn();
 
             displayMovablePieces(
-                    getMovablePieces(GameController.isWhiteTurn())
+                    getMovablePieces(isWhiteTurn())
             );
 
-            String firstPrompt = promptForInput("Enter the board location in [a-h][1-8] format");
+            String firstInput = promptForInput("Enter the starting location in [a-h][1-8] format");
 
-            if(analyzeMove(firstPrompt)) {
+            if (analyzeMove(firstInput)) {
 
-                // TODO: Print the moves allocated to that piece, then verify the second prompt
+                String secondInput = promptForInput("Enter the destination location in [a-h][1-8] format");
 
-                Instruction executable = getInstructionFromString(firstPrompt);
+                if (analyzeMove(secondInput)) {
 
+                    Instruction executable = getInstructionFromString(firstInput + " " + secondInput);
+
+                } else {
+                    System.err.println("Poor input, please start over.");
+                }
+
+            } else {
+                System.err.println("Improper selection");
             }
 
-        }
+        } while (true);
 
     }
 
@@ -75,7 +85,11 @@ public class UserInputHandler {
 
     private void displayMovablePieces(ArrayList<BoardLocation> thePieces) {
 
-        if (thePieces.size() == 0) System.out.println("You're cutting me too much");
+        if (thePieces.size() == 0) {
+            System.out.println("You're cutting me too much");
+            return;
+        }
+
         for (int i = 0, squaresWithColorSize = thePieces.size(); i < squaresWithColorSize; i++) {
 
             BoardLocation boardLocation = thePieces.get(i);
@@ -87,11 +101,11 @@ public class UserInputHandler {
     private ArrayList<BoardLocation> getMovablePieces(boolean b) {
 
         ArrayList<BoardLocation> squaresWithColor =
-                GameController.containerForTheGame.getCheckFinder().pullSquaresWithColor(b);
+                containerForTheGame.getCheckFinder().pullSquaresWithColor(b);
 
-        squaresWithColor.forEach(
-                f -> System.out.println(f + " " + f.getPresentPiece().fancyName())
-        );
+//        squaresWithColor.forEach(
+//                f -> System.out.println(f + " " + f.getPresentPiece().fancyName())
+//        );
 
         ArrayList<BoardLocation> movables = new ArrayList<>();
 
@@ -100,7 +114,10 @@ public class UserInputHandler {
             ArrayList<BoardLocation> validMoves =
                     mp.getValidMoves(friendlySquare);
 
-            if(validMoves.size() > 0) movables.add(friendlySquare);
+            if(validMoves.size() > 0) {
+                movables.add(friendlySquare);
+                System.out.println("Added a possible piece square");
+            }
         }
 
         return movables;

@@ -35,9 +35,8 @@ public class MoveProjector {
         BoardLocation[][] actualTestBoard = testBoard.getFunctionalBoard();
         ArrayList<BoardLocation> testMoveLocations = new ArrayList<>();
 
-        for(int i = 1; i == range; i++ )
+        for(int i = 1; i <= range; i++ )
         {
-            testMoveLocations.add( pieceLocation.add(i, i)  );
             testMoveLocations.add( pieceLocation.add(0, i)  );
             testMoveLocations.add( pieceLocation.add(-i, i) );
             testMoveLocations.add( pieceLocation.add(-i, 0) );
@@ -45,15 +44,29 @@ public class MoveProjector {
             testMoveLocations.add( pieceLocation.add(0, -i) );
             testMoveLocations.add( pieceLocation.add(i, -i) );
             testMoveLocations.add( pieceLocation.add(i, 0)  );
+            testMoveLocations.add( pieceLocation.add(i, i)  );
+
+            // For knight moves
+            testMoveLocations.add( pieceLocation.add(i + 1, i));
+            testMoveLocations.add( pieceLocation.add(-i - 1, i));
+            testMoveLocations.add( pieceLocation.add(i + 1, -i));
+            testMoveLocations.add( pieceLocation.add(-i - 1, -i));
+            testMoveLocations.add( pieceLocation.add(i, i + 1));
+            testMoveLocations.add( pieceLocation.add(-i, i + 1));
+            testMoveLocations.add( pieceLocation.add(i, -i - 1));
+            testMoveLocations.add( pieceLocation.add(-i, -i - 1));
         }
 
         // Remove squares off the board
         testMoveLocations.removeIf(problem -> problem instanceof NullBoardLocation);
 
+
         // Filter the list down to valid boardLocations
         testMoveLocations.stream()
-                .filter(boardLocation -> boardLocation.getY() <= 8)
+                .filter(boardLocation -> boardLocation.getY() > 8)
                 .collect(Collectors.toList());
+
+//        testMoveLocations.forEach(System.out::println);
 
         testMoveLocations.removeIf(problemLocation ->
                 // if there is a piece on the square that is the same color.
@@ -61,8 +74,10 @@ public class MoveProjector {
                 (actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
                         actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
                 && actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1]
-                        .getPresentPiece().colorMatches(pieceLocation.getPresentPiece()) );
+                        .getPresentPiece().colorMatches(pieceLocation.getPresentPiece())
+        );
 
+        System.out.println("Test foreach " + pieceLocation.getPresentPiece().fancyName());
         testMoveLocations.forEach(System.out::println);
 
         ArrayList<BoardLocation> possibleMoveLocations = new ArrayList<>();
@@ -78,7 +93,13 @@ public class MoveProjector {
                 }
         );
 
-        possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
+        System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
+        if(possibleMoveLocations.size() > 0) {
+            possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
+        }
+        else {
+            System.out.println("MoveLocations aren't being populated");
+        }
 
         return possibleMoveLocations;
     }
