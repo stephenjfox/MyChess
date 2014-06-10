@@ -3,8 +3,6 @@ package chess.controller;
 import chess.controller.instruction.Instruction;
 import chess.controller.instruction.MovePieceInstruction;
 import chess.model.board.BoardLocation;
-import chess.model.board.NumberCruncher;
-import chess.model.pieces.ChessPiece;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +16,8 @@ import java.util.ArrayList;
 public class UserInputHandler {
 
     final String SENTINEL = "32";
+    private MoveProjector mp = new MoveProjector(GameController.containerForTheGame);
+
 
     public void runTextPromptGame() {
 
@@ -62,18 +62,18 @@ public class UserInputHandler {
 
             input.append(buff.readLine());
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Failed to append to piece selection to the StringBuilder");
         }
-
-
 
         System.out.println("Please select a destination (in format [a-e][1-8]");
         try {
 
             input.append(" ").append(buff.readLine());
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Failed to append to location selection to the StringBuilder");
         }
 
@@ -106,26 +106,18 @@ public class UserInputHandler {
         squaresWithColor.forEach(
                 f -> System.out.println(f + " " + f.getPresentPiece().fancyName())
         );
-        MoveProjector mp = new MoveProjector(GameController.containerForTheGame);
 
-        ArrayList<BoardLocation> notUseables = new ArrayList<>();
+        ArrayList<BoardLocation> movables = new ArrayList<>();
 
-        for (BoardLocation boardLocation : squaresWithColor) {
-            ChessPiece pieceInquestion = boardLocation.getPresentPiece();
+        for (BoardLocation friendlySquare : squaresWithColor) {
 
+            ArrayList<BoardLocation> validMoves =
+                    mp.getValidMoves(friendlySquare);
 
-            if (mp.projectValidMoves(boardLocation, NumberCruncher.pieceMaxRange(pieceInquestion)).size() == 0 ) {
-
-                notUseables.add(boardLocation);
-                System.out.println(boardLocation.getName() + " " + boardLocation.getPresentPiece().fancyName());
-            }
+            if(validMoves.size() > 0) movables.add(friendlySquare);
         }
 
-        squaresWithColor.removeIf(square -> notUseables.contains(square));
-
-        squaresWithColor.forEach(System.out::println);
-
-        return squaresWithColor;
+        return movables;
 
     }
 
@@ -143,9 +135,6 @@ public class UserInputHandler {
 
             return new MovePieceInstruction(possibleInstruction);
         }
-
-//        if(buffReturn.matches(FileInputHandler.MOVE_TWO_REGEX))
-//            return new MoveTwoInstruction(possibleInstruction);
 
         return null;
     }

@@ -63,7 +63,7 @@ public class MoveProjector {
                 && actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1]
                         .getPresentPiece().colorMatches(pieceLocation.getPresentPiece()) );
 
-//        testMoveLocations.forEach(System.out::println);
+        testMoveLocations.forEach(System.out::println);
 
         ArrayList<BoardLocation> possibleMoveLocations = new ArrayList<>();
 
@@ -78,10 +78,19 @@ public class MoveProjector {
                 }
         );
 
+        possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
+
         return possibleMoveLocations;
     }
 
 
+    public ArrayList<BoardLocation> getValidMoves(BoardLocation pieceLocation) {
+
+        int range = NumberCruncher.pieceMaxRange(pieceLocation.getPresentPiece());
+
+        return projectValidMoves(pieceLocation, range);
+
+    }
     /**
      * Makes changes to fake board and determines check status
      * @param kingLocation square with the king to be captured against
@@ -146,7 +155,6 @@ public class MoveProjector {
                         // Check for Check-condition
                         for (BoardLocation enemyLocation : enemyLocations) {
 
-
                                 kingStillInCheck = (ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard));
 
                         }
@@ -155,10 +163,8 @@ public class MoveProjector {
                         focusChessBoard.movePieceWithoutTurnCheck(potentialAlliedMove.getName(), allyLocation.getName());
 
                     }
-
                 }
             }
-
         }
 
         return kingStillInCheck;
