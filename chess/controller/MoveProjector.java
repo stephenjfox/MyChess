@@ -83,34 +83,22 @@ public class MoveProjector {
         ArrayList<BoardLocation> possibleMoveLocations = new ArrayList<>();
 
         // Add only the valid moves
-// TODO: fix filter
-//        testMoveLocations.forEach(
-//                location -> {
-//                    System.out.printf("\nValid Move filter on: %s and %s\n", pieceLocation.getName(), location.getName());
-//                    if (ChessHelp.testMoveForCheck(pieceLocation, location)) {
-//
-//                        possibleMoveLocations.add(location);
-//
-//                    }
-//                }
-//        );
-
         possibleMoveLocations.addAll(
                 testMoveLocations.stream()
                         .filter(location -> {
-                            System.out.printf("\nValid Move filter on: %s and %s\n", pieceLocation.getName(), location.getName());
+//                            System.out.printf("\nValid Move filter on: %s and %s\n", pieceLocation.getName(), location.getName());
                             return ChessHelp.testMoveForCheck(pieceLocation, location);
                         }).collect(Collectors.toList()));
-
-        System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
-
-        if(possibleMoveLocations.size() > 0)
-        {
-            possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
-        }
-        else {
-            System.out.printf("%s doesn't have any moves\n\n", pieceLocation.getPresentPiece().fancyName());
-        }
+//
+//        System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
+//
+//        if(possibleMoveLocations.size() > 0)
+//        {
+//            possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
+//        }
+//        else {
+//            System.out.printf("%s doesn't have any moves\n\n", pieceLocation.getPresentPiece().fancyName());
+//        }
 
         return possibleMoveLocations;
     }

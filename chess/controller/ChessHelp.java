@@ -79,7 +79,7 @@ public class ChessHelp {
         assert start.getPresentPiece() != null;
         ChessPiece pieceToMove = start.getPresentPiece(); // FIXED : That's going to throw a NullPointer
 
-        if(pathIsClear(start, destination/*, containerForTheGame*/) || pieceToMove.toString().equalsIgnoreCase("n") )
+        if(pathIsClear(start, destination, containerForTheGame) || pieceToMove.toString().equalsIgnoreCase("n") )
             return pieceToMove.isValidMove(start, destination);
 
         return false;
@@ -282,11 +282,13 @@ public class ChessHelp {
                 return containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
             }
             else if (start.isSameSquare(destination)) return true;
+            else if (start.getName().equals(destination.getName())) return true;
             else {
                 return pathIsClear(nextSquareOnPath, destination);
             }
 
         }
+
         System.out.printf("Move from %s to %s for %s was invalid\n", start.getName(), destination.getName(), start.getPresentPiece().fancyName());
         return false;
         // Return false if something is in the way
@@ -325,6 +327,8 @@ public class ChessHelp {
             dY = (startY - destY) / Math.abs(startY - destY);
         }
 
+        if(dX == 0 && dY == 0) return true;
+
 //        modeOfTravel = (((dX / dY) == 1) ? ModeOfTravel.DIAGONAL : ModeOfTravel.STRAIGHT);
 
         if((startPiece.toString().equalsIgnoreCase("q") ||
@@ -341,7 +345,6 @@ public class ChessHelp {
             return true;
 
         // Not equal because we can increment up or down, depending on the piece and side of the board
-        while (startX != destX || startY != destY) {
 
             // Increment to check along the algebraically determined path
 
@@ -350,20 +353,30 @@ public class ChessHelp {
 
             BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
             nextSquareOnPath.placePiece(startPiece);
-
-//            if(nextSquareOnPath.isSameSquare(destination)) return true;
 //            System.out.println(startPiece.fancyName());
 //            System.out.println(nextSquareOnPath);
 
-            if (toOperate.getFunctionalBoard()[startY - 1][startX - 1] != null) {
-                // If there isn't a piece there at the start
-                return toOperate.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
-            }
-            else return start.isSameSquare(destination) || pathIsClear(nextSquareOnPath, destination, toOperate);
 
-        }
-        System.out.printf("Move from %s to %s for %s was invalid\n", start.getName(), destination.getName(), start.getPresentPiece().fancyName());
-        return false;
+            // If a piece is present,
+                // return false
+            // recurse
+
+            BoardLocation currentSquare = toOperate.getFunctionalBoard()[startY - 1][startX - 1];
+
+            if(currentSquare != null && currentSquare.getPresentPiece() != null) {
+                // If piece is present
+                return false;
+            }
+
+            currentSquare = nextSquareOnPath;
+//            currentSquare.placePiece(startPiece);
+
+            boolean isClear = pathIsClear(currentSquare, destination, toOperate);
+
+            currentSquare.remove();
+
+            return isClear;
+
     }
 
     public static void printPlayerTurn() {

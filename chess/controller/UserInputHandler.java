@@ -25,23 +25,35 @@ public class UserInputHandler {
 
 
         do {
+            // Show the player's turn
             ChessHelp.printPlayerTurn();
 
-            displayMoves(
+            // Show their available movable pieces
+            displayMovables(
                     getMovablePieces(isWhiteTurn())
             );
-
+// TODO: PAWN PROMOTION
+            // Prompt
             String firstInput = promptForInput("Enter the starting location in [a-h][1-8] format");
 
+            // Check the validity of the input
             if (analyzeMove(firstInput)) {
 
+                // Present second set of choices: possible destinations of selected piece
+                displayMovables(
+                        getValidMoves(firstInput)
+                );
+
+                // Receive the input
                 String secondInput = promptForInput("Enter the destination location in [a-h][1-8] format");
 
-
-
-                if (analyzeMove(secondInput)) {
+                // Match the regex
+                if ((secondInput).matches(GOOD_INPUT)) {
 
                     Instruction executable = getInstructionFromString(firstInput + " " + secondInput);
+
+                    // Execute
+                    executable.execute();
 
                 } else {
                     System.err.println("Poor input, please start over.");
@@ -51,13 +63,38 @@ public class UserInputHandler {
                 System.err.println("Improper selection");
             }
 
+            ChessHelp.callCheck();
+
         } while (true);
 
     }
 
+    private ArrayList<BoardLocation> getValidMoves(String secondInput) {
+
+        // Grab the board
+        BoardLocation[][] functionalBoard = containerForTheGame.getFunctionalBoard();
+
+        // Create BoardLocation wrapper instance to get the goodies
+        BoardLocation inputWrapper = new BoardLocation(secondInput);
+
+        // Get the actual square that holds that stuff I want
+        BoardLocation actualSquare = functionalBoard[inputWrapper.getY() - 1][inputWrapper.getX() - 1];
+
+        // return the moves that are good
+        return mp.getValidMoves(actualSquare);
+    }
+
     private boolean analyzeMove(String prompted) {
 
-        return prompted.matches(GOOD_INPUT);
+        return prompted.matches(GOOD_INPUT) && teamMatches(new BoardLocation(prompted));
+    }
+
+    private boolean teamMatches(BoardLocation location) {
+
+        BoardLocation[][] fBoard = containerForTheGame.getFunctionalBoard();
+
+
+        return fBoard[location.getY()-1][location.getX()-1].getPresentPiece().isWhite() == isWhiteTurn();
     }
 
     private String promptForInput(String prompt) {
@@ -85,7 +122,7 @@ public class UserInputHandler {
         return input.toString();
     }
 
-    private void displayMoves(ArrayList<BoardLocation> thePieces) {
+    private void displayMovables(ArrayList<BoardLocation> thePieces) {
 
         if (thePieces.size() == 0) {
             System.out.println("You're cutting me too much");
@@ -113,13 +150,13 @@ public class UserInputHandler {
 
         for (BoardLocation friendlySquare : squaresWithColor) {
 
-            System.out.printf("Testing %s\n", friendlySquare.getName());
+//            System.out.printf("Testing %s\n", friendlySquare.getName());
             ArrayList<BoardLocation> validMoves =
                     mp.getValidMoves(friendlySquare);
 
             if(validMoves.size() > 0) {
                 movables.add(friendlySquare);
-                System.out.println("Added a possible piece square");
+//                System.out.println("Added a possible piece square");
             }
         }
 
