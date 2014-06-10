@@ -363,7 +363,7 @@ public class ChessHelp {
             }
             else if (start.isSameSquare(destination)) return true;
             else {
-                return pathIsClear(nextSquareOnPath, destination);
+                return pathIsClear(nextSquareOnPath, destination, toOperate);
             }
 
         }

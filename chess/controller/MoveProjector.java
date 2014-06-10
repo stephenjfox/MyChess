@@ -94,6 +94,7 @@ public class MoveProjector {
         );
 
         System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
+
         if(possibleMoveLocations.size() > 0) {
             possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
         }
