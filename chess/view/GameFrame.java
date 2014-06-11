@@ -14,8 +14,9 @@ public class GameFrame extends JFrame {
 
     // TODO: Return the frame with the pieces on it
 
-    ChessBoard modelBoard;
-    BoardLocation[][] functBoard;
+    private ChessBoard modelBoard;
+    private BoardLocation[][] functBoard;
+    private BoardPanel thePanel = new BoardPanel();
 
     public GameFrame(ChessBoard chessBoard) {
 
@@ -24,20 +25,12 @@ public class GameFrame extends JFrame {
         this.functBoard = modelBoard.getFunctionalBoard();
 
         this.setPreferredSize(new Dimension(1000, 800));
-        this.setLayout(new GridLayout(8, 8));
 
-        initializeSelf();
-
+//        initializeSelf();
+        this.add(thePanel);
         this.setTitle("VirtuaChess");
-        this.setBackground(Color.black);
         this.setVisible(true);
         this.pack();
-
-    }
-
-    @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
 
     }
 
