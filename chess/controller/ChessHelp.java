@@ -265,34 +265,30 @@ public class ChessHelp {
             return true;
 
         // Not equal because we can increment up or down, depending on the piece and side of the board
-        while (startX != destX || startY != destY) {
 
             // Increment to check along the algebraically determined path
 
-            startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
-            startY -= dY;// ^^^^
+        startX -= dX;// Positives (blacks) move "down"/"-" negatives (whites) move "up"/"-- or +"
+        startY -= dY;// ^^^^
 
-            BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
-            nextSquareOnPath.placePiece(startPiece);
+        BoardLocation nextSquareOnPath = new BoardLocation(startX, startY);
+        nextSquareOnPath.placePiece(startPiece);
 //            System.out.println(startPiece.fancyName());
 //            System.out.println(nextSquareOnPath);
 
-            if (containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1] != null) {
-                // If there isn't a piece there at the start
-                return containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1].getPresentPiece() == null;
-            }
-            else if (start.isSameSquare(destination)) return true;
-            else if (start.getName().equals(destination.getName())) return true;
-            else {
-                return pathIsClear(nextSquareOnPath, destination);
-            }
+        BoardLocation currentSquare = containerForTheGame.getFunctionalBoard()[startY - 1][startX - 1];
 
+        if (currentSquare != null) {
+            // If there isn't a piece there at the start
+            return currentSquare.getPresentPiece() == null;
+        }
+        else {
+            return pathIsClear(nextSquareOnPath, destination);
         }
 
-        System.out.printf("Move from %s to %s for %s was invalid\n", start.getName(), destination.getName(), start.getPresentPiece().fancyName());
-        return false;
-        // Return false if something is in the way
-//        return (pathObstacles(start, destination, modeOfTravel).isEmpty());
+
+//        System.out.printf("Move from %s to %s for %s was invalid\n", start.getName(), destination.getName(), start.getPresentPiece().fancyName());
+//        return false;
     }
 
     public static boolean pathIsClear(BoardLocation start, BoardLocation destination, ChessBoard toOperate)
@@ -423,6 +419,27 @@ public class ChessHelp {
 
             System.exit(0);
         }
+
+    }
+
+    public static void promotePawn() {
+
+        BoardLocation[][] functionalBoard = containerForTheGame.getFunctionalBoard();
+
+        int lastRow = isWhiteTurn() ? 7 : 0; // Ends of the board depending on the turn
+
+        for (BoardLocation boardLocation : functionalBoard[lastRow]) {
+
+            if (boardLocation.getPresentPiece() != null && boardLocation.getPresentPiece() instanceof Pawn) {
+                // promote to Queen
+                Queen promoted = new Queen(isWhiteTurn());
+
+                boardLocation.placePiece(promoted);
+                // Overwrite the piece that
+            }
+
+        }
+
 
     }
 

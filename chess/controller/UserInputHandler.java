@@ -63,6 +63,8 @@ public class UserInputHandler {
                 System.err.println("Improper selection");
             }
 
+            ChessHelp.promotePawn();
+
             ChessHelp.callCheck();
 
         } while (true);
