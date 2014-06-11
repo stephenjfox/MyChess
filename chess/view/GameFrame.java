@@ -22,7 +22,9 @@ public class GameFrame extends JFrame {
         this.modelBoard = chessBoard;
 
         this.functBoard = modelBoard.getFunctionalBoard();
+
         this.setPreferredSize(new Dimension(1000, 800));
+        this.setLayout(new GridLayout(8, 8));
 
         initializeSelf();
 
@@ -39,13 +41,16 @@ public class GameFrame extends JFrame {
 
     }
 
-    private void drawModelSquare(BoardLocation boardLocation) {
+    private void drawModelSquare(BoardLocation boardLocation, Color c) {
 
-        // TODO: retrieve image panel
-        this.add(new ImagePanel(boardLocation.getPresentPiece()));
+        ImagePanel panel = new ImagePanel(boardLocation.getPresentPiece());
+        panel.setVisible(true);
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(c);
+
+        this.add(panel);
 
     }
-
 
     private void initializeSelf() {
 
@@ -58,12 +63,9 @@ public class GameFrame extends JFrame {
             for (int i1 = 0; i1 < row.length; i1++) {
                 BoardLocation square = row[i1];
 
-                if (square == null) {
-                    System.out.println("We hit a null square.");
-                }
-                else {
-                    drawModelSquare(square);
-                }
+                if(square == null) square = new BoardLocation(i1 + 1, i);
+
+                drawModelSquare(square, (i * i1 % 2 == 0) ? Color.black : Color.white);
             }
 
         }

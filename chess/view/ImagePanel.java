@@ -20,9 +20,9 @@ public class ImagePanel extends JPanel {
 
     public ImagePanel(ChessPiece c) {
         super();
+        String theDir = ChessHelp.getPieceImageDir(c);
 
         try {
-            String theDir = ChessHelp.getPieceImageDir(c);
             System.out.println(theDir);
 
             this.image = ImageIO.read(new File(theDir));

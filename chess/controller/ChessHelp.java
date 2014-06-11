@@ -46,6 +46,7 @@ public class ChessHelp {
 
         String root = "C:\\Users\\Stephen\\Documents\\Neumont Work\\Quarter 3\\PRO180 - Java Lab\\Files\\GuiImages\\";
 
+        if(cp == null) return root + "";
         return new HashMap<String, String>() {
             {
                 put("n", root + "Knight\\nb.png");
@@ -60,7 +61,6 @@ public class ChessHelp {
                 put("R", root + "Rook\\rw.png");
                 put("p", root + "Pawn\\pb.png");
                 put("P", root + "Pawn\\pw.png");
-
             }
         }.get(cp.toString());
 
