@@ -77,7 +77,7 @@ public class ChessHelp {
     public static boolean testMoveForCheck(BoardLocation start, BoardLocation destination) {
 
         assert start.getPresentPiece() != null;
-        ChessPiece pieceToMove = start.getPresentPiece(); // FIXED : That's going to throw a NullPointer
+        ChessPiece pieceToMove = start.getPresentPiece();
 
         if(pathIsClear(start, destination, containerForTheGame) || pieceToMove.toString().equalsIgnoreCase("n") )
             return pieceToMove.isValidMove(start, destination);
@@ -283,7 +283,13 @@ public class ChessHelp {
             return currentSquare.getPresentPiece() == null;
         }
         else {
-            return pathIsClear(nextSquareOnPath, destination);
+            currentSquare = nextSquareOnPath;
+
+            boolean isClear = pathIsClear(currentSquare, destination);
+
+            currentSquare.remove();
+
+            return isClear;
         }
 
 
@@ -352,7 +358,6 @@ public class ChessHelp {
 //            System.out.println(startPiece.fancyName());
 //            System.out.println(nextSquareOnPath);
 
-
             // If a piece is present,
                 // return false
             // recurse
@@ -372,7 +377,6 @@ public class ChessHelp {
             currentSquare.remove();
 
             return isClear;
-
     }
 
     public static void printPlayerTurn() {

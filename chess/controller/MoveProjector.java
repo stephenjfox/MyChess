@@ -72,10 +72,11 @@ public class MoveProjector {
                         // if there is a piece on the square that is the same color.
                         // YES, its a lot of code to say so little... I don't care
                         (actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1] != null &&
-                                actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
+                         actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1].getPresentPiece() != null)
                                 && actualTestBoard[problemLocation.getY() - 1][problemLocation.getX() - 1]
                                 .getPresentPiece().colorMatches(pieceLocation.getPresentPiece())
         );
+
 
 //        System.out.println("Test foreach " + pieceLocation.getPresentPiece().fancyName());
 //        testMoveLocations.forEach(System.out::println);
@@ -85,20 +86,10 @@ public class MoveProjector {
         // Add only the valid moves
         possibleMoveLocations.addAll(
                 testMoveLocations.stream()
-                        .filter(location -> {
-//                            System.out.printf("\nValid Move filter on: %s and %s\n", pieceLocation.getName(), location.getName());
-                            return ChessHelp.testMoveForCheck(pieceLocation, location);
-                        }).collect(Collectors.toList()));
-//
+                        .filter(location -> ChessHelp.testMoveForCheck(pieceLocation, location))
+                        .collect(Collectors.toList()));
+
 //        System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
-//
-//        if(possibleMoveLocations.size() > 0)
-//        {
-//            possibleMoveLocations.forEach(x -> System.out.println(x.getName()));
-//        }
-//        else {
-//            System.out.printf("%s doesn't have any moves\n\n", pieceLocation.getPresentPiece().fancyName());
-//        }
 
         return possibleMoveLocations;
     }

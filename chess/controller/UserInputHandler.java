@@ -32,7 +32,7 @@ public class UserInputHandler {
             displayMovables(
                     getMovablePieces(isWhiteTurn())
             );
-// TODO: PAWN PROMOTION
+
             // Prompt
             String firstInput = promptForInput("Enter the starting location in [a-h][1-8] format");
 
