@@ -44,9 +44,23 @@ public class ChessHelp {
 
     public static String getPieceImageDir(ChessPiece cp) {
 
+        String root = "C:\\Users\\Stephen\\Documents\\Neumont Work\\Quarter 3\\PRO180 - Java Lab\\Files\\GuiImages\\";
+
         return new HashMap<String, String>() {
             {
-                put("n", "blackKnightLoc"); // TODO: etc.
+                put("n", root + "Knight\\nb.png");
+                put("N", root + "Knight\\nw.png");
+                put("q", root + "Queen\\qb.png");
+                put("Q", root + "Queen\\qw.png");
+                put("k", root + "King\\kb.png");
+                put("K", root + "King\\kw.png");
+                put("b", root + "Bishop\\bb.png");
+                put("B", root + "Bishop\\bw.png");
+                put("r", root + "Rook\\rb.png");
+                put("R", root + "Rook\\rw.png");
+                put("p", root + "Pawn\\pb.png");
+                put("P", root + "Pawn\\pw.png");
+
             }
         }.get(cp.toString());
 

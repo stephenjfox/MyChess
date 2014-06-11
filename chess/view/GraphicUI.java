@@ -17,8 +17,11 @@ public class GraphicUI implements UserInterface {
     public void drawBoard() {
 
         // TODO: the black and white alternating grid of "clickables"
-        focusBoard.printBoard();
+//        focusBoard.printBoard();
 
+        GameFrame gameFrame = new GameFrame(focusBoard);
+//        gameFrame.setVisible(true);
+//        gameFrame.pack();
     }
 
     @Override
