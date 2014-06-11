@@ -42,6 +42,16 @@ public class ChessHelp {
         }.get(rep);
     }
 
+    public static String getPieceImageDir(ChessPiece cp) {
+
+        return new HashMap<String, String>() {
+            {
+                put("n", "blackKnightLoc"); // TODO: etc.
+            }
+        }.get(cp.toString());
+
+    }
+
     public static boolean isValidMove(BoardLocation start, BoardLocation destination) {
 
         if (start.getPresentPiece() != null) {

@@ -74,6 +74,8 @@ public class GameController {
 
         view.drawBoard();
 
+
+
         uIH.runTextPromptGame();
 
     }
