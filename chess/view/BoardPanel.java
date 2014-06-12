@@ -22,14 +22,18 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
     final int SQUARE_SIZE = 80;
     private ChessBoard gameBoard;
     private MoveProjector mp;
-    private BoardLocation focusSquare;
+    private BoardLocation focusSquare, source, destination;
     private ArrayList<BoardLocation> validMoves;
+    private BoardLocation[][] functionalBoard;
     private int last_mouse_x = 0, last_mouse_y = 0;
-    private boolean highlighted;
+    private boolean highlighted, sourceSet, destSet;
 
 
     public BoardPanel(ChessBoard chessBoard) {
         this.gameBoard = chessBoard;
+
+        this.functionalBoard = gameBoard.getFunctionalBoard();
+
         this.mp = new MoveProjector(chessBoard);
     }
 
@@ -53,23 +57,57 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
         doTheHighlights(g);
 
-
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
         Point mouseCurrent = e.getPoint();
+        setMouseIndices(mouseCurrent);
+        // check the x,y against the chessboard
+        if( (last_mouse_y - 39) / SQUARE_SIZE > 8 || (last_mouse_x - 39) / SQUARE_SIZE > 8) return;
 
+        focusSquare =
+                functionalBoard[((last_mouse_y - 39) / SQUARE_SIZE)][((last_mouse_x) / SQUARE_SIZE)];
+
+        System.out.println("Mouse clicked on: " + focusSquare + " x: " + last_mouse_x + " y: " + last_mouse_y);
+
+        if(!sourceSet) {
+            source = focusSquare.add(0, 0); // Clone the square
+            System.out.println("Source set " + source.getName());
+
+            sourceSet = true;
+        }
+        else {
+            if(!destSet) {
+                destination = focusSquare.add(0, 0); // Clone the clicked square
+                System.out.println("Source set " + destination.getName());
+
+                destSet = true;
+            }
+        }
+
+        if (sourceSet && destSet) {
+
+            String sourceName = source.getName(), destName = destination.getName();
+            System.out.println("Move the piece from " + sourceName + " to " + destName);
+
+            // Move the piece and execute
+            gameBoard.movePiece(sourceName, destName);
+            // The source and destination are no longer set
+            sourceSet = false; destSet = false;
+
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        BoardLocation[][] functionalBoard = gameBoard.getFunctionalBoard();
 
         Point theMouseCurrent = e.getPoint();
 
         setMouseIndices(theMouseCurrent);
+
+        if( (last_mouse_y - 39) / SQUARE_SIZE > 8 || (last_mouse_x - 39) / SQUARE_SIZE > 8) return;
 
         // check the x,y against the chessboard
         focusSquare =
@@ -88,9 +126,7 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
     private void highlightValidMoves(BoardLocation square) {
 
-        if (square == null) {
-            return; // don't bother
-        }
+        if (square == null) return; // don't bother
 
         validMoves = mp.getValidMoves(square);
 //        graphics.setColor(Color.green);

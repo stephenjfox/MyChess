@@ -18,7 +18,6 @@ public class GraphicUI implements UserInterface {
     @Override
     public void drawBoard() {
 
-        // TODO: the black and white alternating grid of "clickables"
 //        focusBoard.printBoard();
 
         GameFrame gameFrame = new GameFrame(focusBoard);
@@ -30,6 +29,5 @@ public class GraphicUI implements UserInterface {
     @Override
     public void informTheUser(String input) {
     }
-
 
 }
