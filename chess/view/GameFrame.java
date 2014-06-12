@@ -15,13 +15,11 @@ public class GameFrame extends JFrame {
     // TODO: Return the frame with the pieces on it
 
     private ChessBoard modelBoard;
-    private BoardLocation[][] functBoard;
     private BoardPanel thePanel;
 
     public GameFrame(ChessBoard chessBoard) {
 
         this.modelBoard = chessBoard;
-        this.functBoard = modelBoard.getFunctionalBoard();
         this.thePanel = new BoardPanel(chessBoard);
 
         this.setPreferredSize(new Dimension(1000, 800));
@@ -47,23 +45,23 @@ public class GameFrame extends JFrame {
 
     }
 
-    private void initializeSelf() {
-
-        // TODO: get all the ImagePanels are draw them in the grid layout
-
-        // We print backwards in this town
-        for (int i = functBoard.length - 1; i >= 0; i--) {
-            BoardLocation[] row = functBoard[i];
-
-            for (int i1 = 0; i1 < row.length; i1++) {
-                BoardLocation square = row[i1];
-
-                if(square == null) square = new BoardLocation(i1 + 1, i);
-
-                drawModelSquare(square, (i * i1 % 2 == 0) ? Color.black : Color.white);
-            }
-
-        }
-
-    }
+//    private void initializeSelf() {
+//
+//        // TODO: get all the ImagePanels are draw them in the grid layout
+//
+//        // We print backwards in this town
+//        for (int i = functBoard.length - 1; i >= 0; i--) {
+//            BoardLocation[] row = functBoard[i];
+//
+//            for (int i1 = 0; i1 < row.length; i1++) {
+//                BoardLocation square = row[i1];
+//
+//                if(square == null) square = new BoardLocation(i1 + 1, i);
+//
+//                drawModelSquare(square, (i * i1 % 2 == 0) ? Color.black : Color.white);
+//            }
+//
+//        }
+//
+//    }
 }

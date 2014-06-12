@@ -24,7 +24,7 @@ public class NumberCruncher {
                 return 8;
             case "n":
 //                System.out.println("Knight case");
-                return 2;
+                return 3;
             case "p":
 //                System.out.println("Pawn case");
                 return 2;
