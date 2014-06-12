@@ -6,6 +6,7 @@ import chess.controller.MoveProjector;
 import chess.model.pieces.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -141,6 +142,9 @@ public class ChessBoard {
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
+        ChessPiece toBeAttacked =
+                getActualBoardSquare(tempDest).getPresentPiece();
+
 //        if(    getPieceAtLocation(tempOrigin).isValidMove(
 //                getActualBoardSquare(tempOrigin),
 //                getActualBoardSquare(tempDest)) )
@@ -148,7 +152,7 @@ public class ChessBoard {
 
             // fetch the piece from the array
             ChessPiece removed =
-                    getActualBoardSquare(tempOrigin).remove();
+                    getPseudoBoardSquare(tempOrigin).remove();
 
 //            // place it on the virtual board square
 //            tempDest.placePiece(removed);
@@ -164,12 +168,12 @@ public class ChessBoard {
                     System.err.println(removed.fancyName() + " at " + tempOrigin.getName()+
                             " tried taking allied " + destinationPiece.fancyName() + " at " + tempDest.getName());
 
-                    getActualBoardSquare(tempOrigin).placePiece(removed);
+                    getPseudoBoardSquare(tempOrigin).placePiece(removed);
 
                 }
                 else {
                     // Must be opposite color, so commence capture
-                    getActualBoardSquare(tempDest).placePiece(removed);
+                    getPseudoBoardSquare(tempDest).placePiece(removed);
 
 //                    GameController.triggerDrawBoard();
 //                    GameController.flipPlayerTurn();
@@ -179,7 +183,7 @@ public class ChessBoard {
             }
             else {
                 // Place piece, because the destination is empty
-                getActualBoardSquare(tempDest).placePiece(removed);
+                getPseudoBoardSquare(tempDest).placePiece(removed);
 
 //                GameController.triggerDrawBoard();
 //                GameController.flipPlayerTurn();
@@ -188,10 +192,6 @@ public class ChessBoard {
 
         }
 
-//        else {
-//            System.err.printf("%s to %s was an invalid move. It might be the %s or pathIsClear()\n",
-//                    origin, destination, getPieceAtLocation(tempOrigin).fancyName());
-//        }
 
     }
 
@@ -325,8 +325,24 @@ public class ChessBoard {
 
     }
 
+    private BoardLocation getPseudoBoardSquare(BoardLocation falseLoc) {
+        BoardLocation[][] phony = getFunctionalBoard();
+        if (phony[falseLoc.getY() - 1][falseLoc.getX() - 1] == null) {
+
+            phony[falseLoc.getY() - 1][falseLoc.getX() - 1] 
+                    = new BoardLocation(falseLoc.getName());
+
+        }
+        
+        return phony[falseLoc.getY() - 1][falseLoc.getX() - 1];
+    }
+
     public BoardLocation[][] getFunctionalBoard() {
-        return functionalBoard.clone();
+        BoardLocation[][] returnable = new BoardLocation[8][8];
+        for (int i = 0; i < functionalBoard.length; i++) {
+            returnable[i] = Arrays.copyOf(functionalBoard[i], functionalBoard.length);
+        }
+        return returnable;
     }
 
     public void printBoard(){
@@ -534,7 +550,6 @@ public class ChessBoard {
 
         public boolean gameIsInStaleMate() {
 
-//            boolean state1 = whiteIsInCheck(), state2 = false;
 
             boolean gameTurn = GameController.isWhiteTurn();
 

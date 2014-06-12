@@ -95,6 +95,11 @@ public class MoveProjector {
     }
 
 
+    /**
+     * Returns non-valid capture moves.
+     * @param pieceLocation starting location with a piece to move
+     * @return see the above method
+     */
     public ArrayList<BoardLocation> getValidMoves(BoardLocation pieceLocation) {
 
         int range = NumberCruncher.pieceMaxRange(pieceLocation.getPresentPiece());
