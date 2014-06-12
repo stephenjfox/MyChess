@@ -77,7 +77,11 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
         focusSquare =
                 functionalBoard[((last_mouse_y - 39) / SQUARE_SIZE)][((last_mouse_x) / SQUARE_SIZE)];
 
-        System.out.println("Mouse clicked on: " + focusSquare + " x: " + last_mouse_x + " y: " + last_mouse_y);
+//        System.out.println("Mouse clicked on: " + focusSquare + " x: " + last_mouse_x + " y: " + last_mouse_y);
+
+        if(focusSquare.getPresentPiece() != null) {
+            // TODO: fill me in
+        }
 
         if(!sourceSet) {
             source = focusSquare.add(0, 0); // Clone the square
@@ -104,30 +108,36 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
             // The source and destination are no longer set
             sourceSet = false; destSet = false;
             frozen = false;
+            repaint();
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
 
-        if (!frozen) {
+        try {
+            if (!frozen) {
 
-            Point theMouseCurrent = e.getPoint();
+                Point theMouseCurrent = e.getPoint();
 
-            setMouseIndices(theMouseCurrent);
+                setMouseIndices(theMouseCurrent);
 
-            // check the x,y against the chessboard
-            focusSquare =
-                    functionalBoard[((last_mouse_y - 39) / SQUARE_SIZE)][((last_mouse_x) / SQUARE_SIZE)];
+                // check the x,y against the chessboard
+                focusSquare =
+                        functionalBoard[((last_mouse_y - 39) / SQUARE_SIZE)][((last_mouse_x) / SQUARE_SIZE)];
 
-            System.out.println(focusSquare + " x: " + last_mouse_x + " y: " + last_mouse_y);
+//                System.out.println(focusSquare + " x: " + last_mouse_x + " y: " + last_mouse_y);
 
-            if (focusSquare != null) {
-                highlightValidMoves(focusSquare);
-            } else {
-                highlighted = false;
-                repaint();
+                if (focusSquare != null) {
+                    highlightValidMoves(focusSquare);
+                } else {
+                    highlighted = false;
+                    repaint();
+                }
             }
+        } catch (NullPointerException | IndexOutOfBoundsException np1) {
+//            System.err.println(np1.getLocalizedMessage());
+            // Because this is thrown so often, I'd like to just see the dialogues that I care about
         }
     }
 
@@ -156,7 +166,8 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
             // The Highlights
             g.setColor(Color.green);
             for (BoardLocation validMove : validMoves) {
-                System.out.println("Attempting to fillRect");
+
+//                System.out.println("Attempting to fillRect");
                 graphics.fillRect((validMove.getX() - 1) * SQUARE_SIZE, (validMove.getY() - 1) * SQUARE_SIZE,
                         SQUARE_SIZE, SQUARE_SIZE);
             }
