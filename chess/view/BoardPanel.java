@@ -37,7 +37,6 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
         this.functionalBoard = gameBoard.getFunctionalBoard();
 
         this.mp = new MoveProjector(chessBoard);
-
     }
 
     @Override
@@ -50,7 +49,7 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
             for (int k = 0; k < cols; k++) {
 
-                g.setColor(k % 2 == 0 ^ i % 2 == 1 ? Color.black : Color.white);
+                g.setColor(k % 2 == 0 ^ i % 2 == 1 ? Color.gray : Color.white);
 
                 g.fillRect(k * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
 
@@ -161,9 +160,9 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
                 graphics.fillRect((validMove.getX() - 1) * SQUARE_SIZE, (validMove.getY() - 1) * SQUARE_SIZE,
                         SQUARE_SIZE, SQUARE_SIZE);
             }
-            g.setColor(Color.orange);
-            g.fillRect((focusSquare.getX() - 1) * SQUARE_SIZE, (focusSquare.getY() - 1) * SQUARE_SIZE,
-                    SQUARE_SIZE, SQUARE_SIZE);
+//            g.setColor(Color.orange);
+//            g.fillRect((focusSquare.getX() - 1) * SQUARE_SIZE, (focusSquare.getY() - 1) * SQUARE_SIZE,
+//                    SQUARE_SIZE, SQUARE_SIZE);
         }
     }
 

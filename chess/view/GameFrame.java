@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.model.board.BoardLocation;
 import chess.model.board.ChessBoard;
 
 import javax.swing.*;
@@ -36,34 +35,4 @@ public class GameFrame extends JFrame {
 
     }
 
-    private void drawModelSquare(BoardLocation boardLocation, Color c) {
-
-        ImageFactory panel = new ImageFactory(boardLocation.getPresentPiece());
-        panel.setVisible(true);
-        panel.setLayout(new GridBagLayout());
-        panel.setBackground(c);
-
-        this.add(panel);
-
-    }
-
-//    private void initializeSelf() {
-//
-//        // TODO: get all the ImagePanels are draw them in the grid layout
-//
-//        // We print backwards in this town
-//        for (int i = functBoard.length - 1; i >= 0; i--) {
-//            BoardLocation[] row = functBoard[i];
-//
-//            for (int i1 = 0; i1 < row.length; i1++) {
-//                BoardLocation square = row[i1];
-//
-//                if(square == null) square = new BoardLocation(i1 + 1, i);
-//
-//                drawModelSquare(square, (i * i1 % 2 == 0) ? Color.black : Color.white);
-//            }
-//
-//        }
-//
-//    }
 }

@@ -405,6 +405,7 @@ public class ChessHelp {
 
     public static void printPlayerTurn() {
         System.out.println(GameController.isWhiteTurn()? "White's turn" : "Black's turn");
+        callCheck();
     }
 
     public static void callCheck() {
