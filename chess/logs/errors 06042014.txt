@@ -1,0 +1,4 @@
+Wed Jun 04 13:45:05 MDT 2014
+Moving() nulls results in errors.
+null
+
