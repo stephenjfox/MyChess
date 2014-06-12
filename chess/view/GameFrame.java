@@ -28,6 +28,8 @@ public class GameFrame extends JFrame {
         this.add(thePanel);
         this.addMouseListener(thePanel);
         this.addMouseMotionListener(thePanel);
+
+        this.setContentPane(thePanel);
         this.setTitle("VirtuaChess");
         this.setVisible(true);
         this.pack();

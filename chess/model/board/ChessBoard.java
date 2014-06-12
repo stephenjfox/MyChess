@@ -126,8 +126,8 @@ public class ChessBoard {
         }
 
         else {
-            System.err.printf("%s to %s was an invalid move. It might be the %s or pathIsClear()\n",
-                    origin, destination, getPieceAtLocation(tempOrigin).fancyName());
+            System.err.printf("%s to %s was an invalid move. It might be the other Player's turn)\n",
+                    origin, destination);
         }
 
     }
@@ -371,6 +371,54 @@ public class ChessBoard {
         placePiece(new Pawn(black), "f7");
         placePiece(new Pawn(black), "g7");
         placePiece(new Pawn(black), "h7");
+
+        placePiece(new Pawn(black), "a7");
+        placePiece(new Pawn(black), "b7");
+        placePiece(new Pawn(black), "c7");
+        placePiece(new Pawn(black), "d7");
+        placePiece(new Pawn(black), "e7");
+        placePiece(new Pawn(black), "f7");
+        placePiece(new Pawn(black), "g7");
+        placePiece(new Pawn(black), "h7");
+
+        // Middle ground
+        placePiece(null, "a6");
+        placePiece(null, "b6");
+        placePiece(null, "c6");
+        placePiece(null, "d6");
+        placePiece(null, "e6");
+        placePiece(null, "f6");
+        placePiece(null, "g6");
+        placePiece(null, "h6");
+
+        placePiece(null, "a5");
+        placePiece(null, "b5");
+        placePiece(null, "c5");
+        placePiece(null, "d5");
+        placePiece(null, "e5");
+        placePiece(null, "f5");
+        placePiece(null, "g5");
+        placePiece(null, "h5");
+
+        placePiece(null, "a4");
+        placePiece(null, "b4");
+        placePiece(null, "c4");
+        placePiece(null, "d4");
+        placePiece(null, "e4");
+        placePiece(null, "f4");
+        placePiece(null, "g4");
+        placePiece(null, "h4");
+
+        placePiece(null, "a3");
+        placePiece(null, "b3");
+        placePiece(null, "c3");
+        placePiece(null, "d3");
+        placePiece(null, "e3");
+        placePiece(null, "f3");
+        placePiece(null, "g3");
+        placePiece(null, "h3");
+
+        // End middle ground
 
         // White royalty
         placePiece(new Pawn(white), "a2");
