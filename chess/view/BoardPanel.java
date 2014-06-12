@@ -94,20 +94,19 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
                 destination = focusSquare.add(0, 0); // Clone the clicked square
                 System.out.println("Source set " + destination.getName());
 
-                destSet = true;
+                destSet = true; frozen = false;
             }
         }
 
         if (sourceSet && destSet) {
 
             String sourceName = source.getName(), destName = destination.getName();
-            System.out.println("Move the piece from " + sourceName + " to " + destName);
 
             // Move the piece and execute
             gameBoard.movePiece(sourceName, destName);
             // The source and destination are no longer set
             sourceSet = false; destSet = false;
-            frozen = false;
+
             repaint();
         }
     }

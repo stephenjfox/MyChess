@@ -8,6 +8,6 @@ import javax.swing.*;
  */
 public class AnnouncerBoard extends JTextPane {
 
-    // TODO: if you care, put the king announcer board on the side
+    // TODO: if you care, put the king announcer board on the sideaaaaaaaaaaaaaaaaaaaaaaa
 
 }

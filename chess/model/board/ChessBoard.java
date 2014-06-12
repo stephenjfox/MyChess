@@ -108,7 +108,7 @@ public class ChessBoard {
 
 //                    GameController.triggerDrawBoard();
                     GameController.flipPlayerTurn();
-//                    ChessHelp.callCheck();
+                    ChessHelp.callCheck();
                 }
 
             }
@@ -120,7 +120,7 @@ public class ChessBoard {
 
 //                GameController.triggerDrawBoard();
                 GameController.flipPlayerTurn();
-//                ChessHelp.callCheck();
+                ChessHelp.callCheck();
             }
 
         }
@@ -171,8 +171,6 @@ public class ChessBoard {
                     // Must be opposite color, so commence capture
                     getActualBoardSquare(tempDest).placePiece(removed);
 
-                    removed.setMoved();
-
 //                    GameController.triggerDrawBoard();
 //                    GameController.flipPlayerTurn();
 //                    ChessHelp.callCheck();
@@ -182,8 +180,6 @@ public class ChessBoard {
             else {
                 // Place piece, because the destination is empty
                 getActualBoardSquare(tempDest).placePiece(removed);
-
-                removed.setMoved();
 
 //                GameController.triggerDrawBoard();
 //                GameController.flipPlayerTurn();
@@ -372,15 +368,6 @@ public class ChessBoard {
         placePiece(new Pawn(black), "g7");
         placePiece(new Pawn(black), "h7");
 
-        placePiece(new Pawn(black), "a7");
-        placePiece(new Pawn(black), "b7");
-        placePiece(new Pawn(black), "c7");
-        placePiece(new Pawn(black), "d7");
-        placePiece(new Pawn(black), "e7");
-        placePiece(new Pawn(black), "f7");
-        placePiece(new Pawn(black), "g7");
-        placePiece(new Pawn(black), "h7");
-
         // Middle ground
         placePiece(null, "a6");
         placePiece(null, "b6");
@@ -554,7 +541,7 @@ public class ChessBoard {
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(gameTurn);
             ArrayList<BoardLocation> allies = pullSquaresWithColor(!gameTurn);
 
-            BoardLocation kingSquare = gameTurn ? blackKingLocation : whiteKingLocation;
+            BoardLocation kingSquare = gameTurn ? whiteKingLocation : blackKingLocation;
 
             return projector.projectCheckScenario(kingSquare, enemyLocations, allies);
         }
