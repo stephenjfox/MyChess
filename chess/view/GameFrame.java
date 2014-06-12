@@ -16,18 +16,20 @@ public class GameFrame extends JFrame {
 
     private ChessBoard modelBoard;
     private BoardLocation[][] functBoard;
-    private BoardPanel thePanel = new BoardPanel();
+    private BoardPanel thePanel;
 
     public GameFrame(ChessBoard chessBoard) {
 
         this.modelBoard = chessBoard;
-
         this.functBoard = modelBoard.getFunctionalBoard();
+        this.thePanel = new BoardPanel(chessBoard);
 
         this.setPreferredSize(new Dimension(1000, 800));
 
 //        initializeSelf();
         this.add(thePanel);
+        this.addMouseListener(thePanel);
+        this.addMouseMotionListener(thePanel);
         this.setTitle("VirtuaChess");
         this.setVisible(true);
         this.pack();
