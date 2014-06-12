@@ -3,6 +3,7 @@ package chess.view;
 import chess.controller.MoveProjector;
 import chess.model.board.BoardLocation;
 import chess.model.board.ChessBoard;
+import chess.model.pieces.ChessPiece;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,10 +54,16 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
                 g.fillRect(k * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
 
+                ChessPiece piece = functionalBoard[i][k].getPresentPiece();
+                if (piece != null) {
+                    g.drawImage(new ImageFactory(piece).getImage(), k * SQUARE_SIZE, i * SQUARE_SIZE, 80, 80, null);
+                }
+
             }
 
         }
 
+        // This body was cluttered, so the hacking was moved elsewhere
         doTheHighlights(g);
 
     }
@@ -67,7 +74,6 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
         Point mouseCurrent = e.getPoint();
         setMouseIndices(mouseCurrent);
         // check the x,y against the chessboard
-        if( (last_mouse_y - 39) / SQUARE_SIZE > 8 || (last_mouse_x - 39) / SQUARE_SIZE > 8) return;
 
         focusSquare =
                 functionalBoard[((last_mouse_y - 39) / SQUARE_SIZE)][((last_mouse_x) / SQUARE_SIZE)];
@@ -111,8 +117,6 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
             setMouseIndices(theMouseCurrent);
 
-            if ((last_mouse_y - 39) / SQUARE_SIZE > 8 || (last_mouse_x - 39) / SQUARE_SIZE > 8) return;
-
             // check the x,y against the chessboard
             focusSquare =
                     functionalBoard[((last_mouse_y - 39) / SQUARE_SIZE)][((last_mouse_x) / SQUARE_SIZE)];
@@ -149,7 +153,7 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
     }
 
     private void doTheHighlights(Graphics g) {
-        if (highlighted) {
+        if (highlighted && !frozen) {
             // The Highlights
             g.setColor(Color.green);
             for (BoardLocation validMove : validMoves) {

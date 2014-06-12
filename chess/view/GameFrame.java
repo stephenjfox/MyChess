@@ -38,7 +38,7 @@ public class GameFrame extends JFrame {
 
     private void drawModelSquare(BoardLocation boardLocation, Color c) {
 
-        ImagePanel panel = new ImagePanel(boardLocation.getPresentPiece());
+        ImageFactory panel = new ImageFactory(boardLocation.getPresentPiece());
         panel.setVisible(true);
         panel.setLayout(new GridBagLayout());
         panel.setBackground(c);
