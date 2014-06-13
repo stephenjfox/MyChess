@@ -142,7 +142,7 @@ public class ChessBoard {
 
     }
 
-    public synchronized boolean movePieceWithoutTurnCheck(String origin, String destination) {
+    public synchronized ChessPiece movePieceWithoutTurnCheck(String origin, String destination) {
 
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
@@ -156,7 +156,7 @@ public class ChessBoard {
 
             if ( destinationPiece != null) {
 
-                if( removed.colorMatches(destinationPiece) ) {
+                if( removed != null && removed.colorMatches(destinationPiece) ) {
 
                     // If the color matches after passing in a decent move arg
                     System.err.println(removed.fancyName() + " at " + tempOrigin.getName()+
@@ -178,16 +178,15 @@ public class ChessBoard {
 
             }
 
-        boolean kingInCheck = GameController.isWhiteTurn()
-                ? new CheckFinder().blackIsInCheck() : new CheckFinder().whiteIsInCheck();
+        return destinationPiece;
+    }
 
+    public void undoTheMove(BoardLocation tempOrigin, BoardLocation tempDest, ChessPiece destinationPiece) {
         // Undo the attackers move
         getPseudoBoardSquare(tempOrigin).placePiece(getPseudoBoardSquare(tempDest).remove());
 
         // Put the victim back
         getPseudoBoardSquare(tempDest).placePiece(destinationPiece);
-
-        return kingInCheck;
     }
 
     /**

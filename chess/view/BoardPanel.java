@@ -45,17 +45,19 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
         this.graphics = g;
 
         // Checkerboard
-        for (int i = 0; i < rows; i++) {
+        for (int rowIndex = rows - 1; rowIndex >= 0; rowIndex--) {
 
-            for (int k = 0; k < cols; k++) {
+            for (int colIndex = 0; colIndex < cols; colIndex++) {
+                int currentX = colIndex * SQUARE_SIZE;
+                int currentY = rowIndex/*(rows - 1 - rowIndex)*/ * SQUARE_SIZE;
 
-                g.setColor(k % 2 == 0 ^ i % 2 == 1 ? Color.gray : Color.white);
+                g.setColor(colIndex % 2 == 0 ^ rowIndex % 2 == 1 ? Color.gray : Color.white);
 
-                g.fillRect(k * SQUARE_SIZE, i * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+                g.fillRect(currentX, currentY, SQUARE_SIZE, SQUARE_SIZE);
 
-                ChessPiece piece = functionalBoard[i][k].getPresentPiece();
+                ChessPiece piece = functionalBoard[rowIndex][colIndex].getPresentPiece();
                 if (piece != null) {
-                    g.drawImage(new ImageFactory(piece).getImage(), k * SQUARE_SIZE, i * SQUARE_SIZE, 80, 80, null);
+                    g.drawImage(new ImageFactory(piece).getImage(), currentX, currentY, SQUARE_SIZE, SQUARE_SIZE, null);
                 }
 
             }
@@ -72,6 +74,8 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
         Point mouseCurrent = e.getPoint();
         setMouseIndices(mouseCurrent);
+        int curRow = ((last_mouse_x) / SQUARE_SIZE);
+        int curCol = ((last_mouse_y - 39) / SQUARE_SIZE);//(7 - ((last_mouse_y - 39) / SQUARE_SIZE));
         // check the x,y against the chessboard
 
         focusSquare =
@@ -113,17 +117,22 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
 
     @Override
     public void mouseMoved(MouseEvent e) {
+//        System.out.println("x: " + e.getX() + ", y: " + e.getY());
 
         try {
+
             if (!frozen) {
 
                 Point theMouseCurrent = e.getPoint();
 
                 setMouseIndices(theMouseCurrent);
 
+                int curRow = ((last_mouse_x) / SQUARE_SIZE);
+                int curCol = ((last_mouse_y - 39) / SQUARE_SIZE);//(7 - ((last_mouse_y - 39) / SQUARE_SIZE));
+//                int curCol = (7 - ((last_mouse_y - 39) / SQUARE_SIZE));
+//                System.out.println("curCol: " + curCol + ", colRow: " + curRow);
                 // check the x,y against the chessboard
-                focusSquare =
-                        functionalBoard[((last_mouse_y - 39) / SQUARE_SIZE)][((last_mouse_x) / SQUARE_SIZE)];
+                focusSquare = functionalBoard[curCol][curRow];
 
 //                System.out.println(focusSquare + " x: " + last_mouse_x + " y: " + last_mouse_y);
 
@@ -141,7 +150,7 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
     }
 
     private void highlightValidMoves(BoardLocation square) {
-
+//        System.out.println(square);
         if (square == null) return; // don't bother
 
         validMoves = mp.getValidMoves(square);

@@ -91,7 +91,32 @@ public class MoveProjector {
 
 //        System.out.println(pieceLocation.getPresentPiece().fancyName() +" TestMove size() check block");
 
+        // Remove the moves that would the have the King in check
+            // Detect this by
+            // Moving the move
+            // if the King is check, remove it
+            // undo the move
+
+        possibleMoveLocations.removeIf(
+                location -> simulateMove(pieceLocation, location)
+        );
+
+
         return possibleMoveLocations;
+    }
+
+    private boolean simulateMove(BoardLocation pieceLocation, BoardLocation location) {
+
+
+        ChessPiece cp =
+                testBoard.movePieceWithoutTurnCheck(pieceLocation.getName(), location.getName());
+
+        boolean kingInCheck = GameController.isWhiteTurn() ? testBoard.getCheckFinder().whiteIsInCheck()
+                : testBoard.getCheckFinder().blackIsInCheck();
+
+        testBoard.undoTheMove(pieceLocation, location, cp);
+
+        return kingInCheck;
     }
 
 
@@ -135,7 +160,7 @@ public class MoveProjector {
             if (ChessHelp.pathIsClear(kingLocation, kingValidMove)) {
 
                 // move to new state
-                focusChessBoard.movePieceWithoutTurnCheck(kingLocation.getName(), kingValidMove.getName());
+                ChessPiece captured = focusChessBoard.movePieceWithoutTurnCheck(kingLocation.getName(), kingValidMove.getName());
 
                 // Check if "the King can still be hit"
                 kingStillInCheck = whichKing ?
@@ -143,8 +168,9 @@ public class MoveProjector {
                         focusChessBoard.getCheckFinder().blackIsInCheck();
 
                 // undo back to the old state
-                focusChessBoard.movePieceWithoutTurnCheck(kingValidMove.getName(), kingLocation.getName());
+//                focusChessBoard.movePieceWithoutTurnCheck(kingValidMove.getName(), kingLocation.getName());
 
+                focusChessBoard.undoTheMove(kingLocation, kingValidMove, captured);
             }
 
         }
@@ -165,19 +191,18 @@ public class MoveProjector {
                     if(ChessHelp.pathIsClear(allyLocation, potentialAlliedMove, focusChessBoard)) {
 
                         // Move the piece
-//                        focusChessBoard.movePieceWithoutTurnCheck(allyLocation.getName(), potentialAlliedMove.getName());
-//
-//                        // Check for Check-condition
-//                        for (BoardLocation enemyLocation : enemyLocations) {
-//
-//                                kingStillInCheck = (ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard));
-//
-//                        }
-//
-//                        // Undo the move, rinse, repeat
-//                        focusChessBoard.movePieceWithoutTurnCheck(potentialAlliedMove.getName(), allyLocation.getName());
+                        ChessPiece cp = focusChessBoard.movePieceWithoutTurnCheck(allyLocation.getName(), potentialAlliedMove.getName());
 
-                        kingStillInCheck = focusChessBoard.movePieceWithoutTurnCheck(allyLocation.getName(), potentialAlliedMove.getName());
+                        // Check for Check-condition
+                        for (BoardLocation enemyLocation : enemyLocations) {
+
+                                kingStillInCheck = (ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard));
+
+                        }
+
+                        // Undo the move, rinse, repeat
+                        focusChessBoard.undoTheMove(allyLocation, potentialAlliedMove, cp);
+
                     }
                 }
             }
