@@ -121,12 +121,10 @@ public class MoveProjector {
         boolean whichKing = kingLocation.getPresentPiece().isWhite();
        // boolean kingStillInCheck = false;
 
-        BoardLocation[][] boardArray = testBoard.getFunctionalBoard(); // retrieve a copy of the board-array
-
         // Get the King's valid moves
         ArrayList<BoardLocation> kingValidMoves = projectValidMoves(kingLocation, 1);
 
-        ChessBoard focusChessBoard = new ChessBoard(boardArray);
+        ChessBoard focusChessBoard = new ChessBoard(testBoard); // Clone check
 
         boolean kingStillInCheck = (kingValidMoves.size() == 0);
 //            kingStillInCheck = true;
@@ -167,18 +165,19 @@ public class MoveProjector {
                     if(ChessHelp.pathIsClear(allyLocation, potentialAlliedMove, focusChessBoard)) {
 
                         // Move the piece
-                        focusChessBoard.movePieceWithoutTurnCheck(allyLocation.getName(), potentialAlliedMove.getName());
+//                        focusChessBoard.movePieceWithoutTurnCheck(allyLocation.getName(), potentialAlliedMove.getName());
+//
+//                        // Check for Check-condition
+//                        for (BoardLocation enemyLocation : enemyLocations) {
+//
+//                                kingStillInCheck = (ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard));
+//
+//                        }
+//
+//                        // Undo the move, rinse, repeat
+//                        focusChessBoard.movePieceWithoutTurnCheck(potentialAlliedMove.getName(), allyLocation.getName());
 
-                        // Check for Check-condition
-                        for (BoardLocation enemyLocation : enemyLocations) {
-
-                                kingStillInCheck = (ChessHelp.pathIsClear(enemyLocation, kingLocation, focusChessBoard));
-
-                        }
-
-                        // Undo the move, rinse, repeat
-                        focusChessBoard.movePieceWithoutTurnCheck(potentialAlliedMove.getName(), allyLocation.getName());
-
+                        kingStillInCheck = focusChessBoard.movePieceWithoutTurnCheck(allyLocation.getName(), potentialAlliedMove.getName());
                     }
                 }
             }

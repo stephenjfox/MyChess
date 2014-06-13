@@ -410,7 +410,10 @@ public class ChessHelp {
     public static void callCheck() {
         ChessBoard.CheckFinder finder = containerForTheGame.getCheckFinder();
 
-        if(finder.blackIsInCheck()) {
+        boolean blackInCheck = finder.blackIsInCheck(),
+        whiteInCheck = finder.whiteIsInCheck();
+
+        if(blackInCheck) {
 
             if(finder.blackIsInCheckMate()) {
                 System.out.println("Black King is in checkmate");
@@ -425,7 +428,7 @@ public class ChessHelp {
             System.out.println("Black King is not in check");
         }
 
-        if(finder.whiteIsInCheck()) {
+        if(whiteInCheck) {
 
             if(finder.whiteIsInCheckMate()) {
                 System.out.println("White King is in checkmate");
@@ -441,7 +444,7 @@ public class ChessHelp {
         }
 
 //        System.out.println("The game is in stalemate: "+ finder.gameIsInStaleMate());
-        if(finder.gameIsInStaleMate()) {
+        if((!blackInCheck && !whiteInCheck) && finder.gameIsInStaleMate()) {
             System.out.println("The game has reached stalemate, on "
                     + (isWhiteTurn() ? "White's" : "Black's") + " turn." );
 

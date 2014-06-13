@@ -92,7 +92,7 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
         else {
             if(!destSet) {
                 destination = focusSquare.add(0, 0); // Clone the clicked square
-                System.out.println("Source set " + destination.getName());
+                System.out.println("Destination set " + destination.getName());
 
                 destSet = true; frozen = false;
             }

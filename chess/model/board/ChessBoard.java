@@ -26,8 +26,17 @@ public class ChessBoard {
     public ChessBoard() {
     }
 
-    public ChessBoard(BoardLocation[][] functionalBoard) {
-        this.functionalBoard = functionalBoard;
+    public ChessBoard(ChessBoard toClone) {
+
+        BoardLocation[][] un = toClone.getFunctionalBoard();
+        for (int i = 0; i < un.length; i++) {
+            BoardLocation[] boardLocations = un[i];
+            for (int j = 0; j < boardLocations.length; j++) {
+                this.functionalBoard[i][j] = boardLocations[j];
+            }
+        }
+
+
     }
 
     public CheckFinder getCheckFinder() {
@@ -133,33 +142,18 @@ public class ChessBoard {
 
     }
 
-    public void movePieceWithoutTurnCheck(String origin, String destination) {
-//
-//        if(searchForCheck == null){
-//            searchForCheck = new CheckFinder();
-//        }
+    public synchronized boolean movePieceWithoutTurnCheck(String origin, String destination) {
 
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
-
-        ChessPiece toBeAttacked =
-                getActualBoardSquare(tempDest).getPresentPiece();
-
-//        if(    getPieceAtLocation(tempOrigin).isValidMove(
-//                getActualBoardSquare(tempOrigin),
-//                getActualBoardSquare(tempDest)) )
-        {
 
             // fetch the piece from the array
             ChessPiece removed =
                     getPseudoBoardSquare(tempOrigin).remove();
 
-//            // place it on the virtual board square
-//            tempDest.placePiece(removed);
-
-
             // assign the board location to the array where appropriate
             ChessPiece destinationPiece = getPieceAtLocation(tempDest);
+
             if ( destinationPiece != null) {
 
                 if( removed.colorMatches(destinationPiece) ) {
@@ -175,9 +169,6 @@ public class ChessBoard {
                     // Must be opposite color, so commence capture
                     getPseudoBoardSquare(tempDest).placePiece(removed);
 
-//                    GameController.triggerDrawBoard();
-//                    GameController.flipPlayerTurn();
-//                    ChessHelp.callCheck();
                 }
 
             }
@@ -185,14 +176,18 @@ public class ChessBoard {
                 // Place piece, because the destination is empty
                 getPseudoBoardSquare(tempDest).placePiece(removed);
 
-//                GameController.triggerDrawBoard();
-//                GameController.flipPlayerTurn();
-//                ChessHelp.callCheck();
             }
 
-        }
+        boolean kingInCheck = GameController.isWhiteTurn()
+                ? new CheckFinder().blackIsInCheck() : new CheckFinder().whiteIsInCheck();
 
+        // Undo the attackers move
+        getPseudoBoardSquare(tempOrigin).placePiece(getPseudoBoardSquare(tempDest).remove());
 
+        // Put the victim back
+        getPseudoBoardSquare(tempDest).placePiece(destinationPiece);
+
+        return kingInCheck;
     }
 
     /**
@@ -339,9 +334,11 @@ public class ChessBoard {
 
     public BoardLocation[][] getFunctionalBoard() {
         BoardLocation[][] returnable = new BoardLocation[8][8];
+
         for (int i = 0; i < functionalBoard.length; i++) {
             returnable[i] = Arrays.copyOf(functionalBoard[i], functionalBoard.length);
         }
+
         return returnable;
     }
 
@@ -556,7 +553,7 @@ public class ChessBoard {
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(gameTurn);
             ArrayList<BoardLocation> allies = pullSquaresWithColor(!gameTurn);
 
-            BoardLocation kingSquare = gameTurn ? whiteKingLocation : blackKingLocation;
+            BoardLocation kingSquare = gameTurn ? blackKingLocation : whiteKingLocation;
 
             return projector.projectCheckScenario(kingSquare, enemyLocations, allies);
         }
