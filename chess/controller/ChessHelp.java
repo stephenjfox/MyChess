@@ -4,7 +4,6 @@ import chess.model.board.BoardLocation;
 import chess.model.board.ChessBoard;
 import chess.model.pieces.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static chess.controller.GameController.containerForTheGame;
@@ -123,115 +122,6 @@ public class ChessHelp {
 
     private static boolean isWhiteTurn() {
         return GameController.isWhiteTurn();
-    }
-
-    public static ArrayList<BoardLocation> pathObstacles
-            (BoardLocation start, BoardLocation destination, ModeOfTravel modeOfTravel){
-
-        ArrayList<BoardLocation> conflictPieces = new ArrayList<>();
-
-        int startX = start.getX();
-        int startY = start.getY();
-
-        int destX = destination.getX();
-        int destY = destination.getY();
-
-        int deltaX = startX - destX;
-        int deltaY = startY - destY;
-
-        BoardLocation[][] referenceBoard = containerForTheGame.getFunctionalBoard();
-
-        if (modeOfTravel == ModeOfTravel.STRAIGHT) {
-
-            for (int i = referenceBoard.length - 1; i >= 0; i--) { // so we can look at the from white's side
-                nullEscape:
-                for(int j = 0; j < referenceBoard[i].length; j++) {
-
-                    BoardLocation thisLocation;
-
-                    if (referenceBoard[i][j] != null) {
-
-                        thisLocation = referenceBoard[i][j];
-
-                        if ( (startY < destY) && ((startX - destX) == 0) ) { // White side pawns and Rooks and Queens
-                            if (thisLocation.getY() < destY && thisLocation.getY() > startY) {
-
-                                if(thisLocation.getX() == startX) // Catch if it's in the right column
-                                {
-                                    conflictPieces.add(thisLocation);
-                                }
-
-                            }
-                        }
-                        else if(startY > destY && ((startX - destX) == 0) ) { // Black side pawns and Rooks and Queens
-                            if (thisLocation.getY() < startY && thisLocation.getY() > destY) {
-
-                                if(thisLocation.getX() == startX) // Catch if it's in the right column
-                                {
-                                    conflictPieces.add(thisLocation);
-                                }
-
-                            }
-                        }
-                        else if ( (startX < destX) && ((startY - destY) == 0)) { // To the right
-                            if (thisLocation.getX() < startX && thisLocation.getX() > destX) {
-
-                                if(thisLocation.getY() == startY) // Catch if it's in the right row
-                                {
-                                    conflictPieces.add(thisLocation);
-                                }
-
-                            }
-
-                        }
-                        else if ( (startX > destX) && ((startY - destY) == 0) ) { // To the left
-                            if (thisLocation.getX() < startX && thisLocation.getX() > destX) {
-
-                                if(thisLocation.getY() == startY) // Catch if it's in the right row
-                                {
-                                    conflictPieces.add(thisLocation);
-                                }
-
-                            }
-                        }
-
-
-                    } else {
-                        break nullEscape;
-                    }
-                }
-            }
-        }
-        else { // DIAGONAL modeOfTravel
-            for (int i = referenceBoard.length - 1; i >= 0; i--) { // so we can look at the from white's side
-                nullEscape:
-
-                for(int j = 0; j < referenceBoard[i].length; j++) {
-
-                    BoardLocation thisLocation;
-                    if(referenceBoard[i][j] != null){
-                        thisLocation = referenceBoard[i][j];
-                        if (thisLocation.getY() <= destY && thisLocation.getY() > startY) {
-
-                            if (thisLocation.getX() <= destX && thisLocation.getX() > startX) {
-
-                                conflictPieces.add(thisLocation);
-
-                            }
-
-                        }
-                        else if (thisLocation.getY() > destY) {
-                        }
-
-                    }
-                    else {
-                        break nullEscape;
-                    }
-                }
-            }
-        }
-
-        return conflictPieces;
     }
 
     /**

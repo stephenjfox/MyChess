@@ -14,7 +14,8 @@ public class NullBoardLocation extends BoardLocation {
         this.placePiece(new ChessPiece(false) {
 
             @Override
-            public boolean isValidMove(BoardLocation start, BoardLocation destination) {
+            public boolean isValidMove(BoardLocation start,
+                                       BoardLocation destination) {
                 return false;
             }
 

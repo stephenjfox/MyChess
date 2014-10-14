@@ -465,7 +465,8 @@ public class ChessBoard {
 
             boolean blackInCheck = false;
 
-            for (Iterator<BoardLocation> iterator = enemyLocation.iterator(); iterator.hasNext() && !blackInCheck; ) {
+            for (Iterator<BoardLocation> iterator = enemyLocation.iterator();
+                 iterator.hasNext() && !blackInCheck; ) {
 
                 BoardLocation whiteLocation = iterator.next();
 
@@ -601,10 +602,6 @@ public class ChessBoard {
 
             for (BoardLocation boardLocation : pullSquaresWithColor(true)) {
 
-                // DEBUG
-//                System.out.println(boardLocation.getPresentPiece());
-                // DEBUG
-
                 if (boardLocation.getPresentPiece().toString().equals("K"))
                     return boardLocation;
             }
@@ -616,10 +613,6 @@ public class ChessBoard {
             // Iterate thought the search with proper boolean for this color
 
             for (BoardLocation boardLocation : pullSquaresWithColor(false)) {
-
-                // DEBUG
-//                System.out.println(boardLocation.getPresentPiece());
-                // DEBUG
 
                 if (boardLocation.getPresentPiece().toString().equals("k"))
                     return boardLocation;

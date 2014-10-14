@@ -16,6 +16,5 @@ public class Starter {
 //        }
 
         GameController.start(args);
-
     }
 }

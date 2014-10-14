@@ -143,7 +143,8 @@ public class BoardPanel extends JPanel implements MouseListener, MouseMotionList
                     repaint();
                 }
             }
-        } catch (NullPointerException | IndexOutOfBoundsException np1) {
+        }
+        catch (NullPointerException | IndexOutOfBoundsException np1) {
 //            System.err.println(np1.getLocalizedMessage());
             // Because this is thrown so often, I'd like to just see the dialogues that I care about
         }
