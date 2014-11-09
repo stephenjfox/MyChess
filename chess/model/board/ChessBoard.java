@@ -8,30 +8,36 @@ import chess.model.pieces.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /**
  * This class is meant to facilitate the 2-D array that is to be the board.
  * The class is called "ChessBoard" because all of the things to be done are ON the board.
  */
-public class ChessBoard {
-	final int rowCount = 8;
-	final int columnCount = 8;
+public class ChessBoard
+{
+    final int rowCount = 8;
+    final int columnCount = 8;
     final int offset = 1; // 1-based offset because regulars count from 1
 
-	private BoardLocation[][] functionalBoard = new BoardLocation[columnCount][rowCount];
+    private BoardLocation[][] functionalBoard = new BoardLocation[columnCount][rowCount];
 
 //    CheckFinder searchForCheck = null;
 
 
-    public ChessBoard() {
+    public ChessBoard()
+    {
     }
 
-    public ChessBoard(ChessBoard toClone) {
+    public ChessBoard( ChessBoard toClone )
+    {
 
         BoardLocation[][] un = toClone.getFunctionalBoard();
-        for (int i = 0; i < un.length; i++) {
+        for ( int i = 0; i < un.length; i++ )
+        {
             BoardLocation[] boardLocations = un[i];
-            for (int j = 0; j < boardLocations.length; j++) {
+            for ( int j = 0; j < boardLocations.length; j++ )
+            {
                 this.functionalBoard[i][j] = boardLocations[j];
             }
         }
@@ -39,17 +45,20 @@ public class ChessBoard {
 
     }
 
-    public CheckFinder getCheckFinder() {
+    public CheckFinder getCheckFinder()
+    {
 //        return searchForCheck;
         return new CheckFinder();
     }
 
     /**
      * Primary for the initialization of the board
-     * @param c ChessPiece object to be placed on the board
+     *
+     * @param c           ChessPiece object to be placed on the board
      * @param destination the grid location on the board
      */
-	public void placePiece(ChessPiece c, String destination) {
+    public void placePiece( ChessPiece c, String destination )
+    {
         BoardLocation tempDest = new BoardLocation(destination);
 
         functionalBoard[tempDest.getY() - offset][tempDest.getX() - offset] = tempDest;
@@ -59,23 +68,25 @@ public class ChessBoard {
     /**
      * Not overloaded, because its purpose is defined in its name, not
      * in the similarity to its older brother
-     *
+     * <p>
      * Will only be receiving valid BoardLocations.
      * This method dodges the need for arithmetic hokum by simply
      * placing the pieces down, after plucking.
+     *
      * @param castlePiece, King or rook to be castled
-     * @param destination is the end location for that castle
+     * @param destination  is the end location for that castle
      */
-    private void placePieceForCastle(ChessPiece castlePiece, BoardLocation destination) {
+    private void placePieceForCastle( ChessPiece castlePiece, BoardLocation destination )
+    {
         getActualBoardSquare(destination).placePiece(castlePiece);
     }
 
     /**
-     *
-     * @param origin: The origin board square
+     * @param origin:      The origin board square
      * @param destination: The destination board square
      */
-    public void movePiece(String origin, String destination) {
+    public void movePiece( String origin, String destination )
+    {
 //
 //        if(searchForCheck == null){
 //            searchForCheck = new CheckFinder();
@@ -84,7 +95,7 @@ public class ChessBoard {
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
-        if(    ChessHelp.isValidMove(
+        if ( ChessHelp.isValidMove(
                 getActualBoardSquare(tempOrigin),
                 getActualBoardSquare(tempDest)) )
         {
@@ -99,18 +110,21 @@ public class ChessBoard {
 
             // assign the board location to the array where appropriate
             ChessPiece destinationPiece = getPieceAtLocation(tempDest);
-            if ( destinationPiece != null) {
+            if ( destinationPiece != null )
+            {
 
-                if( removed.colorMatches(destinationPiece) ) {
+                if ( removed.colorMatches(destinationPiece) )
+                {
 
                     // If the color matches after passing in a decent move arg
-                    System.err.println(removed.fancyName() + " at " + tempOrigin.getName()+
+                    System.err.println(removed.fancyName() + " at " + tempOrigin.getName() +
                             " tried taking allied " + destinationPiece.fancyName() + " at " + tempDest.getName());
 
                     getActualBoardSquare(tempOrigin).placePiece(removed);
 
                 }
-                else {
+                else
+                {
                     // Must be opposite color, so commence capture
                     getActualBoardSquare(tempDest).placePiece(removed);
 
@@ -122,7 +136,8 @@ public class ChessBoard {
                 }
 
             }
-            else {
+            else
+            {
                 // Place piece, because the destination is empty
                 getActualBoardSquare(tempDest).placePiece(removed);
 
@@ -135,53 +150,60 @@ public class ChessBoard {
 
         }
 
-        else {
+        else
+        {
             System.err.printf("%s to %s was an invalid move. It might be the other Player's turn)\n",
                     origin, destination);
         }
 
     }
 
-    public synchronized ChessPiece movePieceWithoutTurnCheck(String origin, String destination) {
+    public synchronized ChessPiece movePieceWithoutTurnCheck( String origin, String destination )
+    {
 
         BoardLocation tempOrigin = new BoardLocation(origin);
         BoardLocation tempDest = new BoardLocation(destination);
 
-            // fetch the piece from the array
-            ChessPiece removed =
-                    getPseudoBoardSquare(tempOrigin).remove();
+        // fetch the piece from the array
+        ChessPiece removed =
+                getPseudoBoardSquare(tempOrigin).remove();
 
-            // assign the board location to the array where appropriate
-            ChessPiece destinationPiece = getPieceAtLocation(tempDest);
+        // assign the board location to the array where appropriate
+        ChessPiece destinationPiece = getPieceAtLocation(tempDest);
 
-            if ( destinationPiece != null) {
+        if ( destinationPiece != null )
+        {
 
-                if( removed != null && removed.colorMatches(destinationPiece) ) {
+            if ( removed != null && removed.colorMatches(destinationPiece) )
+            {
 
-                    // If the color matches after passing in a decent move arg
-                    System.err.println(removed.fancyName() + " at " + tempOrigin.getName()+
-                            " tried taking allied " + destinationPiece.fancyName() + " at " + tempDest.getName());
+                // If the color matches after passing in a decent move arg
+                System.err.println(removed.fancyName() + " at " + tempOrigin.getName() +
+                        " tried taking allied " + destinationPiece.fancyName() + " at " + tempDest.getName());
 
-                    getPseudoBoardSquare(tempOrigin).placePiece(removed);
-
-                }
-                else {
-                    // Must be opposite color, so commence capture
-                    getPseudoBoardSquare(tempDest).placePiece(removed);
-
-                }
+                getPseudoBoardSquare(tempOrigin).placePiece(removed);
 
             }
-            else {
-                // Place piece, because the destination is empty
+            else
+            {
+                // Must be opposite color, so commence capture
                 getPseudoBoardSquare(tempDest).placePiece(removed);
 
             }
 
+        }
+        else
+        {
+            // Place piece, because the destination is empty
+            getPseudoBoardSquare(tempDest).placePiece(removed);
+
+        }
+
         return destinationPiece;
     }
 
-    public void undoTheMove(BoardLocation tempOrigin, BoardLocation tempDest, ChessPiece destinationPiece) {
+    public void undoTheMove( BoardLocation tempOrigin, BoardLocation tempDest, ChessPiece destinationPiece )
+    {
         // Undo the attackers move
         getPseudoBoardSquare(tempOrigin).placePiece(getPseudoBoardSquare(tempDest).remove());
 
@@ -191,20 +213,24 @@ public class ChessBoard {
 
     /**
      * Simply a relay to the realy method
+     *
      * @param locations an String[] array of size 4; no exceptions
      */
-    public void moveTwoPiece(String[] locations) {
+    public void moveTwoPiece( String[] locations )
+    {
         moveTwoPiece(locations[0], locations[1], locations[2], locations[3]);
     }
 
     /**
      * Perform the castinlg maneuver
+     *
      * @param o1: origin chessboard index for piece 1
      * @param d1: destination chessboard index for piece 1
      * @param o2: origin chessboard index for piece 2
      * @param d2: destination chessboard index for piece 2
      */
-    public void moveTwoPiece(String o1, String d1, String o2, String d2) {
+    public void moveTwoPiece( String o1, String d1, String o2, String d2 )
+    {
         BoardLocation castler1Location = new BoardLocation(o1), castler2Location = new BoardLocation(o2);
         BoardLocation moveForC1 = new BoardLocation(d1), moveForC2 = new BoardLocation(d2);
 
@@ -224,14 +250,17 @@ public class ChessBoard {
             int deltaX = c1LocX - c2LocX;
             int deltaY = c1LocY - c2LocY;
 
-            if(deltaY == 0 && (c1LocY == 8 || c2LocY == 1)) {
+            if ( deltaY == 0 && ( c1LocY == 8 || c2LocY == 1 ) )
+            {
                 System.out.println("DEBUG: Passed vertical castling test");
 
-                if(deltaX == 4 || deltaX == -3){
+                if ( deltaX == 4 || deltaX == -3 )
+                {
                     System.out.println("DEBUG: Passed horizontal castling test");
                 }
             }
-            else {
+            else
+            {
                 System.out.println("DEBUG: Invalid castling maneuver was attempted");
 
             }
@@ -239,21 +268,23 @@ public class ChessBoard {
         }
 
 
-
         // Chess pieces at those board locations
         ChessPiece c1 = getPieceAtLocation(castler1Location),
                 c2 = getPieceAtLocation(castler2Location);
 
         // Just check the starting locations (FIRST OFF)
-        if( !(c1 instanceof King) ){
+        if ( !( c1 instanceof King ) )
+        {
             System.err.println("If it's not a king, it can't castle");
         }
 
-        else if( !(c2 instanceof Rook)) {
+        else if ( !( c2 instanceof Rook ) )
+        {
             System.err.println("You're not even moving a Rook, so we're DEFINITELY not castling.");
         }
 
-        else {
+        else
+        {
 
             King king = (King) removePieceAtLocation(castler1Location); // If we're here, we should be good
             Rook rook = (Rook) removePieceAtLocation(castler2Location);
@@ -265,7 +296,8 @@ public class ChessBoard {
 
     }
 
-    private void performCastleManeuver(King king, BoardLocation kingDest, Rook rook, BoardLocation rookDest) {
+    private void performCastleManeuver( King king, BoardLocation kingDest, Rook rook, BoardLocation rookDest )
+    {
 
         BoardLocation rookTrueDest = getActualBoardSquare(rookDest);
         BoardLocation kingTrueDest = getActualBoardSquare(kingDest);
@@ -282,7 +314,8 @@ public class ChessBoard {
      * @param boardLocation any BoardLocation object with desired, 1-based x and y coordinates
      * @return the piece in the 2-d at the compensated, proper location
      */
-    private ChessPiece getPieceAtLocation(BoardLocation boardLocation) {
+    private ChessPiece getPieceAtLocation( BoardLocation boardLocation )
+    {
 
         return getActualBoardSquare(boardLocation).getPresentPiece();
     }
@@ -291,7 +324,8 @@ public class ChessBoard {
      * @param boardLocation any BoardLocation object with desired, 1-based x and y coordinates
      * @return the piece in the 2-d at the compensated, proper location
      */
-    private ChessPiece removePieceAtLocation(BoardLocation boardLocation) {
+    private ChessPiece removePieceAtLocation( BoardLocation boardLocation )
+    {
         return getActualBoardSquare(boardLocation).remove();
     }
 
@@ -303,63 +337,75 @@ public class ChessBoard {
      * @param falsePositive the wrapper object for the desired indices
      * @return the true BoardLocation at the index in the 2-D array
      */
-    private BoardLocation getActualBoardSquare(BoardLocation falsePositive) {
+    private BoardLocation getActualBoardSquare( BoardLocation falsePositive )
+    {
 
         /*
         Compensate for the 1-based counting and return the actual square with the proper
         properties
         */
-        if (functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset] == null) {
+        if ( functionalBoard[falsePositive.getY() - offset][falsePositive.getX() - offset] == null )
+        {
 
-            functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset]
+            functionalBoard[falsePositive.getY() - offset][falsePositive.getX() - offset]
                     = new BoardLocation(falsePositive.getName());
         }
 
-        return functionalBoard[falsePositive.getY()-offset][falsePositive.getX()-offset];
+        return functionalBoard[falsePositive.getY() - offset][falsePositive.getX() - offset];
 
     }
 
-    private BoardLocation getPseudoBoardSquare(BoardLocation falseLoc) {
+    private BoardLocation getPseudoBoardSquare( BoardLocation falseLoc )
+    {
         BoardLocation[][] phony = getFunctionalBoard();
-        if (phony[falseLoc.getY() - 1][falseLoc.getX() - 1] == null) {
+        if ( phony[falseLoc.getY() - 1][falseLoc.getX() - 1] == null )
+        {
 
-            phony[falseLoc.getY() - 1][falseLoc.getX() - 1] 
+            phony[falseLoc.getY() - 1][falseLoc.getX() - 1]
                     = new BoardLocation(falseLoc.getName());
 
         }
-        
+
         return phony[falseLoc.getY() - 1][falseLoc.getX() - 1];
     }
 
-    public BoardLocation[][] getFunctionalBoard() {
+    public BoardLocation[][] getFunctionalBoard()
+    {
         BoardLocation[][] returnable = new BoardLocation[8][8];
 
-        for (int i = 0; i < functionalBoard.length; i++) {
+        for ( int i = 0; i < functionalBoard.length; i++ )
+        {
             returnable[i] = Arrays.copyOf(functionalBoard[i], functionalBoard.length);
         }
 
         return returnable;
     }
 
-    public void printBoard(){
-		for (int i = rowCount - 1; i >= 0; i--) {
-	        // If the board piece at a location is holding a piece
-			for (int k = 0; k < columnCount; k++) {
-                if(functionalBoard[i][k] != null) {
-                    System.out.print("[ " + ((functionalBoard[i][k].getPresentPiece() == null) ? "-" :
-                            functionalBoard[i][k].getPresentPiece().toString()) + " ]");
+    public void printBoard()
+    {
+        for ( int i = rowCount - 1; i >= 0; i-- )
+        {
+            // If the board piece at a location is holding a piece
+            for ( int k = 0; k < columnCount; k++ )
+            {
+                if ( functionalBoard[i][k] != null )
+                {
+                    System.out.print("[ " + ( ( functionalBoard[i][k].getPresentPiece() == null ) ? "-" :
+                            functionalBoard[i][k].getPresentPiece().toString() ) + " ]");
                 }
-                else { // it is null
+                else
+                { // it is null
                     System.out.print("[ - ]");
                 }
-			}
-			System.out.println();
-	    }
+            }
+            System.out.println();
+        }
         System.out.println("\n");
     }
 
     // Initialize for user play
-    public void init(){
+    public void init()
+    {
         boolean black = false, white = true;
         // Black royalty
         placePiece(new Rook(black), "a8");
@@ -443,14 +489,16 @@ public class ChessBoard {
      * The inner CheckFinder class's sole purpose is it tell the [ChessHelp]
      * that a King is in check. And which one.
      */
-    public class CheckFinder {
+    public class CheckFinder
+    {
 //        BoardSquareLocator forTheKings = new BoardSquareLocator();
 
         BoardLocation whiteKingLocation;
         BoardLocation blackKingLocation;
         MoveProjector projector;
 
-        public CheckFinder() {
+        public CheckFinder()
+        {
 
             whiteKingLocation = getWhiteKingSquare();
 
@@ -459,18 +507,20 @@ public class ChessBoard {
             projector = new MoveProjector(ChessBoard.this);
         }
 
-        public boolean blackIsInCheck() {
-
+        public boolean blackIsInCheck()
+        {
             ArrayList<BoardLocation> enemyLocation = pullSquaresWithColor(true);
 
             boolean blackInCheck = false;
 
-            for (Iterator<BoardLocation> iterator = enemyLocation.iterator();
-                 iterator.hasNext() && !blackInCheck; ) {
+            for ( Iterator<BoardLocation> iterator = enemyLocation.iterator();
+                  iterator.hasNext() && !blackInCheck; )
+            {
 
                 BoardLocation whiteLocation = iterator.next();
 
-                if (ChessHelp.testMoveForCheck(whiteLocation, blackKingLocation)) {
+                if ( ChessHelp.testMoveForCheck(whiteLocation, blackKingLocation) )
+                {
 
                     blackInCheck = true;
 
@@ -481,19 +531,18 @@ public class ChessBoard {
             return blackInCheck;
         }
 
-        public boolean whiteIsInCheck() {
+        public boolean whiteIsInCheck()
+        {
             // Tell someone that IntelliJ auto-suggested black as enemy to white
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(false);
             boolean whiteInCheck = false;
 
-            for (Iterator<BoardLocation> iterator = enemyLocations.iterator(); iterator.hasNext() && !whiteInCheck; ) {
+            for ( Iterator<BoardLocation> iterator = enemyLocations.iterator(); iterator.hasNext() && !whiteInCheck; )
+            {
                 BoardLocation blackLocation = iterator.next();
 
-                if (ChessHelp.testMoveForCheck(blackLocation, whiteKingLocation)) {
-
+                if ( ChessHelp.testMoveForCheck(blackLocation, whiteKingLocation) )
                     whiteInCheck = true;
-
-                }
 
             }
 
@@ -501,21 +550,12 @@ public class ChessBoard {
         }
 
 
-        public boolean blackIsInCheckMate() {
-
+        public boolean blackIsInCheckMate()
+        {
             ArrayList<BoardLocation> allies = pullSquaresWithColor(false);
             // The allied board squares : BlackPiece squares
 
-//            ArrayList<BoardLocation> potentialAlliedMoves = new ArrayList<>();
-
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(true);
-
-//            for (BoardLocation allyLocation : allies) { // get all possible moves for all the animals
-//                potentialAlliedMoves.addAll(projector.projectValidMoves(
-//                        allyLocation, NumberCruncher.pieceMaxRange(allyLocation.getPresentPiece())));
-//            }
-//
-//            potentialAlliedMoves.removeIf(location -> projector.projectValidMoves(blackKingLocation, 1).contains(location));
 
             boolean blackInCheckmate;
 
@@ -524,19 +564,14 @@ public class ChessBoard {
             return blackInCheckmate;
         }
 
-        public boolean whiteIsInCheckMate() {
-
+        public boolean whiteIsInCheckMate()
+        {
             ArrayList<BoardLocation> allies = pullSquaresWithColor(true);
             // The allied board squares : WhitePiece squares
 
 //            ArrayList<BoardLocation> potentialMoves = projector.projectValidMoves(whiteKingLocation, 1);
 
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(false);
-
-//            for (BoardLocation allyLocation : allies) { // get all possible moves for all the animals
-//                potentialMoves.addAll( projector.projectValidMoves(
-//                        allyLocation, NumberCruncher.pieceMaxRange(allyLocation.getPresentPiece())) );
-//            }
 
             boolean whiteInCheckmate;
 
@@ -545,9 +580,8 @@ public class ChessBoard {
             return whiteInCheckmate;
         }
 
-        public boolean gameIsInStaleMate() {
-
-
+        public boolean gameIsInStaleMate()
+        {
             boolean gameTurn = GameController.isWhiteTurn();
 
             ArrayList<BoardLocation> enemyLocations = pullSquaresWithColor(gameTurn);
@@ -560,20 +594,23 @@ public class ChessBoard {
 
         /**
          * Search the entire 2D array for BoardLocation's that have pieces
+         *
          * @return An ArrayList<BoardLocation> fully populated
          */
         private ArrayList<BoardLocation> pullSquaresWithPieces()
         { // Get the squares that have pieces on them
             ArrayList<BoardLocation> piecesExist = new ArrayList<>();
 
-            for (BoardLocation[] row : functionalBoard) {
-
-                for (BoardLocation boardLocation : row) {
-
-                    if (boardLocation != null) {
-                            if(boardLocation.getPresentPiece() != null) {
+            for ( BoardLocation[] row : functionalBoard )
+            {
+                for ( BoardLocation boardLocation : row )
+                {
+                    if ( boardLocation != null )
+                    {
+                        if ( boardLocation.getPresentPiece() != null )
+                        {
                             piecesExist.add(boardLocation);
-    //                        System.out.println("Added a piece");
+                            //                        System.out.println("Added a piece");
                         }
                     }
                 }
@@ -583,38 +620,41 @@ public class ChessBoard {
             return piecesExist;
         }
 
-        public ArrayList<BoardLocation> pullSquaresWithColor(boolean isWhite) {
+        public ArrayList<BoardLocation> pullSquaresWithColor( boolean isWhite )
+        {
             ArrayList<BoardLocation> returner = new ArrayList<>();
 
             // Returner array of BoardLocations with White Pieces
-            for (BoardLocation boardLocation : pullSquaresWithPieces()) {
-
-                if(boardLocation.getPresentPiece().isWhite() == isWhite)
-                    returner.add(boardLocation); // Add the squares to the returner
-            }
+            // Add the squares to the returner
+            returner.addAll(pullSquaresWithPieces().
+                    stream().
+                    filter(boardLocation -> boardLocation.getPresentPiece().isWhite() == isWhite).
+                    collect(Collectors.toList()));
 
             return returner;
         }
 
-        public BoardLocation getWhiteKingSquare() {
-
+        public BoardLocation getWhiteKingSquare()
+        {
             // Iterate thought the search with proper boolean for this color
 
-            for (BoardLocation boardLocation : pullSquaresWithColor(true)) {
+            for ( BoardLocation boardLocation : pullSquaresWithColor(true) )
+            {
 
-                if (boardLocation.getPresentPiece().toString().equals("K"))
+                if ( boardLocation.getPresentPiece().toString().equals("K") )
                     return boardLocation;
             }
             return new NullBoardLocation(); // Null-rep board square
         }
 
-        public BoardLocation getBlackKingSquare() {
-
+        public BoardLocation getBlackKingSquare()
+        {
             // Iterate thought the search with proper boolean for this color
 
-            for (BoardLocation boardLocation : pullSquaresWithColor(false)) {
+            for ( BoardLocation boardLocation : pullSquaresWithColor(false) )
+            {
 
-                if (boardLocation.getPresentPiece().toString().equals("k"))
+                if ( boardLocation.getPresentPiece().toString().equals("k") )
                     return boardLocation;
             }
             return new NullBoardLocation(); // Null-rep board square

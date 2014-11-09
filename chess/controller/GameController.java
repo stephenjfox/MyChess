@@ -19,21 +19,17 @@ public class GameController {
     private static boolean whiteTurn = true;
 
     public static void start(String[] starterArgs){
-
         FileInputHandler fIH = new FileInputHandler();
-        UserInputHandler uIH = new UserInputHandler();
-
         containerForTheGame.init();
-        System.out.println("Welcome to VirtuaChess");
 
         if(starterArgs.length > 0) {
             chessView = new ConsoleUI(containerForTheGame);
             runFileGame(starterArgs[0], fIH);
 //            chessView.drawBoard();
         }
-        else /*if(starterArgs[0].equals(""))*/ {
+        else {
             chessView = new GraphicUI(containerForTheGame);
-            runGraphicGame(uIH);
+            runGraphicGame();
         }
     }
 
@@ -60,7 +56,7 @@ public class GameController {
             // [3] = board index for the movement destination2
             instruction.execute();
             ChessHelp.printPlayerTurn();
-            triggerDrawBoard();
+//            triggerDrawBoard();
         }
 
         ChessHelp.callCheck();
@@ -68,13 +64,11 @@ public class GameController {
 
     }
 
-    private static void runGraphicGame(UserInputHandler uIH) {
+    private static void runGraphicGame() {
 
         GraphicUI view = (GraphicUI) chessView;
 
-        view.drawBoard();
-
-//        uIH.runTextPromptGame();
+        // TODO: do stuff
 
     }
 
