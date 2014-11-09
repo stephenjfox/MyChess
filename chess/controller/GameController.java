@@ -68,7 +68,7 @@ public class GameController {
 
         GraphicUI view = (GraphicUI) chessView;
 
-        // TODO: do stuff
+        view.drawBoard();
 
     }
 
