@@ -31,7 +31,6 @@ public class ChessBoard
 
     public ChessBoard( ChessBoard toClone )
     {
-
         BoardLocation[][] un = toClone.getFunctionalBoard();
         for ( int i = 0; i < un.length; i++ )
         {
@@ -41,8 +40,6 @@ public class ChessBoard
                 this.functionalBoard[i][j] = boardLocations[j];
             }
         }
-
-
     }
 
     public CheckFinder getCheckFinder()
@@ -262,9 +259,7 @@ public class ChessBoard
             else
             {
                 System.out.println("DEBUG: Invalid castling maneuver was attempted");
-
             }
-
         }
 
 
@@ -335,11 +330,10 @@ public class ChessBoard
      * we retrieve BoardLocation at those indices and return it.
      *
      * @param falsePositive the wrapper object for the desired indices
-     * @return the true BoardLocation at the index in the 2-D array
+     * @return the true <code>BoardLocation</code>at the index in the 2-D array
      */
     private BoardLocation getActualBoardSquare( BoardLocation falsePositive )
     {
-
         /*
         Compensate for the 1-based counting and return the actual square with the proper
         properties
@@ -385,16 +379,16 @@ public class ChessBoard
     {
         for ( int i = rowCount - 1; i >= 0; i-- )
         {
-            // If the board piece at a location is holding a piece
             for ( int k = 0; k < columnCount; k++ )
             {
+                // If the board piece at a location is holding a piece
                 if ( functionalBoard[i][k] != null )
                 {
                     System.out.print("[ " + ( ( functionalBoard[i][k].getPresentPiece() == null ) ? "-" :
                             functionalBoard[i][k].getPresentPiece().toString() ) + " ]");
                 }
                 else
-                { // it is null
+                { // else if it doesn't exist
                     System.out.print("[ - ]");
                 }
             }
@@ -405,7 +399,7 @@ public class ChessBoard
 
     // Initialize for user play
     public void init()
-    {
+        {
         boolean black = false, white = true;
         // Black royalty
         placePiece(new Rook(black), "a8");
